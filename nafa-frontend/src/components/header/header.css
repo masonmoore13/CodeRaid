@@ -1,0 +1,13 @@
+.hDiv{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ul {
+    list-style: none;
+    display: flex;
+}
+
+.ul > li {
+    padding: 10px;
+}
