@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from "react";
 import { Nav, Navbar, Container, Form, FormControl, Button, } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import {
@@ -7,8 +7,7 @@ import {
 import Home from "../pages/Home";
 import Events from "../pages/Events";
 
-export default class NavBar extends Component {
-  render() {
+function NavBar() {
     return (
       <Router>
         <Navbar bg="dark" variant="dark" expand="lg">
@@ -59,4 +58,6 @@ export default class NavBar extends Component {
       </Router>
     );
   }
-}
+
+  export default NavBar;
+

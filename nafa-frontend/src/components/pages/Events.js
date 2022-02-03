@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class Events extends Component {
-  render() {
+function Events() {
     return (
       <div>
         <h1>Events</h1>
       </div>
     );
   }
-}
+
+  export default Events;
