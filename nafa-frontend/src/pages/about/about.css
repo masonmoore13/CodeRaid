@@ -1,0 +1,13 @@
+.mission-statement {
+    
+}
+
+.about-us-container{
+        text-align: justify;
+        position: absolute;
+        left: 25%;
+        right: 25%;
+        align-content: center;
+        background-color: tan;
+        padding: 1.5em;
+}
