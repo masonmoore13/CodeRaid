@@ -1,13 +1,14 @@
 import './App.css';
-// import Navbar from './components/navbar/NavBar';
-import Contact from './components/pages/contact/contactPage';
-// import Header from './components/header/Header';
+import Navbar from './components/Navbar/NavBar';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 
 function App() {
   return (
     <div className="App">
-      {/* put any page here */}
-      <Contact/>     
+      <Header />
+      <Navbar />
+      <Footer />
     </div>
   );
 }
