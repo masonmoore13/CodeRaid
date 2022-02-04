@@ -1,12 +1,14 @@
 import React from 'react'
-import Template from '../../components/template/Template'
+import Header from '../../../components/header/Header'
+import Navbar from '../../../components/navbar/NavBar'
 import './contact.css'
 
 
 export default function Contact() {
     return (
         <>
-            <Template/>
+                <Header/>
+                <Navbar/>
                 <div className="contact-container">
                     <h1>Contact Us</h1>
                     <hr/><br/>

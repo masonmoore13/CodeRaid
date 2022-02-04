@@ -1,5 +1,5 @@
 import React from "react"
-import nafaLogo from "../../images/nafa-logo.png"
+import nafaLogo from "../../components/images/nafa-logo.png"
 import "./header.css"
 
 export default function Header() {

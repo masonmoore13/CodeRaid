@@ -1,12 +1,14 @@
 import React from 'react'
-import Template from '../../components/template/Template'
 import './about.css'
+import Header from '../../../components/header/Header'
+import Navbar from '../../../components/navbar/NavBar'
 
 
 export default function About() {
     return (
         <>
-            <Template/>
+            <Header/>
+            <Navbar/>
                 <div className="about-us-container">
                     <h1>About Us</h1>
                     <hr/>
