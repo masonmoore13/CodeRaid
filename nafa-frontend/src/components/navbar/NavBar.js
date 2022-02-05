@@ -8,17 +8,13 @@ import {
   Button,
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-
-import Home from "../pages/home/homePage";
-import Events from "../pages/events/eventsPage";
-import Contact from "../pages/contact/contactPage"; 
-import About from "../pages/about/aboutPage"; 
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import './navbar.css'
 
 function NavBar() {
   return (
-    <Router>
-      <Navbar bg="dark" variant="dark" expand="lg">
+    <div>
+      <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
         <Container fluid>
           <Navbar.Brand href="/">NAFA</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -61,14 +57,8 @@ function NavBar() {
         </Container>
       </Navbar>
       <div>
-        <Routes>
-          <Route path="" element={<Home />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
       </div>
-    </Router>
+    </div>
   );
 }
 

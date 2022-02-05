@@ -2,13 +2,14 @@
     
 }
 
-.about-us-container{
+.mission-statement-container{
         text-align: justify;
         position: absolute;
-        left: 25%;
-        right: 25%;
+        left: 5%;
+        right: 5%;
         align-content: center;
         background-color: rgb(33,37,41);
         color: white;
         padding: 1.5em;
+
 }
