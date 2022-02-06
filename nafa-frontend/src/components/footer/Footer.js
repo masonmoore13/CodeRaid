@@ -9,7 +9,7 @@ import { IconContext } from "react-icons";
 export default function Footer() {
     return (
         <div className="footer">
-            <div className="content">
+            <div className="footer-content">
                 <div className="text">ⓒNeville High School</div>
                 <IconContext.Provider value={{ className: 'react-icons' }}>
                     <ul className="icons">
