@@ -15,7 +15,6 @@ class Member(models.Model):
     current_work = models.CharField(max_length=150, blank=True, null=True)
     has_contributions = models.BooleanField(default=False)
     achievements = models.TextField(max_length=2500, blank=True, null=True)
-    gender = models.CharField(max_length=10)
     address_line_1 = models.CharField( max_length=150, blank=True, null=True)
     city = models.CharField(max_length=150, blank=True, null=True, default=None)
     state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='LA')

@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'main',
-    'address'
+    'address',
+    'corsheaders', 
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = "accounts.User" 
+
+#Whitelisting react port
+CORS_ORIGIN_WHITELIST = (
+'https://localhost:3000',
+)
