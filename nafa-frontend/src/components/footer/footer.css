@@ -27,16 +27,20 @@
     right:0%;
     position:absolute;
     color: white;
+    
 }
 
+a:hover{
+    color:white;
+}
 .icons > li {
     
     padding-left: 1em;
     color: white;
 }
 
-.icons > li:hover {
-    color:goldenrod;
+.icons:hover {
+    color:rgb(204, 20, 20);
 }
 
 .a{
@@ -45,3 +49,12 @@
     background-color: white;
     
 }
+
+.react-icons {
+    vertical-align: middle;
+    color: rgb(255, 255, 255);
+  }
+  .react-icons:hover {
+    vertical-align: middle;
+    color: yellow;
+  }
