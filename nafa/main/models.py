@@ -1,10 +1,11 @@
 from django.db import models
+from .states import CONTIGUOUS_STATES
+from datetime import date
 
 class Member(models.Model):
     first_name = models.CharField(max_length=150)
     middle_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150)
-    address = models.CharField(max_length=150)
     password = models.CharField(max_length=150)
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(unique=True)
@@ -15,11 +16,9 @@ class Member(models.Model):
     has_contributions = models.BooleanField(default=False)
     achievements = models.TextField(max_length=2500, blank=True, null=True)
     gender = models.CharField(max_length=10)
-    
-    #Unsure if these are needed
-    #address_line_1 = models.CharField( max_length=150, blank=True, null=True)
-    #city = models.CharField(max_length=150, blank=True, null=True, default=None)
-    #state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='LA')
+    address_line_1 = models.CharField( max_length=150, blank=True, null=True)
+    city = models.CharField(max_length=150, blank=True, null=True, default=None)
+    state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='LA')
 
     def __str__(self):
       return(self.username) 
