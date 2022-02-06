@@ -9,7 +9,7 @@ class Member(models.Model):
     password = models.CharField(max_length=150)
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(unique=True)
-    class_of = models.CharField(max_length=150)
+    class_of = models.CharField(max_length=150, blank=True)
     phone_no = models.CharField(max_length=10)
     have_paid_dues = models.BooleanField(default=False)
     current_work = models.CharField(max_length=150, blank=True, null=True)
@@ -24,27 +24,27 @@ class Member(models.Model):
       return(self.username) 
 
 class Event(models.Model):
-    rsvpd_members = models.ManyToManyField(Member)
+    rsvpd_members = models.ManyToManyField(Member, blank=True)
     event_name = models.CharField(max_length=150)
     date = models.DateField()
     location = models.CharField(max_length=150)
-    banner_image = models.CharField(max_length=150) #May need to be image field
-    gallery = models.CharField(max_length=150) #May need to be image field
+    banner_image = models.FileField(upload_to='Event Media', blank=True) 
+    gallery = models.FileField(upload_to='Event Media', blank=True) 
     description = models.TextField(max_length=2500)
-    media = models.CharField(max_length=150) #May need to be image field - may be same as gallery
+    media = models.ImageField(upload_to='Event Media', blank=True) 
     registration_fees = models.CharField(max_length=150)
 
     def __str__(self):
       return(self.event_name)
 
 class Campaign(models.Model):
-    members_who_donated  = models.ManyToManyField(Member)
+    members_who_donated  = models.ManyToManyField(Member, blank=True)
     campaign_name = models.CharField(max_length=150)
-    media = models.CharField(max_length=150) #May need to be image field - may be same as gallery
-    gallery = models.CharField(max_length=150) #May need to be image field
-    banner_image = models.CharField(max_length=150) #May need to be image field
-    goal = models.CharField(max_length=150)
-    amount_collected = models.CharField(max_length=150)
+    media = models.ImageField(upload_to='Campaign Media', blank=True)
+    gallery = models.FileField(upload_to='Campaign Media', blank=True)
+    banner_image = models.ImageField(upload_to='Campaign Media',  blank=True)
+    goal = models.DecimalField(max_digits=10, decimal_places=2)
+    amount_collected = models.DecimalField(max_digits=10, decimal_places=2, default='0', blank=True)
     contact_details = models.CharField(max_length=150)
 
     def __str__(self):
@@ -56,14 +56,15 @@ class CategoryOfTeam(models.Model):
 
     def __str__(self):
       return(self.category_name)
-      
+
+#Basketball, cheerleading, etc.       
 class Team(models.Model):
-    members_of_team = models.ManyToManyField(Member, related_name='members_of_team')
-    coaches = models.ManyToManyField(Member, related_name='coaches')
+    members_of_team = models.ManyToManyField(Member, related_name='members_of_team') #Connects to members but not all members of old teams are site members
+    coaches = models.ManyToManyField(Member, related_name='coaches', blank=True)
     year = models.CharField(max_length=150)
     type_of_team = models.ManyToManyField(CategoryOfTeam)
     description = models.TextField(max_length=2500)
-    media = models.CharField(max_length=150) #May need to be image field
+    media = models.ImageField(upload_to='Team Media', blank=True)
 
     def __str__(self):
       return(self.type_of_team)
@@ -71,9 +72,9 @@ class Team(models.Model):
 class Scholarship(models.Model):
     scholarship_name = models.CharField(max_length=150)
     description = models.TextField(max_length=2500)
-    image = models.CharField(max_length=150) #May need to be image field
-    team_organization = models.ManyToManyField(Team) #may be wrong
-    amount = models.CharField(max_length=150) #May be wrong - linked to Team table on schema
+    image = models.ImageField(upload_to='Scholarship Media',  blank=True)
+    team_organization = models.ManyToManyField(Team,  blank=True) 
+    amount = models.CharField(max_length=150)
 
     def __str__(self):
       return(self.scholarship_name)
@@ -87,8 +88,8 @@ class Contribution(models.Model):
       return(self.user)
 
 class Role(models.Model):
-    role_title = models.CharField(max_length=150)
-    member_ID = models.ManyToManyField(Member)
+    role_title = models.CharField(max_length=150, blank=True)
+    member_ID = models.ManyToManyField(Member, blank=True)
 
     def __str__(self):
       return(self.role_title)
