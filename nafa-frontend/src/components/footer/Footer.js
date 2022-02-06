@@ -12,11 +12,13 @@ export default function Footer() {
             <div className="content">
                 <div className="text">ⓒNeville High School</div>
                 <IconContext.Provider value={{ className: 'react-icons' }}>
-                    <li><a href="https://www.facebook.com/Neville-Alumni-and-Friends-Association-310455590523"><BsFacebook/></a></li>
-                    <li><a href="https://www.youtube.com/c/NevilleHighSchool"><BsYoutube /></a></li>
-                    <li><a href=""><GrMail /></a></li>
-                    <li><a href="https://duckduckgo.com/?q=neville+highschool&t=brave&ia=web&iaxm=directions&end=what%3ANeville%2520High%2520School%2Cwhere%3A600%2520Forsythe%2520Ave%252C%2520Monroe%252C%2520LA%2520%252071201%252C%2520United%2520States&transport=drive"><FaMapMarkedAlt /></a></li>
-                    <li><a href=""><HiLink /></a></li>
+                    <ul className="icons">
+                        <li><a href="https://www.facebook.com/Neville-Alumni-and-Friends-Association-310455590523"><BsFacebook /></a></li>
+                        <li><a href="https://www.youtube.com/c/NevilleHighSchool"><BsYoutube /></a></li>
+                        <li><a href=""><GrMail /></a></li>
+                        <li><a href="https://duckduckgo.com/?q=neville+highschool&t=brave&ia=web&iaxm=directions&end=what%3ANeville%2520High%2520School%2Cwhere%3A600%2520Forsythe%2520Ave%252C%2520Monroe%252C%2520LA%2520%252071201%252C%2520United%2520States&transport=drive"><FaMapMarkedAlt /></a></li>
+                        <li><a href=""><HiLink /></a></li>
+                    </ul>
                 </IconContext.Provider>
             </div>
         </div>

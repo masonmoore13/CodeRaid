@@ -30,9 +30,6 @@
     
 }
 
-a:hover{
-    color:white;
-}
 .icons > li {
     
     padding-left: 1em;
@@ -43,18 +40,9 @@ a:hover{
     color:rgb(204, 20, 20);
 }
 
-.a{
-    color: white;
-    text-decoration-color:white;
-    background-color: white;
-    
-}
-
 .react-icons {
-    vertical-align: middle;
     color: rgb(255, 255, 255);
   }
   .react-icons:hover {
-    vertical-align: middle;
-    color: yellow;
+    color: goldenrod;
   }
