@@ -1,0 +1,48 @@
+.footer{
+    background-color: rgb(33,37,41);
+    color: white;
+    text-align: center;
+    height: 3em;
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+    }
+
+.footer-content{
+    left: 25%;
+    right: 25%;
+    position: absolute;   
+    color:white; 
+}
+
+.text{
+    position: absolute;
+    left: 0%;
+}
+
+.icons {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row; 
+    right:0%;
+    position:absolute;
+    color: white;
+    
+}
+
+.icons > li {
+    
+    padding-left: 1em;
+    color: white;
+}
+
+.icons:hover {
+    color:rgb(204, 20, 20);
+}
+
+.react-icons {
+    color: rgb(255, 255, 255);
+  }
+  .react-icons:hover {
+    color: goldenrod;
+  }
