@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import Spinner from 'react-bootstrap/Spinner'
 
 const defaultProp = {
   postSignup: () => {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       resolve({});
     });
   },
 };
 
-function UserSignup({props,actions=defaultProp}) {
+function UserSignup({ props, actions = defaultProp }) {
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -18,7 +19,7 @@ function UserSignup({props,actions=defaultProp}) {
     passwordRepeat: "",
   });
 
-  const[pendingApiCalls, setPendingApiCalls] = useState(false);
+  const [pendingApiCall, setPendingApiCall] = useState(false);
 
   const onInputChange = (event) => {
     const { value, name } = event.target;
@@ -30,16 +31,26 @@ function UserSignup({props,actions=defaultProp}) {
       };
     });
   };
-
+  
   const onClickSignup = () => {
-    const {username,email,password} = form
-    const user ={
-        username:username,
-        email:email,
-        password:password
-    }
-    actions.postSignup(user);
+    const { username, email, password } = form;
+    const user = {
+      username: username,
+      email: email,
+      password: password,
+    };
+    setPendingApiCall(true);
+    actions.postSignup(user).then(response=>{
+      setPendingApiCall(false);
+    }).
+    catch((error)=>{
+      console.log("testtt")
+      setPendingApiCall(false);
+    })
+
   };
+
+
 
   return (
     <div>
@@ -80,8 +91,13 @@ function UserSignup({props,actions=defaultProp}) {
             placeholder="Repeat your password"
             onChange={onInputChange}
           />
-        </Form.Group>
-        <Button onClick={onClickSignup}>Sign up</Button>{" "}
+        </Form.Group >
+        <Button className="d-flex justify-content-center" onClick={onClickSignup} disabled={pendingApiCall}>
+        {pendingApiCall && <Spinner className="m-1" animation="border" role="status" size="sm">
+            <span className="visually-hidden text-light">Loading...</span>
+          </Spinner>}
+          Sign up
+        </Button>{" "}
       </Form>
     </div>
   );
