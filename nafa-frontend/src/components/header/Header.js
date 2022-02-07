@@ -1,8 +1,7 @@
 import React from "react";
-import { Route, Router, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 import nafaLogo from "../../Assets/images/nafa-logo.png";
 import "./header.css";
-import Contact from "../pages/contact/contactPage";
 
 export default function Header() {
   return (
@@ -15,6 +14,7 @@ export default function Header() {
         <li><a href="https://www.facebook.com/Neville-Alumni-and-Friends-Association-310455590523">facebook</a></li>
         <li>instagram</li>
         <li>email</li>
+        <li><Link to="/login">login</Link></li>
       </ul>
     </div>
   );

@@ -11,6 +11,7 @@ import Home from './components/pages/home/homePage';
 import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
 import Events from './components/pages/events/eventsPage';
+import Login from './components/pages/login/loginpage'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path='/about' element={<About />} />
               <Route path='/contact' element={<Contact />} />
               <Route path='/events' element={<Events />} />
+              <Route path='/login' element={<Login />} />
             </Routes>
           </div>
         </div>
