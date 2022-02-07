@@ -13,8 +13,15 @@ import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
 import Events from './components/pages/events/eventsPage';
 import UserSignup from './components/pages/user-signup/UserSignup';
+import * as apiCalls from "./api/apiCalls";
 
 function App() {
+
+  // will be changed later just for demo
+  const actions ={
+    postSignup: apiCalls.signup
+  }
+
   return (
     <Router>
     <Header />
@@ -28,7 +35,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/events" element={<Events />} />
-            <Route path="/signup" element={<UserSignup/>} />
+            <Route path="/signup" element={<UserSignup actions={actions}/>} />
             
           </Routes> 
          

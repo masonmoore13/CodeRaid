@@ -18,6 +18,8 @@ function UserSignup({props,actions=defaultProp}) {
     passwordRepeat: "",
   });
 
+  const[pendingApiCalls, setPendingApiCalls] = useState(false);
+
   const onInputChange = (event) => {
     const { value, name } = event.target;
 

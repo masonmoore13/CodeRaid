@@ -74,28 +74,35 @@ describe("UserSignup", () => {
       };
     };
 
-   
+    const mockAsyncDelayed = ()=>{
+      return jest.fn().mockImplementation(() => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve({});
+          }, 300);
+        });
+      })
+    }
+
     let button, emailInput, usernameInput, passwordInput, passwordRepeat;
     const setupForSubmit = (props) => {
-        const rendered = render(<UserSignup {...props} />);
-  
-        const { container, queryByPlaceholderText } = rendered;
-  
-        emailInput = queryByPlaceholderText(/name@example.com/i);
-        usernameInput = queryByPlaceholderText(/Your username/i);
-        passwordInput = queryByPlaceholderText('password');
-        passwordRepeat = queryByPlaceholderText('Repeat your password');
-  
-        fireEvent.change(emailInput, changeEvent('name@example.com'));
-        fireEvent.change(usernameInput, changeEvent('my-user-name'));
-        fireEvent.change(passwordInput, changeEvent('my-password'));
-        fireEvent.change(passwordRepeat, changeEvent('my-password'));
-  
-        button = container.querySelector('button');
-        return rendered;
-      };
+      const rendered = render(<UserSignup {...props} />);
 
+      const { container, queryByPlaceholderText } = rendered;
 
+      emailInput = queryByPlaceholderText(/name@example.com/i);
+      usernameInput = queryByPlaceholderText(/Your username/i);
+      passwordInput = queryByPlaceholderText("password");
+      passwordRepeat = queryByPlaceholderText("Repeat your password");
+
+      fireEvent.change(emailInput, changeEvent("name@example.com"));
+      fireEvent.change(usernameInput, changeEvent("my-user-name"));
+      fireEvent.change(passwordInput, changeEvent("my-password"));
+      fireEvent.change(passwordRepeat, changeEvent("my-password"));
+
+      button = container.querySelector("button");
+      return rendered;
+    };
 
     it("sets username value into state", () => {
       render(<UserSignup />);
@@ -119,42 +126,50 @@ describe("UserSignup", () => {
     });
 
     it("sets repeat value into state", () => {
-        render(<UserSignup />);
-        const passwordInputRepeat = screen.getByPlaceholderText("password");
-        fireEvent.change(passwordInputRepeat, changeEvent("my-pasword"));
-        expect(passwordInputRepeat).toHaveValue("my-pasword");
-      });
+      render(<UserSignup />);
+      const passwordInputRepeat = screen.getByPlaceholderText("password");
+      fireEvent.change(passwordInputRepeat, changeEvent("my-pasword"));
+      expect(passwordInputRepeat).toHaveValue("my-pasword");
+    });
 
+    it("calls postSignup when the fields are valid and the actions provided in props", () => {
+      const actions = {
+        postSignup: jest.fn().mockResolvedValueOnce({}),
+      };
+      setupForSubmit({ actions });
+      fireEvent.click(button);
+      expect(actions.postSignup).toHaveBeenCalledTimes(1);
+    });
 
-    it('calls postSignup when the fields are valid and the actions provided in props',()=>{
-        const actions = {
-            postSignup: jest.fn().mockResolvedValueOnce({})
-        }
-        setupForSubmit({actions})
-        fireEvent.click(button);
-        expect(actions.postSignup).toHaveBeenCalledTimes(1);
-    })
+    it("does not throw exceptions when clicking the signup button actions not provided in the props", () => {
+      setupForSubmit();
+      expect(() => fireEvent.click(button)).not.toThrow();
+    });
 
-    it('does not throw exceptions when clicking the signup button actions not provided in the props',()=>{
-        setupForSubmit()
-        expect(()=> fireEvent.click(button)).not.toThrow();
+    it("calls post with user body when the field are valid", () => {
+      const actions = {
+        postSignup: jest.fn().mockResolvedValueOnce({}),
+      };
+      setupForSubmit({ actions });
+      fireEvent.click(button);
+      const expectedUserObject = {
+        username: "my-user-name",
+        email: "name@example.com",
+        password: "my-password",
+      };
 
-    })
+      expect(actions.postSignup).toHaveBeenCalledWith(expectedUserObject);
+    });
 
-    it('calls post with user body when the field are valid',()=>{
-        const actions = {
-            postSignup: jest.fn().mockResolvedValueOnce({})
-        }
-        setupForSubmit({actions})
-        fireEvent.click(button);
-        const expectedUserObject ={
-            username:'my-user-name',
-            email:'name@example.com',
-            password:'my-password'
-        }
+    it("does not let the user click the signup button when there is an ongoing api call", () => {
+      const actions = {
+        postSignup: mockAsyncDelayed()
+      };
+      setupForSubmit({ actions });
+      fireEvent.click(button);
+      fireEvent.click(button);
 
-        expect(actions.postSignup).toHaveBeenCalledWith(expectedUserObject);
-    })
-
+      expect(actions.postSignup).toHaveBeenCalledTimes(1);
+    });
   });
 });
