@@ -1,6 +1,4 @@
 .hDiv{
-    background-color: rgb(33,37,41);
-    color: white;
     display: flex;
     justify-content: space-between;
 }
