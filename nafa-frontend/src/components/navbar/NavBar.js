@@ -16,7 +16,7 @@ function NavBar() {
     <div>
       <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
         <Container fluid>
-          <Navbar.Brand href="/">NAFA</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">NAFA</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -32,6 +32,10 @@ function NavBar() {
               </Nav.Link>
               <Nav.Link as={Link} to="/about">
                 About
+              </Nav.Link>
+
+              <Nav.Link as={Link} to="/signup">
+                Signup
               </Nav.Link>
               <NavDropdown title="Link" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>

@@ -12,40 +12,31 @@ import Home from './components/pages/home/homePage';
 import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
 import Events from './components/pages/events/eventsPage';
+import UserSignup from './components/pages/user-signup/UserSignup';
 
 function App() {
   return (
     <Router>
-      <Header />
-      <Navbar />
-      <div className="app">
-        <div className="cardBox">
-
-          <div className="content">
-            {/* only one route shows at one time */}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/events" element={<Events />} />
-            </Routes>
-          </div>
+    <Header />
+    <Navbar />
+    <div className="app">
+      <div className="cardBox">
+        <div className="content">
+          {/* only one route shows at one time */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/signup" element={<UserSignup/>} />
+            
+          </Routes> 
+         
         </div>
-
-          <div className='content'>
-            {/* only one route shows at one time */}
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/contact' element={<Contact />} />
-              <Route path='/events' element={<Events />} />
-            </Routes>
-          </div>
-        </div>
-        <Footer />
-
-      
-    </Router>
+      </div>
+      <Footer />
+    </div>
+  </Router>
   );
 }
 

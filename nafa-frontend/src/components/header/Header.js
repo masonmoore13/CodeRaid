@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <div className="hDiv">
       {/* shows logo in the navbar */}
-      <img src={nafaLogo} width="60px" vertic />
+      <img src={nafaLogo} width="60px"  />
       {/* list on the right side of the screen */}
       <ul className="ul">
         <li>(phone number)</li>

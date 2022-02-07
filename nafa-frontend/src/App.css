@@ -1,4 +1,4 @@
-.app{
+/* .app{
     background-image: url("http://neville.mcschools.net/sites/neville/cache/file/063634A1-78AA-4903-AAA9AA82850127C8.jpg");
     background-repeat: no-repeat;
     background-attachment:fixed;
@@ -7,16 +7,15 @@
     width: 100%;
     position: absolute;
     align-self: center;
-}
+} */
 
-.cardBox{
+/* .cardBox{
     left: 25%;
     right: 25%;
     position: absolute;
     height: 100%;
     background-color: rgb(0, 0, 0, 0.5);
-}
+} */
 
-.content{
-    color:white;
-}
+/* .content{
+    /* color:white; */
