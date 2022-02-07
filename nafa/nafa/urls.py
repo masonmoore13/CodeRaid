@@ -19,7 +19,10 @@ from main import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'tasks', views.MembersView, 'task')
+
+# http://127.0.0.1:8000/... paths to see API
+router.register(r'member', views.MemberView, 'member')
+router.register(r'event', views.EventView, 'event')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
