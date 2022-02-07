@@ -43,26 +43,9 @@ a:hover{
     color:rgb(204, 20, 20);
 }
 
-<<<<<<< HEAD
 .react-icons {
     color: rgb(255, 255, 255);
   }
   .react-icons:hover {
     color: goldenrod;
-=======
-.a{
-    color: white;
-    text-decoration-color:white;
-    background-color: white;
-    
-}
-
-.react-icons {
-    vertical-align: middle;
-    color: rgb(255, 255, 255);
-  }
-  .react-icons:hover {
-    vertical-align: middle;
-    color: yellow;
->>>>>>> parent of f87d91e (Revert "Merge pull request #15 from onthir/layout")
   }

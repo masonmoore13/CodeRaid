@@ -1,18 +1,4 @@
 
-import "./App.css";
-import Navbar from "./components/navbar/NavBar";
-import Header from "./components/header/Header";
-
-
-// This will allow all components that are imported to use the Router.
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-//import the pages that we will use into apps
-import Home from "./components/pages/home/homePage";
-import About from "./components/pages/about/aboutPage";
-import Contact from "./components/pages/contact/contactPage";
-import Events from "./components/pages/events/eventsPage";
-
 import './App.css';
 import Navbar from './components/navbar/NavBar';
 import Header from './components/header/Header';
@@ -58,7 +44,7 @@ function App() {
         </div>
         <Footer />
 
-      </div>
+      
     </Router>
   );
 }
