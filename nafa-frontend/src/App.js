@@ -14,6 +14,7 @@ import Contact from './components/pages/contact/contactPage';
 import Events from './components/pages/events/eventsPage';
 import UserSignup from './components/pages/user-signup/UserSignup';
 import * as apiCalls from "./api/apiCalls";
+import Login from './components/pages/login/Login';
 
 function App() {
 
@@ -36,7 +37,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/events" element={<Events />} />
             <Route path="/signup" element={<UserSignup actions={actions}/>} />
-            
+            <Route path="/login" element={<Login/>} />
           </Routes> 
          
         </div>

@@ -47,7 +47,7 @@ describe("UserSignup", () => {
       expect(passwordInput.type).toBe("password");
     });
 
-    it("has input for password", () => {
+    it("has input for password repeat", () => {
       render(<UserSignup />);
       const passwordInputRepeat = screen.getByPlaceholderText(
         "Repeat your password"
@@ -63,7 +63,7 @@ describe("UserSignup", () => {
       expect(passwordInputRepeat.type).toBe("password");
     });
 
-    it("has submit button", () => {
+    it("has sign up button", () => {
       // render
       render(<UserSignup />);
       const button = screen.getByRole("button", { name: /sign up/i });
