@@ -4,9 +4,8 @@
 
 .mission-statement-container{
         text-align: justify;
-        position: absolute;
-        left: 5%;
-        right: 5%;
+        margin-left: 5%;
+        margin-right: 5%;
         align-content: center;
         background-color: rgb(33,37,41);
         color: white;

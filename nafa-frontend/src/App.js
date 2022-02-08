@@ -16,6 +16,7 @@ import Login from './components/pages/login/loginpage'
 function App() {
   return (
     <Router>
+      <div className='page'>
         <Header />
         <Navbar />
         <div className="app">
@@ -32,6 +33,7 @@ function App() {
             </div>
           </div>
           <Footer />
+        </div>
         </div>
     </Router>
   );

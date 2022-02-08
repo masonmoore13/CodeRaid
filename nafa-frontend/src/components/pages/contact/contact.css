@@ -1,12 +1,11 @@
 .contact-container{
     text-align: justify;
-        position: absolute;
-        left: 5%;
-        right: 5%;
-        align-content: center;
-        background-color: rgb(33,37,41);
-        color: white;
-        padding: 1.5em;
+    margin-left: 5%;
+    margin-right: 5%;
+    align-content: center;
+    background-color: rgb(33,37,41);
+    color: white;
+    padding: 1.5em;
 }
 
 .feedback{
