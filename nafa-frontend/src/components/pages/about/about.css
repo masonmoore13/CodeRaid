@@ -1,0 +1,14 @@
+.mission-statement {
+    
+}
+
+.mission-statement-container{
+        text-align: justify;
+        margin-left: 5%;
+        margin-right: 5%;
+        align-content: center;
+        background-color: rgb(33,37,41);
+        color: white;
+        padding: 1.5em;
+
+}

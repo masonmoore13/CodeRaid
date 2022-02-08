@@ -1,0 +1,25 @@
+.page{
+    height: 100%;
+
+}
+
+.app{
+    background-image: url("http://neville.mcschools.net/sites/neville/cache/file/063634A1-78AA-4903-AAA9AA82850127C8.jpg");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    align-self: center;
+}
+
+.cardBox{
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: rgb(0, 0, 0, 0.5);
+    min-height: 100vh;
+}
+
+.content{
+    color:white;
+}
