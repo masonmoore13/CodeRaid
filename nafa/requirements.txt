@@ -7,4 +7,4 @@ django-address
 django-allauth
 django-rest-allauth
 django-restframework
-django-corsheaders
+django-cors-headers
