@@ -16,9 +16,11 @@ import Login from './components/pages/login/loginpage'
 function App() {
   return (
     <Router>
+      {/* entire page */}
       <div className='page'>
         <Header />
         <Navbar />
+        {/* application area */}
         <div className="app">
           <div className="cardBox">
             <div className='content'>
