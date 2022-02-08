@@ -16,23 +16,23 @@ import Login from './components/pages/login/loginpage'
 function App() {
   return (
     <Router>
-      <Header />
-      <Navbar />
-      <div className="app">
-        <div className="cardBox">
-          <div className='content'>
-            {/* only one route shows at one time */}
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/contact' element={<Contact />} />
-              <Route path='/events' element={<Events />} />
-              <Route path='/login' element={<Login />} />
-            </Routes>
+        <Header />
+        <Navbar />
+        <div className="app">
+          <div className="cardBox">
+            <div className='content'>
+              {/* only one route shows at one time */}
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='/events' element={<Events />} />
+                <Route path='/login' element={<Login />} />
+              </Routes>
+            </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
     </Router>
   );
 }
