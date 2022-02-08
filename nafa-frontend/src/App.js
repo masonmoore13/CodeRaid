@@ -20,7 +20,8 @@ function App() {
 
   // will be changed later just for demo
   const actions ={
-    postSignup: apiCalls.signup
+    postSignup: apiCalls.signup,
+    postLogin: apiCalls.login
   }
 
   return (
@@ -37,7 +38,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/events" element={<Events />} />
             <Route path="/signup" element={<UserSignup actions={actions}/>} />
-            <Route path="/login" element={<Login/>} />
+            <Route path="/login" element={<Login actions={actions}/>} />
           </Routes> 
          
         </div>

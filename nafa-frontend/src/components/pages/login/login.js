@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
+import ButtonWithProgress from "../../buttonWithProgress/ButtonWithProgress";
 import Input from "../../input/Input";
 
-function Login(props) {
+
+const defaultProp = {
+  postLogin: () => {
+    return new Promise((resolve, reject) => {
+      resolve({});
+    });
+  },
+};
+
+function Login({ props, actions = defaultProp }) {
   const [form, setForm] = useState({
     username: "",
     password: "",
   });
-  const [apiError, setApiError] = useState();
+  const [apiError, setApiError] = useState("Login Failed");
+  const [pendingApiCall, setPendingApiCall] = useState(false);
 
+ 
   const onInputChange = (event) => {
     const { value, name } = event.target;
 
@@ -18,7 +30,37 @@ function Login(props) {
         [name]: value,
       };
     });
+
+    setApiError(undefined);
+    
   };
+
+  const onClickLogin = () => {
+    const { username, password } = form;
+    const user = {
+      username: username,
+      password: password,
+    };
+    setPendingApiCall(true);
+    actions.postLogin(user)
+    .then(response =>{
+        setPendingApiCall(false);
+    })
+    .catch((error) => {
+        if (error.response) {
+            setApiError(error.response.data.message);
+            setPendingApiCall(false);  
+          } 
+      });
+  };
+
+  let disableLogin = false;
+  if (form.username === "") {
+    disableLogin = true;
+  }
+  if (form.password === "") {
+    disableLogin = true;
+  }
 
   return (
     <div>
@@ -44,13 +86,18 @@ function Login(props) {
           // error={errors.password}
         />
 
-        <Button
-          className="d-flex justify-content-center"
-          //   onClick={onClickSignup}
-          //   disabled={pendingApiCall || passwordRepeatError ? true : false}
-        >
-          Login
-        </Button>
+        {apiError && (
+        <div className="col-12 mb-3">
+          <Alert as="text" variant="danger">{apiError}</Alert>
+        </div>
+      )}
+
+<ButtonWithProgress
+          onClick={onClickLogin}
+          disabled={disableLogin || pendingApiCall}
+          text="Login"
+          pendingApiCall={pendingApiCall}
+        />
       </Form>
     </div>
   );

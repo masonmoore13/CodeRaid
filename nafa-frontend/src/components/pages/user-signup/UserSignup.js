@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import ButtonWithProgress from "../../buttonWithProgress/ButtonWithProgress";
 import Spinner from "react-bootstrap/Spinner";
 import Input from "../../input/Input";
 
@@ -74,7 +74,7 @@ function UserSignup({ props, actions = defaultProp }) {
       password === passwordRepeat ? '' : 'Does not match to password';
   }
 
-
+ 
   return (
     <div>
       <h1>Sign Up</h1>
@@ -119,18 +119,13 @@ function UserSignup({ props, actions = defaultProp }) {
             error={passwordRepeatError}
           />
 
-        <Button
-          className="d-flex justify-content-center"
+        <ButtonWithProgress
           onClick={onClickSignup}
           disabled={pendingApiCall || passwordRepeatError ? true : false}
+          pendingApiCall={pendingApiCall}
+          text="Sign up"
         >
-          {pendingApiCall && (
-            <Spinner className="m-1" animation="border" role="status" size="sm">
-              <span className="visually-hidden text-light">Loading...</span>
-            </Spinner>
-          )}
-          Sign up
-        </Button>{" "}
+        </ButtonWithProgress>
       </Form>
     </div>
   );
