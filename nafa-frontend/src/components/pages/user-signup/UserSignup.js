@@ -24,6 +24,7 @@ function UserSignup({ props, actions = defaultProp }) {
   const [errors, setErrors] = useState({});
 
   const onInputChange = (event) => {
+    
     const { value, name } = event.target;
 
     setForm((previousForm) => {
@@ -32,7 +33,17 @@ function UserSignup({ props, actions = defaultProp }) {
         [name]: value,
       };
     });
+
+    setErrors((previousErrors) => {
+      return {
+        ...previousErrors,
+        [name]: undefined
+      };
+    });
+  
   };
+
+ 
 
   const onClickSignup = () => {
     const { username, email, password } = form;
