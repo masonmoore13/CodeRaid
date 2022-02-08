@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as apiCalls from "./apiCalls"
 
-const apiUrl = "https://coderaid.free.beeceptor.com/signup";
+const apiUrl = "http://localhost:8000/accounts/register/";
 
 describe("apiCalls", () => {
   describe("signup", () => {

@@ -1,5 +1,11 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  findByText,
+} from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import UserSignup from "./UserSignup";
 
@@ -74,15 +80,15 @@ describe("UserSignup", () => {
       };
     };
 
-    const mockAsyncDelayed = ()=>{
+    const mockAsyncDelayed = () => {
       return jest.fn().mockImplementation(() => {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve({});
           }, 300);
         });
-      })
-    }
+      });
+    };
 
     let button, emailInput, usernameInput, passwordInput, passwordRepeat;
     const setupForSubmit = (props) => {
@@ -141,7 +147,7 @@ describe("UserSignup", () => {
       expect(actions.postSignup).toHaveBeenCalledTimes(1);
     });
 
-    it("does not throw exceptions when clicking the signup button actions not provided in the props", async() => {
+    it("does not throw exceptions when clicking the signup button actions not provided in the props", async () => {
       setupForSubmit();
       expect(() => fireEvent.click(button)).not.toThrow();
     });
@@ -163,7 +169,7 @@ describe("UserSignup", () => {
 
     it("does not let the user click the signup button when there is an ongoing api call", () => {
       const actions = {
-        postSignup: mockAsyncDelayed()
+        postSignup: mockAsyncDelayed(),
       };
       setupForSubmit({ actions });
       fireEvent.click(button);
@@ -174,52 +180,114 @@ describe("UserSignup", () => {
 
     it("displays spinner when there is an ongoing Api call", () => {
       const actions = {
-        postSignup: mockAsyncDelayed()
+        postSignup: mockAsyncDelayed(),
       };
 
-       setupForSubmit({actions})
+      setupForSubmit({ actions });
 
       fireEvent.click(button);
-      
-      const spinner = screen.queryByText('Loading...');
+
+      const spinner = screen.queryByText("Loading...");
       expect(spinner).toBeInTheDocument();
     });
 
     it("it hides the spinner after api call finishes successfully ", async () => {
       const actions = {
-        postSignup: mockAsyncDelayed()
+        postSignup: mockAsyncDelayed(),
       };
 
-       setupForSubmit({actions})
+      setupForSubmit({ actions });
 
       fireEvent.click(button);
-      
-      const spinner = await screen.findByText('Loading...');
-      await waitFor(()=>expect(spinner).not.toBeInTheDocument());
+
+      const spinner = await screen.findByText("Loading...");
+      await waitFor(() => expect(spinner).not.toBeInTheDocument());
     });
 
     it("it hides the spinner after api call finishes with error", async () => {
       const actions = {
-        postSignup:jest.fn().mockImplementation(() => {
+        postSignup: jest.fn().mockImplementation(() => {
           return new Promise((resolve, reject) => {
             setTimeout(() => {
               reject({
-                response: {data:{}}
+                response: { data: {} },
               });
             }, 300);
           });
-        })
+        }),
       };
 
-       setupForSubmit({actions})
+      setupForSubmit({ actions });
 
       fireEvent.click(button);
-      
-      const spinner = await screen.findByText('Loading...');
-      await waitFor(()=>expect(spinner).not.toBeInTheDocument());
+
+      const spinner = await screen.findByText("Loading...");
+      await waitFor(() => expect(spinner).not.toBeInTheDocument());
     });
 
+    it("it displays validation error for username when error is recieved in the field", async () => {
+      const actions = {
+        postSignup: jest.fn().mockImplementation(() => {
+          return new Promise((resolve, reject) => {
+ 
+              reject({
+                response: {
+                  data: {
+                    validationErrors: {
+                      username: "Cannot be null",
+                    },
+                  },
+                },
+              });
+
+          });
+        }),
+      };
+
+      setupForSubmit({ actions });
+
+      fireEvent.click(button);
+
+      const errorMessage = await screen.findByText("Cannot be null");
+
+      await waitFor(() => expect(errorMessage).toBeInTheDocument());
+    });
+
+    it("enables the signup button when the password and repeat password has same value",()=>{
+      setupForSubmit();
+      expect(button).not.toBeDisabled();
+    })
+
+    it("disables the signup button when the password don't match password repeat",()=>{
+      setupForSubmit();
+      fireEvent.change(passwordRepeat, changeEvent('new-pass'));
+      expect(button).toBeDisabled();
+    })
+
+    it("disables the signup button when the password repeat don't match password ",()=>{
+      setupForSubmit();
+      fireEvent.change(passwordInput, changeEvent('new-pass'));
+      expect(button).toBeDisabled();
+    })
+
+    it("displays error style for password repeat if repeat don't match password ",()=>{
+      const {queryByText} = setupForSubmit();
+      fireEvent.change(passwordRepeat, changeEvent('new-pass'));
+      const mismatch = queryByText('Does not match to password');
+      expect(mismatch).toBeInTheDocument();
+    })
+
+    it("displays error style for password repeat if password input mismatch",()=>{
+      const {queryByText} = setupForSubmit();
+      fireEvent.change(passwordRepeat, changeEvent('new-pass'));
+      const mismatch = queryByText('Does not match to password');
+      expect(mismatch).toBeInTheDocument();
+    })
+
+
+
+  
   });
 });
 
-console.error =()=>{};
+console.error = () => {};

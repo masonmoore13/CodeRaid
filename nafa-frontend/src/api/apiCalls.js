@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = "https://coderaid.free.beeceptor.com/signup";
+const apiUrl = "http://localhost:8000/accounts/register/";
 
 export const signup = (user)=>{
     return axios.post(apiUrl,user)
