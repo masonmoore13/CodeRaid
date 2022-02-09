@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 __pycache__/
+<<<<<<< HEAD
+ 
+=======
+>>>>>>> f8bb770f7010bc8fe85124319b8749042c30df20
