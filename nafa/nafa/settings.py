@@ -49,16 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'corsheaders'
-
-=======
-    'accounts',
-    'main',
-    'address',
-    'corsheaders', 
-    'rest_framework',
->>>>>>> mason-models
 ]
 
 SITE_ID = 1
@@ -155,7 +146,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.User" 
 
-<<<<<<< HEAD
 # cors headers
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -165,10 +155,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-=======
+
 #Whitelisting react port
 CORS_ORIGIN_WHITELIST = (
 'https://localhost:3000',
 'https://localhost:8000',
 )
->>>>>>> mason-models
