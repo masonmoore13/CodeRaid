@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+<<<<<<< HEAD
 from django.urls import path, include, re_path
 from allauth.account.views import confirm_email
 from rest_auth.registration.views import VerifyEmailView, RegisterView
@@ -21,4 +22,19 @@ from rest_auth.registration.views import VerifyEmailView, RegisterView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
+=======
+from django.urls import path, include
+from main import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+
+# http://127.0.0.1:8000/... paths to see API
+router.register(r'member', views.MemberView, 'member')
+router.register(r'event', views.EventView, 'event')
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include(router.urls))
+>>>>>>> mason-models
 ]
