@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Member
 from .models import Event
 from .models import Campaign
 from .models import CategoryOfTeam
@@ -9,9 +8,6 @@ from .models import Contribution
 from .models import Role
 from .models import Contact
 
-admin.site.register(Member)
-class MemberModel(admin.ModelAdmin):
-    list_display = ('id', 'username')
 
 admin.site.register(Event)
 class EvemtModel(admin.ModelAdmin):

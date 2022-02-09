@@ -1,30 +1,11 @@
 from django.db import models
 from .states import CONTIGUOUS_STATES
 from datetime import date
-
-class Member(models.Model):
-    first_name = models.CharField(max_length=150)
-    middle_name = models.CharField(max_length=150, blank=True, null=True)
-    last_name = models.CharField(max_length=150)
-    password = models.CharField(max_length=150)
-    username = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    email = models.EmailField(unique=True)
-    class_of = models.CharField(max_length=150, blank=True)
-    phone_no = models.CharField(max_length=10)
-    have_paid_dues = models.BooleanField(default=False)
-    current_work = models.CharField(max_length=150, blank=True, null=True)
-    has_contributions = models.BooleanField(default=False)
-    achievements = models.TextField(max_length=2500, blank=True, null=True)
-    address_line_1 = models.CharField( max_length=150, blank=True, null=True)
-    city = models.CharField(max_length=150, blank=True, null=True, default=None)
-    state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='LA')
-
-    def __str__(self):
-      return(self.username) 
+from accounts.models import User
 
 class Event(models.Model):
-    rsvpd_members = models.ManyToManyField(Member, blank=True)
     event_name = models.CharField(max_length=150)
+    rsvpd_members = models.ManyToManyField(User, blank=True)
     date = models.DateField()
     location = models.CharField(max_length=150)
     banner_image = models.FileField(upload_to='Event Media', blank=True) 
@@ -37,8 +18,8 @@ class Event(models.Model):
       return(self.event_name)
 
 class Campaign(models.Model):
-    members_who_donated  = models.ManyToManyField(Member, blank=True)
     campaign_name = models.CharField(max_length=150)
+    members_who_donated  = models.ManyToManyField(User, blank=True)
     media = models.ImageField(upload_to='Campaign Media', blank=True)
     gallery = models.FileField(upload_to='Campaign Media', blank=True)
     banner_image = models.ImageField(upload_to='Campaign Media',  blank=True)
@@ -51,6 +32,7 @@ class Campaign(models.Model):
 
 class CategoryOfTeam(models.Model):
     category_name = models.CharField(max_length=150)
+    year = models.IntegerField()
     description = models.TextField(max_length=2500)
 
     def __str__(self):
@@ -58,15 +40,15 @@ class CategoryOfTeam(models.Model):
 
 #Basketball, cheerleading, etc.       
 class Team(models.Model):
-    members_of_team = models.ManyToManyField(Member, related_name='members_of_team') #Connects to members but not all members of old teams are site members
-    coaches = models.ManyToManyField(Member, related_name='coaches', blank=True)
-    year = models.CharField(max_length=150)
-    type_of_team = models.ManyToManyField(CategoryOfTeam)
+
+    members_of_team = models.ManyToManyField(User, related_name='members_of_team') #Connects to members but not all members of old teams are site members
+    coaches = models.ManyToManyField(User, related_name='coaches', blank=True)
+    type_of_team = models.ForeignKey(CategoryOfTeam, on_delete=models.CASCADE)
     description = models.TextField(max_length=2500)
     media = models.ImageField(upload_to='Team Media', blank=True)
 
     def __str__(self):
-      return(self.type_of_team)
+      return(str(self.type_of_team.year) + " " +self.type_of_team.category_name)
 
 class Scholarship(models.Model):
     scholarship_name = models.CharField(max_length=150)
@@ -79,16 +61,16 @@ class Scholarship(models.Model):
       return(self.scholarship_name)
 
 class Contribution(models.Model):
-    members = models.ManyToManyField(Member)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     events = models.ManyToManyField(Event)
     campaigns = models.ManyToManyField(Campaign)
 
     def __str__(self):
-      return(self.user)
+      return(self.user.username)
 
 class Role(models.Model):
     role_title = models.CharField(max_length=150, blank=True)
-    member_ID = models.ManyToManyField(Member, blank=True)
+    user = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
       return(self.role_title)
