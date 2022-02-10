@@ -1,5 +1,4 @@
 from django.db import models
-from .states import CONTIGUOUS_STATES
 from datetime import date
 from accounts.models import User
 
