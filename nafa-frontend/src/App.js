@@ -14,38 +14,37 @@ import Contact from './components/pages/contact/contactPage';
 import Events from './components/pages/events/eventsPage';
 import UserSignup from './components/pages/user-signup/UserSignup';
 import * as apiCalls from "./api/apiCalls";
-import Login from './components/pages/login/Login';
+import Login from './components/pages/login/login';
 
 function App() {
 
   // will be changed later just for demo
-  const actions ={
+  const actions = {
     postSignup: apiCalls.signup,
     postLogin: apiCalls.login
   }
 
   return (
     <Router>
-    <Header />
-    <Navbar />
-    <div className="app">
-      <div className="cardBox">
-        <div className="content">
-          {/* only one route shows at one time */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/signup" element={<UserSignup actions={actions}/>} />
-            <Route path="/login" element={<Login actions={actions}/>} />
-          </Routes> 
-         
+      <Header />
+      <Navbar />
+      <div className="app">
+        <div className="cardBox">
+          <div className="content">
+            {/* only one route shows at one time */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/signup" element={<UserSignup actions={actions} />} />
+              <Route path="/login" element={<Login actions={actions} />} />
+            </Routes>
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  </Router>
+    </Router>
   );
 }
 
