@@ -24,5 +24,5 @@ from main.api import MitchellCreateApi
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
-    path('api/create', MitchellCreateApi.as_view()),
+    path('events/', MitchellCreateApi.as_view()),
 ]
