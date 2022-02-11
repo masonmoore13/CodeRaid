@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders',
 ]
 
 SITE_ID = 1
@@ -84,6 +84,9 @@ TEMPLATES = [
         },
     },
 ]
+
+# Mitchell created this for testing
+# REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES':['rest_framework.permission.AllowAny']}
 
 WSGI_APPLICATION = 'nafa.wsgi.application'
 

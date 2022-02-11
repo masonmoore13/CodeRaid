@@ -82,3 +82,7 @@ class Contact(models.Model):
 
     def __str__(self):
       return(self.sender_email)
+
+class MitchellEvent(models.Model):
+    mitchell_event_name = models.CharField(max_length=150, blank=True)
+    location = models.CharField(max_length=150, blank=True)

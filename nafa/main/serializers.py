@@ -15,3 +15,9 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ('id', 'rsvpd_members', 'event_name', 'date', 'location', 'banner_image', 
         'gallery', 'description', 'media', 'registration_fees')
+
+# Mitchell created this for testing
+class MitchellEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MitchellEvent
+        fields = ['mitchell_event_name', 'location']
