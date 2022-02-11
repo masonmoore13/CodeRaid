@@ -18,7 +18,7 @@ function Login({ props, actions = defaultProp }) {
     username: "",
     password: "",
   });
-  const [apiError, setApiError] = useState("Login Failed");
+  const [apiError, setApiError] = useState("");
   const [pendingApiCall, setPendingApiCall] = useState(false);
 
  
