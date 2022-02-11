@@ -14,7 +14,7 @@ export default class Events extends Component {
     super(props);
   }
   fetchEmp() {
-    fetch("main/api/event")
+    fetch("main/api/event/")
       .then((response) => response.json())
       .then((data) =>
         this.setState({

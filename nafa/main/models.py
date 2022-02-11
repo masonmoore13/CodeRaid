@@ -7,10 +7,10 @@ class Event(models.Model):
     rsvpd_members = models.ManyToManyField(User, blank=True)
     date = models.DateField()
     location = models.CharField(max_length=150)
-    banner_image = models.FileField(upload_to='Event Media', blank=True) 
-    gallery = models.FileField(upload_to='Event Media', blank=True) 
+    banner_image = models.FileField(upload_to='Event Media', null=True, blank=True) 
+    gallery = models.FileField(upload_to='Event Media', null=True, blank=True) 
     description = models.TextField(max_length=2500)
-    media = models.ImageField(upload_to='Event Media', blank=True) 
+    media = models.ImageField(upload_to='Event Media', null=True, blank=True) 
     registration_fees = models.CharField(max_length=150)
 
     def __str__(self):
