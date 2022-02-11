@@ -1,3 +1,4 @@
+
 import './App.css';
 import Navbar from './components/navbar/NavBar';
 import Header from './components/header/Header';
@@ -11,32 +12,38 @@ import Home from './components/pages/home/homePage';
 import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
 import Events from './components/pages/events/eventsPage';
-import Login from './components/pages/login/loginpage'
+import UserSignup from './components/pages/user-signup/UserSignup';
+import * as apiCalls from "./api/apiCalls";
+import Login from './components/pages/login/login';
 
 function App() {
+
+  // will be changed later just for demo
+  const actions = {
+    postSignup: apiCalls.signup,
+    postLogin: apiCalls.login
+  }
+
   return (
     <Router>
-      {/* entire page */}
-      <div className='page'>
-        <Header />
-        <Navbar />
-        {/* application area */}
-        <div className="app">
-          <div className="cardBox">
-            <div className='content'>
-              {/* only one route shows at one time */}
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/about' element={<About />} />
-                <Route path='/contact' element={<Contact />} />
-                <Route path='/events' element={<Events />} />
-                <Route path='/login' element={<Login />} />
-              </Routes>
-            </div>
+      <Header />
+      <Navbar />
+      <div className="app">
+        <div className="cardBox">
+          <div className="content">
+            {/* only one route shows at one time */}
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/signup" element={<UserSignup actions={actions} />} />
+              <Route path="/login" element={<Login actions={actions} />} />
+            </Routes>
           </div>
-          <Footer />
         </div>
-        </div>
+        <Footer />
+      </div>
     </Router>
   );
 }
