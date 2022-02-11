@@ -14,15 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
-from allauth.account.views import confirm_email
-from rest_auth.registration.views import VerifyEmailView, RegisterView
-from django.conf.urls import url
+from django.urls import path,include
 from main.views import *
-from main.api import MitchellCreateApi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
-    path('events/', MitchellCreateApi.as_view()),
+    path('main/', include("main.urls")),
+    path('events/', MitchellEventView.as_view())
 ]
