@@ -5,5 +5,39 @@ from .models import User
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'rsvpd_members', 'event_name', 'date', 'location', 'banner_image', 
-        'gallery', 'description', 'media', 'registration_fees')
+        fields = ('__all__')
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('__all__')
+
+class CampaignSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Campaign
+        fields = ('__all__')
+
+class CategoryOfTeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CategoryOfTeam
+        fields = ('__all__')
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ('__all__')
+
+class ScholarshipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('__all__')
+
+class ContributionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contribution
+        fields = ('__all__')
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = ('__all__')

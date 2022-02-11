@@ -1,4 +1,3 @@
-import Events from './components/pages/events/Events';
 import './App.css';
 import Navbar from './components/navbar/NavBar';
 import Header from './components/header/Header';
@@ -11,8 +10,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/pages/home/homePage';
 import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
-/*import Events from './components/pages/events/eventsPage';*/
+import Events from './components/pages/events/events';
 import UserSignup from './components/pages/user-signup/UserSignup';
+import CreateEvent from './components/pages/events/createEvent';
 import * as apiCalls from "./api/apiCalls";
 import Login from './components/pages/login/Login';
 
@@ -37,6 +37,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/createEvent" element={<CreateEvent />} />
             <Route path="/signup" element={<UserSignup actions={actions}/>} />
             <Route path="/login" element={<Login actions={actions}/>} />
           </Routes> 
