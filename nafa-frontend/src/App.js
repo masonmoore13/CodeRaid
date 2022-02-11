@@ -19,7 +19,7 @@ import Login from './components/pages/login/login';
 function App() {
 
   // will be changed later just for demo
-  const actions ={
+  const actions = {
     postSignup: apiCalls.signup,
     postLogin: apiCalls.login
   }
