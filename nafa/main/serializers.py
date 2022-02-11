@@ -20,4 +20,4 @@ class EventSerializer(serializers.ModelSerializer):
 class MitchellEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = MitchellEvent
-        fields = ['mitchell_event_name', 'location']
+        fields = '__all__'

@@ -19,9 +19,10 @@ from allauth.account.views import confirm_email
 from rest_auth.registration.views import VerifyEmailView, RegisterView
 from django.conf.urls import url
 from main.views import *
+from main.api import MitchellCreateApi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
-    path('', ReactEventView.as_view(), name="events")
+    path('api/create', MitchellCreateApi.as_view()),
 ]
