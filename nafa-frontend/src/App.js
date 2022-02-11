@@ -10,11 +10,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/pages/home/homePage';
 import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
-import Events from './components/pages/events/events';
+import Events from './components/pages/events/Events';
 import UserSignup from './components/pages/user-signup/UserSignup';
 import CreateEvent from './components/pages/events/createEvent';
 import * as apiCalls from "./api/apiCalls";
-import Login from './components/pages/login/Login';
+import Login from './components/pages/login/login';
 
 function App() {
 

@@ -10,11 +10,9 @@ export default class Events extends Component {
     event: [],
     error: null,
   };
-  constructor(props) {
-    super(props);
-  }
-  fetchEmp() {
-    fetch("main/api/event/")
+
+  fetchEvent() {
+    fetch("http://127.0.0.1:8000/main/api/event/")
       .then((response) => response.json())
       .then((data) =>
         this.setState({
@@ -25,7 +23,7 @@ export default class Events extends Component {
       .catch((error) => this.setState({ error, isLoading: false }));
   }
   componentDidMount() {
-    this.fetchEmp();
+    this.fetchEvent();
   }
   render() {
     return (
