@@ -2,6 +2,7 @@ import "./App.css";
 import Navbar from "./components/navbar/NavBar";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import PageNotFound from "./components/pages/404/404Page";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -36,11 +37,12 @@ function App() {
           <Route path="/signup" element={<UserSignup actions={actions} />} />
           <Route path="/login" element={<Login actions={actions} />} />
 
-          <Route path="/event" element={<ShowEvents />} />
+          <Route exact path="/event" element={<ShowEvents />} />
           <Route path="/event/createEvent" element={<CreateEvent/>} />
           <Route path="/event/:id/" element={<EventDetail/>} />
           <Route path="/event/:id/update" element={<EventUpdate/>} />
 
+          <Route path="*" exact element={<PageNotFound/>} />
         </Routes> 
         <Footer /> 
       </div>
