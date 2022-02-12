@@ -11,10 +11,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/pages/home/homePage';
 import About from './components/pages/about/aboutPage';
 import Contact from './components/pages/contact/contactPage';
-import Events from './components/pages/events/eventsPage';
 import UserSignup from './components/pages/user-signup/UserSignup';
 import * as apiCalls from "./api/apiCalls";
 import Login from './components/pages/login/login';
+
+import CreateEvent from './components/pages/events/CreateEvent'
+import EventDetail from './components/pages/events/EventDetail'
+import ShowEvents from './components/pages/events/ShowEvents'
+import UpdateEvent from './components/pages/events/UpdateEvent'
+import EventPage from './components/pages/events/EventPage'
 
 function App() {
 
@@ -25,23 +30,30 @@ function App() {
   }
 
   return (
+    
     <Router>
       <Header />
       <Navbar />
       <div className="app">
-        <div className="cardBox">
+
           <div className="content">
             {/* only one route shows at one time */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/events" element={<Events />} />
+
+              <Route exact path="/createEvent" component={CreateEvent} />
+              <Route exact path="/eventDetail" component={EventDetail} />
+              <Route exact path="/showEvents" component={ShowEvents} />
+              <Route exact path="/updateEvent" component={UpdateEvent} />
+              <Route path="/event" element={<EventPage />} />
+
               <Route path="/signup" element={<UserSignup actions={actions} />} />
               <Route path="/login" element={<Login actions={actions} />} />
             </Routes>
           </div>
-        </div>
+
         <Footer />
       </div>
     </Router>

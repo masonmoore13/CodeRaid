@@ -7,11 +7,6 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ('__all__')
 
-class EventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Event
-        fields = ('__all__')
-
 class CampaignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
@@ -40,4 +35,9 @@ class ContributionSerializer(serializers.ModelSerializer):
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
+        fields = ('__all__')
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
         fields = ('__all__')

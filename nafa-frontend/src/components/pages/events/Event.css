@@ -1,0 +1,5 @@
+.main-events-show{
+    display: flex;
+    flex-direction:inherit ;
+    margin-right: 100px;
+}

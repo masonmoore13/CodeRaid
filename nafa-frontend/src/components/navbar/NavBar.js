@@ -8,8 +8,7 @@ import {
   Button,
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import './navbar.css'
+import {Link } from "react-router-dom";
 
 function NavBar() {
   return (
@@ -24,7 +23,7 @@ function NavBar() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/events">
+              <Nav.Link as={Link} to="/event">
                 Events
               </Nav.Link>
               <Nav.Link as={Link} to="/contact">
