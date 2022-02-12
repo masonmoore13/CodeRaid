@@ -43,9 +43,10 @@ function App() {
           <Route path="/event/:id/update" element={<EventUpdate/>} />
 
         </Routes>
-      </div> 
+      </div>
+      <Footer />  
     </Router>
   );
 }
-//add back footer
+
 export default App;

@@ -18,7 +18,7 @@ const ShowEvents = () => {
 
   return (
     <div>
-      <div className="main-events-show">
+      <div className="showEvents">
         {events.map((event, index) => (
           <Card
             className="m-3 rounded shadow-lg"
@@ -27,7 +27,7 @@ const ShowEvents = () => {
             text="dark"
             style={{ width: "22em" }}
           >
-            <Card.Img variant="top" src={event.image} />
+            <Card.Img src={event.image} />
 
             <Card.Body>
               <Card.Title>Event Name: {event.event_name}</Card.Title>
@@ -35,11 +35,12 @@ const ShowEvents = () => {
               <Card.Text> Event Description: {event.description} </Card.Text>
               <Card.Text> Event ID: {event.id} </Card.Text>
               <Card.Text>
-                {" "}
                 <img src={event.gallery} width="200px" alt="" />
               </Card.Text>
-
-              <Link className="btn btn-outline-dark btn-warning mr-2" to={`/event/${event.id}/`}>
+              <Link
+                className="btn btn-outline-dark btn-warning mr-2"
+                to={`/event/${event.id}/`}
+              >
                 Event Details
               </Link>
             </Card.Body>
