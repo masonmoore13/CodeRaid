@@ -7,6 +7,7 @@ from .models import Scholarship
 from .models import Contribution
 from .models import Role
 from .models import Contact
+from .models import MitchellEvent
 
 
 admin.site.register(Event)
@@ -40,3 +41,7 @@ class RoleModel(admin.ModelAdmin):
 admin.site.register(Contact)
 class ContactModel(admin.ModelAdmin):
     list_display = ('sender_email')
+
+admin.site.register(MitchellEvent)
+class EventModel(admin.ModelAdmin):
+    list_display = ('id','mitchell_event_name')

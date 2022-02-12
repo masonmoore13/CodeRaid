@@ -86,3 +86,6 @@ class Contact(models.Model):
 class MitchellEvent(models.Model):
     mitchell_event_name = models.CharField(max_length=150, blank=True)
     location = models.CharField(max_length=150, blank=True)
+
+    def __str__(self):
+      return(self.mitchell_event_name)
