@@ -12,7 +12,6 @@ import UserSignup from "./components/pages/user-signup/UserSignup";
 import * as apiCalls from "./api/apiCalls";
 import Login from "./components/pages/login/login";
 
-
 import CreateEvent from "./components/pages/events/CreateEvent";
 import ShowEvents from "./components/pages/events/ShowEvents";
 import EventDetail from "./components/pages/events/EventDetail";
@@ -29,7 +28,7 @@ function App() {
     <Router>
       <Header />
       <Navbar />
-      <div className="app">
+      <div className="app-container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -42,9 +41,10 @@ function App() {
           <Route path="/event/:id/" element={<EventDetail/>} />
           <Route path="/event/:id/update" element={<EventUpdate/>} />
 
-        </Routes>
+        </Routes> 
+        <Footer /> 
       </div>
-      <Footer />  
+       
     </Router>
   );
 }

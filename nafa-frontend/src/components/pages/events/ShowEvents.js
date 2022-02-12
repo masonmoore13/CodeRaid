@@ -17,7 +17,6 @@ const ShowEvents = () => {
   }, []);
 
   return (
-    <div>
       <div className="showEvents">
         {events.map((event, index) => (
           <Card
@@ -31,8 +30,8 @@ const ShowEvents = () => {
 
             <Card.Body>
               <Card.Title>Event Name: {event.event_name}</Card.Title>
-              <Card.Text> Event Date: {event.date} </Card.Text>
-              <Card.Text> Event Description: {event.description} </Card.Text>
+              <Card.Text> Date: {event.date} </Card.Text>
+              <Card.Text> Description: {event.description} </Card.Text>
               <Card.Text> Event ID: {event.id} </Card.Text>
               <Card.Text>
                 <img src={event.gallery} width="200px" alt="" />
@@ -47,7 +46,6 @@ const ShowEvents = () => {
           </Card>
         ))}
       </div>
-    </div>
   );
 };
 
