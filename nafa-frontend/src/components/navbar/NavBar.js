@@ -8,14 +8,16 @@ import {
   Button,
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">NAFA</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            NAFA
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -23,9 +25,16 @@ function NavBar() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/event">
-                Events
-              </Nav.Link>
+              <NavDropdown title="Events" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="/event">Events</NavDropdown.Item>
+                <NavDropdown.Item href="/event/createEvent">
+                  Create Event
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/event/Calendar">
+                  Calendar
+                </NavDropdown.Item>
+              </NavDropdown>
+
               <Nav.Link as={Link} to="/contact">
                 Contact
               </Nav.Link>
@@ -39,16 +48,6 @@ function NavBar() {
               <Nav.Link as={Link} to="/login">
                 Login
               </Nav.Link>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown>
             </Nav>
             <Form className="d-flex">
               <FormControl
@@ -62,8 +61,7 @@ function NavBar() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div>
-      </div>
+      <div></div>
     </div>
   );
 }

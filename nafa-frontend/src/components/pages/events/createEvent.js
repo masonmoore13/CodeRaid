@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function refreshPage() {
-  window.location.reload(
-    false
-  ); /* May be able to create a separate js file for this */
-}
-
 const CreateEvent = () => {
   let navigate = useNavigate();
 
@@ -112,8 +106,8 @@ const CreateEvent = () => {
           <div className="form-group">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-              <span class="input-group-text">$</span>
-              <span class="input-group-text">0.00</span>
+                <span class="input-group-text">$</span>
+                <span class="input-group-text">0.00</span>
               </div>
               <input
                 type="text"
@@ -126,12 +120,9 @@ const CreateEvent = () => {
             </div>
           </div>
 
-          <button
-            className="btn btn-primary btn-block"
-            onClick={(CreateEventInfo, refreshPage)}
-          >
+          <a href="/event" className="btn btn-warning" onClick={CreateEventInfo}>
             Add Event
-          </button>
+          </a>
         </div>
       </div>
     </div>

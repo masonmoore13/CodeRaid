@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import "./footer.css";
 import { BsFacebook, BsYoutube } from 'react-icons/bs';
 import { GrMail } from 'react-icons/gr';
@@ -24,3 +24,5 @@ export default function Footer() {
         </div>
     );
 }
+
+*/

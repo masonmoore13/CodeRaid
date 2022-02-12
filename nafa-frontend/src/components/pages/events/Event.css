@@ -1,5 +1,5 @@
 .main-events-show{
     display: flex;
-    flex-direction:inherit ;
+    flex-direction:row ;
     margin-right: 100px;
 }
