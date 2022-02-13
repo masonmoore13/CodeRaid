@@ -41,9 +41,3 @@ class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = ('__all__')
-
-# Mitchell created this for testing
-class MitchellEventSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MitchellEvent
-        fields = ('__all__')

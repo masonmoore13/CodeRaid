@@ -37,8 +37,3 @@ class RoleView(viewsets.ModelViewSet):
 class ContactView(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-
-# mitchell created this as a test
-class MitchellEventView(viewsets.ModelViewSet):
-    queryset = MitchellEvent.objects.all()
-    serializer_class = MitchellEventSerializer

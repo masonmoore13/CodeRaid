@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import EventsInput from "./eventsInput";
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import AddEvent from "./addEvent";
 
 const Events = () => {
 
-  const [events, updateEvents] = useState()
+  const [events, updateEvents] = useState([])
 
   const getEvents = async () => {
-    const response = await axios.get('http://127.0.0.1:8000/main/api/events/')
+    const response = await axios.get('http://127.0.0.1:8000/main/api/event/')
     updateEvents(response.data)
     console.log(response.data)
   }
@@ -18,19 +17,16 @@ const Events = () => {
   }, [])
 
   return (
-    // <Router>
-    // <Switch>
     <>
       <div>
         {events.map((event, index) => (
-          <div>{event.mitchell_event_name}</div>
+          <div>Event Name: {event.event_name} event Location: {event.location}</div>
         )
         )
         }
+        <AddEvent/>
       </div>
     </>
-    // </Switch>
-    // </Router> 
   )
 
 }
