@@ -1,6 +1,5 @@
 import React from "react";
 import "./404Page.css";
-import Button from "react-bootstrap/Button";
 
 function PageNotFound() {
   return (

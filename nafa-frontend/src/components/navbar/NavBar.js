@@ -9,8 +9,12 @@ import {
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
+import "./navbar.css"
 
 function NavBar() {
+
+
+
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
@@ -26,7 +30,7 @@ function NavBar() {
               navbarScroll
             >
               <NavDropdown title="Events" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="/event">Events</NavDropdown.Item>
+                <NavDropdown.Item href="/event">All Events</NavDropdown.Item>
                 <NavDropdown.Item href="/event/createEvent">
                   Create Event
                 </NavDropdown.Item>
