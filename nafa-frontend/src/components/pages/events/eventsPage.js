@@ -21,16 +21,13 @@ const Events = () => {
     // <Router>
     // <Switch>
     <>
-      <div>{events.map((event, index) => (
-        <div>
-          <p>{event.mitchell_event_name}</p>
-          <p>{event.location}</p>
-          <br />
-        </div>
-      )
-      )
-    }
-    </div>
+      <div>
+        {events.map((event, index) => (
+          <div>{event.mitchell_event_name}</div>
+        )
+        )
+        }
+      </div>
     </>
     // </Switch>
     // </Router> 
