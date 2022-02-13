@@ -8,7 +8,7 @@ const ShowEvents = () => {
   const [events, setEvents] = useState([]);
 
   const getEvents = async () => {
-    const response = await axios.get(`http://127.0.0.1:8000/main/api/event/`);
+    const response = await axios.get(`/main/api/event/`);
     setEvents(response.data);
   };
 

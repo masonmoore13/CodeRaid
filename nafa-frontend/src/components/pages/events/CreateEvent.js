@@ -33,11 +33,9 @@ const CreateEvent = () => {
       formField.append("gallery", gallery);
     }
 
-    await axios({
-      method: "post",
-      url: "/main/api/event/",
-      data: formField,
-    }).then((response) => {
+
+    await axios.post("/main/api/event/", formField)
+    .then((response) => {
       console.log(response.data);
       navigate.push("/");
     });
