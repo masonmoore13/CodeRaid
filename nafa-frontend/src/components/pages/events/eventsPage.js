@@ -1,34 +1,41 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EventsInput from "./eventsInput";
+// import EventsInput from "./eventsInput";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-export default class Events extends React.Component {
-  
-  state = {
-    events:[],
-  };
+const Events = () => {
 
-  componentDidMount(){
-    axios.get('http://127.0.0.1:8000/main/api/events/').then(res => {
-      console.log(res);
-      this.setState({ events: res.data})
-    })
+  const [events, updateEvents] = useState()
+
+  const getEvents = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/main/api/events/')
+    updateEvents(response.data)
+    console.log(response.data)
   }
 
-  render(){
-    return <><ul>{this.state.events.map(event => <li key={event.id}>Event Name: {event.mitchell_event_name} <br/>Location: {event.location}</li>)}</ul>
-    <EventsInput/></>
-  }
+  useEffect(() => {
+    getEvents()
+  }, [])
 
-  // React.useEffect(()=> {
-  //   axios.get{}
-  // })
+  return (
+    // <Router>
+    // <Switch>
+    <>
+      <div>{events.map((event, index) => (
+        <div>
+          <p>{event.mitchell_event_name}</p>
+          <p>{event.location}</p>
+          <br />
+        </div>
+      )
+      )
+    }
+    </div>
+    </>
+    // </Switch>
+    // </Router> 
+  )
 
-    // return (
-    //   <div>
-    //     <h1>Events</h1>
-    //   </div>
-    // );
-  }
+}
 
-  // export default Events;
+export default Events

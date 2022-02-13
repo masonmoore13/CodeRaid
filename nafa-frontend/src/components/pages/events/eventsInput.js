@@ -1,40 +1,39 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-export default class EventsInput extends React.Component {
-  
-  state = {
-    mitchell_event_name: "",
-  };
+const EventsInput = () => {
 
-  handleChange = event => {
-    this.setState({ mitchell_event_name: event.target.value })
+  const [name, setName] = useState()
+
+  const handleChange = event => {
+    setName(event.target.value)
   }
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
 
-    const eventName ={
-      mitchell_event_name: this.state.mitchell_event_name,
+    const thisEvent = {
+      name: name,
+      // location: this.state.location
     }
 
-    axios.post('http://127.0.0.1:8000/main/api/events/', {eventName})
-    .then(res => {
-      console.log(res)
-      console.log(res.data)
-    })
+    axios.post('http://127.0.0.1:8000/main/api/events/', { thisEvent })
+      .then(res => {
+        console.log(res)
+        console.log(res.data)
+      })
   }
 
-  render(){
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Event location:
-          <input type="text" name="location" onChange={this.handleChange}/>
-        </label>
-        <button type="submit">add</button>
-      </form>
-    )
-  }
 
+  return (
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Event location:
+        <input type="text" name="location" onChange={handleChange} />
+      </label>
+      <button type="submit">add</button>
+    </form>
+  )
 }
+
+export default EventsInput
