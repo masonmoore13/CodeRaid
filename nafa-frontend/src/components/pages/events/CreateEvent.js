@@ -46,7 +46,7 @@ const CreateEvent = () => {
   return (
   
       <div className="w-50 mx-auto shadow p-5">
-        <h2 className="text-center mb-4">Add A Event</h2>
+        <h2 className="text-center mb-4">Add An Event</h2>
 
         <div className="form-group">
           <input
