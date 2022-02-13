@@ -14,7 +14,7 @@ const CreateEvent = () => {
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState(null);
   const [registration_fees, setRegistrationFees] = useState("");
-  const [rsvpd_members, setRsvpdMembers] = useState("");
+  const [rsvpd_members, setRsvpdMembers] = useState(""); 
 
   const CreateEventInfo = async () => {
     let formField = new FormData();
