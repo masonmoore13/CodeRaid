@@ -40,12 +40,12 @@ function App() {
               <Route path="/events" element={<Events />} />
               <Route path="/signup" element={<UserSignup actions={actions} />} />
               <Route path="/login" element={<Login actions={actions} />} />
-              <Route path="/events/addevent" element={<AddEvent/>} />
+              <Route path="/events/addevent" element={<AddEvent />} />
             </Routes>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </Router>
   );
 }
