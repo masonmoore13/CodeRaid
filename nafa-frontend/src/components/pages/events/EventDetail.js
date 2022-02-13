@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import "./Event.css";
 
 const EventDetail = () => {
   const [event, setEvent] = useState([]);
@@ -27,11 +28,11 @@ const EventDetail = () => {
   };
 
   return (
-    <div>
+    <div className="eventDetail">
       <h2>Detail of Event </h2>
-      <hr></hr>
+      <hr/>
       <div className="full-event-detail">
-        <div className="event-detail">
+        <div className="eventDetail">
           <p>Event ID: {event.id}</p>
           <p>Event Name: {event.event_name}</p>
           <p>Date: {event.date}</p>

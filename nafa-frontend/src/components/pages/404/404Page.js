@@ -1,11 +1,13 @@
 import React from "react";
+import "./404Page.css";
+import Button from "react-bootstrap/Button";
 
 function PageNotFound() {
   return (
-    
-    <div >
-      <h3>This page could not be found</h3>
-      <img src="https://i.imgur.com/qIufhof.png" />
+    <div className="container">
+      This page could not be found
+      <img src="https://i.imgur.com/qIufhof.png" alt="Page Not found"/>
+      <a href="/" type="button"  class="btn btn-warning">Go Home</a>
     </div>
   );
 }

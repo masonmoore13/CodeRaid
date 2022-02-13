@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Event.css";
 
 const CreateEvent = () => {
   let navigate = useNavigate();
@@ -43,89 +44,87 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="container">
-      <div className="container">
-        <div className="w-75 mx-auto shadow p-5">
-          <h2 className="text-center mb-4">Add A Event</h2>
+  
+      <div className="w-50 mx-auto shadow p-5">
+        <h2 className="text-center mb-4">Add A Event</h2>
 
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Event Name"
-              name="event_name"
-              value={event_name}
-              onChange={(e) => setEventName(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Date of Event"
-              name="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Location"
-              name="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Event Images</label>
-            <input
-              type="file"
-              className="form-control"
-              onChange={(e) =>
-                setGallery(e.target.files[0])
-              } /*Set to maximum of 1 */
-            />
-          </div>
-
-          <div className="form-group">
-            <textarea
-              type="text"
-              className="form-control form-control-lg"
-              placeholder="Enter Description of Event"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
-          <div className="form-group">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
-                <span class="input-group-text">0.00</span>
-              </div>
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Enter Registration Fee"
-                name="registration_fees"
-                value={registration_fees}
-                onChange={(e) => setRegistrationFees(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <a href="/event" className="btn btn-warning" onClick={CreateEventInfo}>
-            Add Event
-          </a>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control form-control-lg"
+            placeholder="Enter Event Name"
+            name="event_name"
+            value={event_name}
+            onChange={(e) => setEventName(e.target.value)}
+          />
         </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control form-control-lg"
+            placeholder="Enter Date of Event"
+            name="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control form-control-lg"
+            placeholder="Enter Location"
+            name="location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Event Images</label>
+          <input
+            type="file"
+            className="form-control"
+            onChange={(e) =>
+              setGallery(e.target.files[0])
+            } /*Set to maximum of 1 */
+          />
+        </div>
+
+        <div className="form-group">
+          <textarea
+            type="text"
+            className="form-control form-control-lg"
+            placeholder="Enter Description of Event"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+              <span class="input-group-text">0.00</span>
+            </div>
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="Enter Registration Fee"
+              name="registration_fees"
+              value={registration_fees}
+              onChange={(e) => setRegistrationFees(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <a href="/event" className="btn btn-warning" onClick={CreateEventInfo}>
+          Add Event
+        </a>
       </div>
-    </div>
+    
   );
 };
 
