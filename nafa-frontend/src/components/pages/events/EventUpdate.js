@@ -1,6 +1,7 @@
-import axios from "axios";
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getEventById, updateEventById } from "../../../api/apiCalls";
 
 const EventUpdate = () => {
   let navigate = useNavigate();
@@ -15,28 +16,28 @@ const EventUpdate = () => {
   const [media, setMedia] = useState(null);
   const [registration_fees, setRegistrationFees] = useState("");
   const [rsvpd_members, setRsvpdMembers] = useState("");
+  const [galleryChanged, setGalleryChanged] = useState(false)
 
   useEffect(() => {
-    loadEvents();
-  }, []);
+    
+    getEventById(id).then((response) => {
+      console.log(response.data.gallery);
+      setEventName(response.data.event_name);
+      setDate(response.data.date);
+      setLocation(response.data.location);
+      setGallery(response.data.gallery);
+      setDescription(response.data.description);
+      setRegistrationFees(response.data.registration_fees);
+    });
+    
+  }, [id]);
 
-  // load events by  ids and show data to forms by value
 
-  let loadEvents = async () => {
-    const result = await axios.get(
-      `http://127.0.0.1:8000/main/api/event/${id}/`
-    );
-    console.log(result.data.name);
-
-    setEventName(result.data.event_name);
-    setDate(result.data.date);
-    setLocation(result.data.location);
-    setGallery(result.data.gallery);
-    setDescription(result.data.description);
-    setRegistrationFees(result.data.registration_fees);
-  };
-
-  // Update single event by id
+  const onGalleryChange = (eve)=>{
+    eve.preventDefault()
+    setGalleryChanged(true)
+    setGallery(eve.target.files[0])
+  }
 
   const updateSingleEvent = async () => {
     let formField = new FormData();
@@ -47,20 +48,19 @@ const EventUpdate = () => {
     formField.append("gallery", gallery);
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
-
-    if (gallery !== null) {
-      formField.append("gallery", gallery);
+    
+    if(galleryChanged === false){
+      setGallery(null)
     }
-
-    await axios({
-      method: "PUT",
-      url: `http://127.0.0.1:8000/main/api/event/${id}/`,
-      data: formField,
-    }).then((response) => {
+    formField.append("gallery", gallery);
+    updateEventById(id,formField).then((response)=>{
       console.log(response.data);
-      navigate.push("/");
-    });
-  };
+          //navigate.push("/");
+    }).catch((error)=>{
+      console.log('Error occured '+ error.message);
+    })
+
+  }
 
   return (
     <div className="container">
@@ -109,7 +109,7 @@ const EventUpdate = () => {
           <input
             type="file"
             className="form-control"
-            onChange={(e) => setGallery(e.target.files[0])}
+            onChange={onGalleryChange}
           />
         </div>
 
