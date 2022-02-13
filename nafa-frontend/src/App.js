@@ -38,15 +38,14 @@ function App() {
           <Route path="/login" element={<Login actions={actions} />} />
 
           <Route exact path="/event" element={<ShowEvents />} />
-          <Route path="/event/createEvent" element={<CreateEvent/>} />
-          <Route path="/event/:id/" element={<EventDetail/>} />
-          <Route path="/event/:id/update" element={<EventUpdate/>} />
+          <Route path="/event/createEvent" element={<CreateEvent />} />
+          <Route path="/event/:id/" element={<EventDetail />} />
+          <Route path="/event/:id/update" element={<EventUpdate />} />
 
-          <Route path="*" exact element={<PageNotFound/>} />
-        </Routes> 
-        
+          <Route path="*" exact element={<PageNotFound />} />
+        </Routes>
+        <Footer />
       </div>
-       <Footer /> 
     </Router>
   );
 }
