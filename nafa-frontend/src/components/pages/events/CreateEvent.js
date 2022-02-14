@@ -8,11 +8,12 @@ const CreateEvent = () => {
 
   const [event_name, setEventName] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
-  const [banner_image, setBannerImage] = useState(null);
-  const [gallery, setGallery] = useState(null);
+  const [banner_image, setBannerImage] = useState("");
+  const [gallery, setGallery] = useState("");
   const [description, setDescription] = useState("");
-  const [media, setMedia] = useState(null);
+  const [media, setMedia] = useState("");
   const [registration_fees, setRegistrationFees] = useState("");
   const [rsvpd_members, setRsvpdMembers] = useState("");
 
@@ -21,6 +22,7 @@ const CreateEvent = () => {
 
     formField.append("event_name", event_name);
     formField.append("date", date);
+    formField.append("time", date);
     formField.append("location", location);
     /* formField.append("banner_image", banner_image); */
     formField.append("gallery", gallery);
@@ -33,18 +35,10 @@ const CreateEvent = () => {
       formField.append("gallery", gallery);
     }
 
-    // await axios.post("/main/api/event/", formField).then((response) => {
-    //   console.log(response.data);
-    //   navigate.push("/");
-    // });
-
-    createEvent(formField).then(
-      (response)=>{
-        console.log(response.data);
-        navigate.push("/")
-      }
-    )
-
+    createEvent(formField).then((response) => {
+      console.log(response.data);
+      navigate.push("/");
+    });
   };
 
   return (
@@ -63,13 +57,30 @@ const CreateEvent = () => {
       </div>
 
       <div className="form-group">
-        <input
-          type="text"
+        Event Date: <input
           className="form-control form-control-lg"
-          placeholder="Enter Date of Event"
+          type="date"
+          id="start"
+          value="2018-07-22"
+          min="2022-01-01"
+          max="3050-12-31"
           name="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+        />
+      </div>
+
+      <div className="form-group">
+        Event Time:{" "}
+        <input
+          type="time"
+          id="appt"
+          min="09:00"
+          max="18:00"
+          required
+          name="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
         />
       </div>
 
@@ -85,7 +96,7 @@ const CreateEvent = () => {
       </div>
 
       <div className="form-group">
-        <label>Event Images</label>
+        Event Images
         <input
           type="file"
           className="form-control"
@@ -107,10 +118,10 @@ const CreateEvent = () => {
       </div>
 
       <div className="form-group">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">$</span>
-            <span class="input-group-text">0.00</span>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">$</span>
+            <span className="input-group-text">0.00</span>
           </div>
           <input
             type="text"

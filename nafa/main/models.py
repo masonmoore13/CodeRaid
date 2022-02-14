@@ -5,12 +5,13 @@ from accounts.models import User
 class Event(models.Model):
     event_name = models.CharField(max_length=150)
     #rsvpd_members = models.ManyToManyField(User, blank=True)
-    date = models.DateField()
+    date = models.CharField(max_length=40)
+    time = models.CharField(max_length=40,null=True, blank=True)
     location = models.CharField(max_length=150)
-    # banner_image = models.FileField(upload_to='uploads/Event Media', null=True, blank=True) 
-    gallery = models.FileField(upload_to='uploads/Event Media', null=True, blank=True) 
+    # banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True) 
+    gallery = models.ImageField(upload_to='media/Event Media', default='Default Event Image.PNG') 
     description = models.TextField(max_length=2500)
-    #media = models.ImageField(upload_to='uploads/Event Media', null=True, blank=True) 
+    #media = models.ImageField(upload_to='media/Event Media', null=True, blank=True) 
     registration_fees = models.CharField(max_length=150)
 
     def __str__(self):
@@ -19,9 +20,9 @@ class Event(models.Model):
 class Campaign(models.Model):
     campaign_name = models.CharField(max_length=150)
     members_who_donated  = models.ManyToManyField(User, blank=True)
-    media = models.ImageField(upload_to='uploads/Campaign Media', blank=True)
-    gallery = models.FileField(upload_to='uploads/Campaign Media', blank=True)
-    banner_image = models.ImageField(upload_to='uploads/Campaign Media',  blank=True)
+    media = models.ImageField(upload_to='media/Campaign Media', blank=True)
+    gallery = models.FileField(upload_to='media/Campaign Media', blank=True)
+    banner_image = models.ImageField(upload_to='media/Campaign Media',  blank=True)
     goal = models.DecimalField(max_digits=10, decimal_places=2)
     amount_collected = models.DecimalField(max_digits=10, decimal_places=2, default='0', blank=True)
     contact_details = models.CharField(max_length=150)
@@ -44,7 +45,7 @@ class Team(models.Model):
     coaches = models.ManyToManyField(User, related_name='coaches', blank=True)
     type_of_team = models.ForeignKey(CategoryOfTeam, on_delete=models.CASCADE)
     description = models.TextField(max_length=2500)
-    media = models.ImageField(upload_to='uploads/Team Media', blank=True)
+    media = models.ImageField(upload_to='media/Team Media', blank=True)
 
     def __str__(self):
       return(str(self.type_of_team.year) + " " +self.type_of_team.category_name)
@@ -52,7 +53,7 @@ class Team(models.Model):
 class Scholarship(models.Model):
     scholarship_name = models.CharField(max_length=150)
     description = models.TextField(max_length=2500)
-    image = models.ImageField(upload_to='uploads/Scholarship Media',  blank=True)
+    image = models.ImageField(upload_to='media/Scholarship Media',  blank=True)
     team_organization = models.ManyToManyField(Team,  blank=True) 
     amount = models.CharField(max_length=150)
 
