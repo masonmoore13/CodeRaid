@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { getEventById, deleteEventById } from "../../../api/apiCalls";
 import "./Event.css";
 
 const EventDetail = () => {
@@ -11,19 +11,18 @@ const EventDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getSingleEvent();
-  }, []);
+    getEventById(id).then((response)=>{
+      setEvent(response.data)
+    })
+  }, [id]);
 
-  const getSingleEvent = async () => {
-    const { data } = await axios.get(
-      `http://127.0.0.1:8000/main/api/event/${id}/`
-    );
-    console.log(data);
-    setEvent(data);
-  };
 
   const deleteEvent = async (id) => {
-    await axios.delete(`http://127.0.0.1:8000/main/api/event/${id}/`);
+    deleteEventById(id).then((response)=>{
+      console.log("delete successful")
+    }).catch((error)=>{
+      console.log(error.message)
+    })
     navigate.push("/");
   };
 

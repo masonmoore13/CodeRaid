@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Card } from "react-bootstrap";
 import "./Event.css";
 import { Link } from "react-router-dom";
+import { getEvents } from "../../../api/apiCalls";
 
 const ShowEvents = () => {
   const [events, setEvents] = useState([]);
 
-  const getEvents = async () => {
-    const response = await axios.get(`/main/api/event/`);
-    setEvents(response.data);
-  };
-
   useEffect(() => {
-    getEvents();
+    getEvents().then(response =>{
+      console.log(response.data);
+      setEvents(response.data)
+    }).catch((error)=>{
+      console.log(error.message);
+    })
   }, []);
 
   return (
@@ -25,6 +25,7 @@ const ShowEvents = () => {
             bg="light"
             text="dark"
             style={{ width: "22em" }}
+            key={event.id}
           >
             <Card.Img src={event.image} />
 
