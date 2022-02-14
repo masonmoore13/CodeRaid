@@ -24,7 +24,7 @@ class TeamSerializer(serializers.ModelSerializer):
 
 class ScholarshipSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Event
+        model = Scholarship
         fields = ('__all__')
 
 class ContributionSerializer(serializers.ModelSerializer):

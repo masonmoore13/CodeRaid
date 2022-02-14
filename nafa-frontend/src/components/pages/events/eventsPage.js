@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AddEvent from "./addEvent";
 import { Link } from "react-router-dom";
 
 const Events = () => {
@@ -25,7 +24,7 @@ const Events = () => {
         )
         )
         }
-        <Link as={ Link } to="addevent">Click here to add an event.</Link>
+        <Link as={Link} to="addevent">Click here to add an event.</Link>
       </div>
     </>
   )

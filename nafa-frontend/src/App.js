@@ -16,6 +16,10 @@ import UserSignup from './components/pages/user-signup/UserSignup';
 import * as apiCalls from "./api/apiCalls";
 import Login from './components/pages/login/login';
 import AddEvent from './components/pages/events/addEvent';
+import Scholarship from './components/pages/Scholarships/ScholarshipPage';
+import AddScholarship from './components/pages/Scholarships/AddScholarship';
+import ScholarshipDetails from './components/pages/Scholarships/ScholarshipDetails';
+import ManageScholarship from './components/pages/Scholarships/ManageScholarship';
 
 function App() {
 
@@ -41,6 +45,10 @@ function App() {
               <Route path="/signup" element={<UserSignup actions={actions} />} />
               <Route path="/login" element={<Login actions={actions} />} />
               <Route path="/events/addevent" element={<AddEvent />} />
+              <Route path="/scholarships" element={<Scholarship />} />
+              <Route path="/scholarships/addscholarship" element={<AddScholarship />} />
+              <Route path="/scholarships/:id" element={<ScholarshipDetails />} />
+              <Route path="/scholarships/:id/managescholarship" element={<ManageScholarship />} />
             </Routes>
           </div>
         </div>
