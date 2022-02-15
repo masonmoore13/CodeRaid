@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEventById, updateEventById } from "../../../api/apiCalls";
@@ -9,6 +8,7 @@ const EventUpdate = () => {
 
   const [event_name, setEventName] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [banner_image, setBannerImage] = useState(null);
   const [gallery, setGallery] = useState(null);
@@ -16,51 +16,51 @@ const EventUpdate = () => {
   const [media, setMedia] = useState(null);
   const [registration_fees, setRegistrationFees] = useState("");
   const [rsvpd_members, setRsvpdMembers] = useState("");
-  const [galleryChanged, setGalleryChanged] = useState(false)
+  const [galleryChanged, setGalleryChanged] = useState(false);
 
   useEffect(() => {
-    
     getEventById(id).then((response) => {
       console.log(response.data.gallery);
       setEventName(response.data.event_name);
       setDate(response.data.date);
+      setTime(response.data.date);
       setLocation(response.data.location);
       setGallery(response.data.gallery);
       setDescription(response.data.description);
       setRegistrationFees(response.data.registration_fees);
     });
-    
   }, [id]);
 
-
-  const onGalleryChange = (eve)=>{
-    eve.preventDefault()
-    setGalleryChanged(true)
-    setGallery(eve.target.files[0])
-  }
+  const onGalleryChange = (eve) => {
+    eve.preventDefault();
+    setGalleryChanged(true);
+    setGallery(eve.target.files[0]);
+  };
 
   const updateSingleEvent = async () => {
     let formField = new FormData();
 
     formField.append("event_name", event_name);
     formField.append("date", date);
+    formField.append("time", time);
     formField.append("location", location);
     formField.append("gallery", gallery);
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
-    
-    if(galleryChanged === false){
-      setGallery(null)
+
+    if (galleryChanged === false) {
+      setGallery(null);
     }
     formField.append("gallery", gallery);
-    updateEventById(id,formField).then((response)=>{
-      console.log(response.data);
-          //navigate.push("/");
-    }).catch((error)=>{
-      console.log('Error occured '+ error.message);
-    })
-
-  }
+    updateEventById(id, formField)
+      .then((response) => {
+        console.log(response.data);
+        //navigate.push("/");
+      })
+      .catch((error) => {
+        console.log("Error occured " + error.message);
+      });
+  };
 
   return (
     <div className="container">
@@ -89,6 +89,23 @@ const EventUpdate = () => {
             name="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group">
+          {" "}
+          Time
+          <input
+            type="time"
+            id="appt"
+            min="09:00"
+            max="12:00"
+            required
+            name="time"
+            className="form-control form-control-lg"
+            placeholder="Enter time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
           />
         </div>
 

@@ -1,7 +1,10 @@
 .header{
-    background-color: rgb(224, 222, 222);
+    background-color: rgb(243, 239, 239);
     min-height: 50px;
-    padding: 15px;
+    padding: 5px;
+    padding-bottom: 5px;
+    font-size:40pt;
+
 }
 .showEvents{
     display: flex;

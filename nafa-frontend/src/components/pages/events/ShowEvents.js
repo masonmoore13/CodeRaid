@@ -21,24 +21,22 @@ const ShowEvents = () => {
   return (
     <div className="completedEvents">
       
-        <div className="headerz">
-          <h1>Events</h1>
+        <div className="header">
+          Events
         </div>
      <Card className="cardBox" border="white" boxShadow="none">
       <div className="showEvents">
         {events.map((event, index) => (
           <Card
             className="m-3 rounded shadow-lg"
-            border="warning"
-            bg="light"
-            text="dark"
+            border="dark"
             style={{ width: "22em" }}
             key={event.id}
           >
             <Card.Body>
-              <Card.Title>Event Name: {event.event_name}</Card.Title>
-              <Card.Text> Date: {event.date} </Card.Text>
-              <Card.Text> Description: {event.description} </Card.Text>
+              <Card.Title>{event.event_name}</Card.Title>
+              <Card.Text> {event.time} </Card.Text>
+              <Card.Text>  {event.description} </Card.Text>
               <Link
                 className="btn btn-outline-dark btn-warning mr-2"
                 to={`/event/${event.id}/`}
