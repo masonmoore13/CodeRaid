@@ -1,18 +1,25 @@
 from django.db import models
 from datetime import date
 from accounts.models import User
+from .states import CONTIGUOUS_STATES
 
 class Event(models.Model):
     event_name = models.CharField(max_length=150)
-    #rsvpd_members = models.ManyToManyField(User, blank=True)
     date = models.CharField(max_length=40)
     time = models.CharField(max_length=40,null=True, blank=True)
-    location = models.CharField(max_length=150)
-    # banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True) 
-    gallery = models.ImageField(upload_to='media/Event Media', default='Default Event Image.PNG') 
+    address_line = models.CharField(max_length=250, null=True, blank=True)
+    city = models.CharField(max_length=150, blank=True, null=True, default=None)
+    state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='Louisiana')
+    zip_code = models.CharField(max_length=20)
+    contact_name = models.CharField(max_length=150, blank=True, null=True, default=None)
+    contact_number = models.CharField(max_length=150, blank=True, null=True, default=None)
+    contact_email = models.EmailField(max_length=150, blank=True, null=True, default=None)
+    banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True, default='EventBannerDefault.jpg') 
+    gallery = models.ImageField(upload_to='media/Event Media', null=True, blank=True) 
     description = models.TextField(max_length=2500)
-    #media = models.ImageField(upload_to='media/Event Media', null=True, blank=True) 
-    registration_fees = models.CharField(max_length=150)
+    # media = models.ImageField(upload_to='media/Event Media', null=True, blank=True) 
+    # rsvpd_members = models.ManyToManyField(User, blank=True)
+    registration_fees = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self):
       return(self.event_name)
@@ -82,3 +89,4 @@ class Contact(models.Model):
 
     def __str__(self):
       return(self.sender_email)
+
