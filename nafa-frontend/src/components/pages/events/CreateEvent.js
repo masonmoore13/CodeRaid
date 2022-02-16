@@ -40,7 +40,7 @@ const CreateEvent = () => {
     formField.append("gallery", gallery);
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
-    /* formField.append("media", media); */
+
     /* formField.append("rsvpd_members", rsvpd_members); */
     /* formField.append("banner_image", banner_image); */
 
