@@ -40,6 +40,7 @@ const EventDetail = () => {
           <div className="eventDetail">
             <p>Date: {event.date}</p>
             <p>Description: {event.description}</p>
+            <p><img src={event.gallery} height="300px" /></p>
           </div>
         </div>
 
