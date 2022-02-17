@@ -21,4 +21,5 @@ from rest_auth.registration.views import VerifyEmailView, RegisterView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
+    path("", include("main.urls"))
 ]
