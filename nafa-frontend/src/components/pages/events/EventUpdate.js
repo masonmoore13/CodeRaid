@@ -40,6 +40,7 @@ const EventUpdate = () => {
       setGallery(response.data.gallery);
       setDescription(response.data.description);
       setRegistrationFees(response.data.registration_fees);
+      
     });
   }, [id]);
 
@@ -55,7 +56,6 @@ const EventUpdate = () => {
     formField.append("event_name", event_name);
     formField.append("date", date);
     formField.append("time", time);
-
     formField.append("address_line", address_line);
     formField.append("city", city);
     formField.append("state", state);
@@ -63,8 +63,6 @@ const EventUpdate = () => {
     formField.append("contact_name", contact_name);
     formField.append("contact_number", contact_number);
     formField.append("contact_email", contact_email);
-
-
     formField.append("gallery", gallery);
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
@@ -73,7 +71,7 @@ const EventUpdate = () => {
       setGallery(null);
     }*/
 
-    formField.append("gallery", gallery);
+
     updateEventById(id, formField)
       .then((response) => {
         console.log(response.data);
