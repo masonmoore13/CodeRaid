@@ -1,1 +1,1 @@
-web: gunicorn nafa.wsgi
+web: gunicorn nafa nafa.wsgi
