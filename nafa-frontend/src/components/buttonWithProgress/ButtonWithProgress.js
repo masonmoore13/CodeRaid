@@ -16,7 +16,7 @@ function ButtonWithProgress(props) {
           </Spinner>
         )}
         {props.text}
-      </Button>{" "}
+      </Button>
     </>
   );
 }
