@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { getEventById, deleteEventById } from "../../../api/apiCalls";
+import { getEventById, deleteEventById } from "../../api/apiCalls"
 import { Card } from "react-bootstrap";
 import "./Event.css";
 

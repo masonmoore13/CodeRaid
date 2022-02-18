@@ -2,21 +2,21 @@ import "./App.css";
 import Navbar from "./components/navbar/NavBar";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import PageNotFound from "./components/pages/404/404Page";
+import PageNotFound from "./pages/404/404Page";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from "./components/pages/home/homePage";
-import About from "./components/pages/about/aboutPage";
-import Contact from "./components/pages/contact/contactPage";
-import UserSignup from "./components/pages/user-signup/UserSignup";
+import Home from "./pages/home/homePage";
+import About from "./pages/about/aboutPage";
+import Contact from "./pages/contact/contactPage";
+import UserSignup from "./pages/user-signup/UserSignup";
 import * as apiCalls from "./api/apiCalls";
-import Login from "./components/pages/login/login";
+import Login from "./pages/login/login";
 
-import CreateEvent from "./components/pages/events/CreateEvent";
-import ShowEvents from "./components/pages/events/ShowEvents";
-import EventDetail from "./components/pages/events/EventDetail";
-import EventUpdate from "./components/pages/events/EventUpdate";
+import CreateEvent from "./pages/events/CreateEvent";
+import ShowEvents from "./pages/events/ShowEvents";
+import EventDetail from "./pages/events/EventDetail";
+import EventUpdate from "./pages/events/EventUpdate";
 
 function App() {
   // will be changed later just for demo

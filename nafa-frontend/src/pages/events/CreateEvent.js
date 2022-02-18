@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Event.css";
-import { createEvent } from "../../../api/apiCalls";
+import { createEvent } from "../../api/apiCalls"
 
 const CreateEvent = () => {
   let navigate = useNavigate();

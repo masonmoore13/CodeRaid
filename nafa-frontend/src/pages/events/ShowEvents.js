@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import "./Event.css";
 import { Link } from "react-router-dom";
-import { getEvents } from "../../../api/apiCalls";
+import { getEvents } from "../../api/apiCalls"
 
 const ShowEvents = () => {
   const [events, setEvents] = useState([]);
