@@ -38,7 +38,8 @@ const EventDetail = () => {
         <hr />
         <div className="full-event-detail">
           <div className="eventDetail text-start">
-            <p>Date: {event.date}</p>
+            <p> {event.description}</p>
+            <p> {event.date}</p>
             <p> {event.time}</p>
             <p> {event.address_line}</p>
             <p> {event.city}</p>
@@ -47,14 +48,15 @@ const EventDetail = () => {
             <p> {event.contact_number}</p>
             <p> {event.contact_email}</p>
             <p> {event.zip_code}</p>
-            <p> {event.description}</p>
-
+            
             <p><img src={event.gallery} height="300px" /></p>
           </div>
-        </div>
+        </div>     
+      </Card> 
 
-        <Link
-          className="btn btn-outline-dark btn-warning mr-2"
+
+      <Link
+          className="btn btn-outline-dark btn-warning mb-5 m-1"
           bg="warning"
           to={`/event/${event.id}/update`}
         >
@@ -62,15 +64,13 @@ const EventDetail = () => {
         </Link>
         <a
           href="/event"
-          className="btn btn-outline-dark btn-danger mr-2"
+          className="btn btn-outline-dark btn-danger mb-5 m-1"
           bg="warning"
           to={``}
           onClick={() => deleteEvent(event.id)}
         >
           Delete
-        </a>
-      </Card>
-    </div>
+        </a></div>
   );
 };
 

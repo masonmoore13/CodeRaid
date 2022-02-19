@@ -233,7 +233,6 @@ const EventUpdate = () => {
           </div>
         </div>
         <a
-          href="/event"
           size="large"
           onClick={updateSingleEvent}
           className="btn btn-outline-dark btn-warning btn-block"
