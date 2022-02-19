@@ -1,0 +1,19 @@
+.scholarhip-container{
+    border-radius: 25px;
+    background-color: white;
+    border-color: black;
+    border: 1;
+    margin-left: 5%;
+    margin-right: 5%;
+    overflow-y: scroll;
+    height: 50vh;
+}
+
+
+.single-scholarship-container{
+    color: black;
+}
+
+.scholarship{
+    text-align: center;
+}

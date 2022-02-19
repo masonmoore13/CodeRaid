@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import "./scholarships.css"
 
 const Scholarship = () => {
 
@@ -18,17 +19,26 @@ const Scholarship = () => {
 
     return (
         <div>
-            {scholarships.map((scholarship, index) => (
-                <div>
-                    Scholarship_Name: {scholarship.scholarship_name} 
-                    <br/><br/>
-                    Scholarship_Description: {scholarship.description}
-                    <br/><Link className="btn btn-primary m-2" to={`${scholarship.id}`}>details</Link><br/>
-                </div>
-            )
-            )
-            }
-            <br/><Link className="btn btn-primary m-2" to="addscholarship">Click here to add a Scholarship.</Link><br/>
+            <h1>Scholarships</h1>
+            <div className="scholarhip-container">
+                {scholarships.map((scholarship, index) => (
+
+
+                    <div className="single-scholarship-container">
+                        <div className="scholarship">
+                            Scholarship_Name: {scholarship.scholarship_name}
+                            <br /><br />
+                            Scholarship_Description: {scholarship.description}
+                            <br /><Link className="btn btn-primary m-2" to={`${scholarship.id}`}>details</Link><br />
+                            <hr/>
+                        </div>
+                    </div>
+
+                )
+                )
+                }
+            </div>
+            <br /><Link className="btn btn-primary m-2" to="addscholarship">Click here to add a Scholarship.</Link><br />
         </div>
     )
 }
