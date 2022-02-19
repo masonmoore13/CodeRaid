@@ -205,7 +205,7 @@ const CreateEvent = () => {
             />
           </div>
         </div>
-        <a href="/" className="btn btn-warning " onClick={CreateEventInfo}>
+        <a href="/event" className="btn btn-warning " onClick={CreateEventInfo}>
           Add Event
         </a>
       </form>

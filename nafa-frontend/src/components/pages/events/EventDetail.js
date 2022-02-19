@@ -31,13 +31,13 @@ const EventDetail = () => {
   return (
     <div className="eventDetail">
       <Card className="cardBox" border="white" boxShadow="none">
-        <img className="banner" src={event.banner_image} alt="..."></img>
+        <div className="bg"><img className="banner" src={event.banner_image} alt="..."></img></div>
 
-        <div className="detailHeader">{event.event_name}</div>
+        <div className="detailHeader display-4">{event.event_name}</div>
 
         <hr />
         <div className="full-event-detail">
-          <div className="eventDetail">
+          <div className="eventDetail display-6 text-start">
             <p>Date: {event.date}</p>
             <p>Description: {event.description}</p>
             <p><img src={event.gallery} height="300px" /></p>

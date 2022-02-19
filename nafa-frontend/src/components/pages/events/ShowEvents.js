@@ -30,7 +30,7 @@ const ShowEvents = () => {
           <Card
             className="m-3 rounded shadow-lg"
             border="dark"
-            style={{ width: "22em" }}
+            style={{ width: "25em" }}
             key={event.id}
           >
             <Card.Body>
