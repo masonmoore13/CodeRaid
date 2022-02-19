@@ -37,9 +37,18 @@ const EventDetail = () => {
 
         <hr />
         <div className="full-event-detail">
-          <div className="eventDetail display-6 text-start">
+          <div className="eventDetail text-start">
             <p>Date: {event.date}</p>
-            <p>Description: {event.description}</p>
+            <p> {event.time}</p>
+            <p> {event.address_line}</p>
+            <p> {event.city}</p>
+            <p> {event.state}</p>
+            <p> {event.contact_name}</p>
+            <p> {event.contact_number}</p>
+            <p> {event.contact_email}</p>
+            <p> {event.zip_code}</p>
+            <p> {event.description}</p>
+
             <p><img src={event.gallery} height="300px" /></p>
           </div>
         </div>
