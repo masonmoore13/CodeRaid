@@ -39,8 +39,8 @@ const EventDetail = () => {
       </div>
 
       <Card className="eventDetailCardBox text-start">
-        <div className="detailButtons display-4 d-flex justify-content-center">
-          <div className="eventNameHeader text-center">{event.event_name}</div>
+        <div className="detailButtons display-3 d-flex justify-content-center">{event.event_name}</div>
+          <div className="eventNameHeader text-center">
             <Link
               className="btn btn-outline-dark btn-warning mb-5 m-1"
               bg="warning"
