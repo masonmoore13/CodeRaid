@@ -36,48 +36,41 @@ const EventDetail = () => {
         <div className="detailHeader display-4">{event.event_name}</div>
 
         <hr />
-        {/* <div class="flex-container" className="event-detail-container"> */}
-        <table className="event-detail-table">
-          <tr>
-            <td>
-                <img src={event.gallery} className="event-detail-image"/>
-            </td>
-
-            <td>
-              <div className="event-text">
-                <p className="event-detail-description"> {event.description}</p>
-                <p className="event-detail-date"> {event.date}</p>
-                <p className="event-detail-time"> {event.time}</p>
-                <p className="event-detail-address"> {event.address_line}</p>
-                <p className="event-detail-city"> {event.city}</p>
-                <p className="event-detail-state"> {event.state}</p>
-                <p className="event-detail-contact-name"> {event.contact_name} {event.contact_number}</p>
-                <p className="event-detail-email"> {event.contact_email}</p>
-                <p className="event-detail-zip"> {event.zip_code}</p>
-              </div>
-            </td>
-          </tr>
-        </table>
-        {/* </div> */}
-      </Card>
+        <div className="full-event-detail">
+          <div className="eventDetail text-start">
+            <p> {event.description}</p>
+            <p> {event.date}</p>
+            <p> {event.time}</p>
+            <p> {event.address_line}</p>
+            <p> {event.city}</p>
+            <p> {event.state}</p>
+            <p> {event.contact_name}</p>
+            <p> {event.contact_number}</p>
+            <p> {event.contact_email}</p>
+            <p> {event.zip_code}</p>
+            
+            <p><img src={event.gallery} height="300px" /></p>
+          </div>
+        </div>     
+      </Card> 
 
 
       <Link
-        className="btn btn-outline-dark btn-warning mb-5 m-1"
-        bg="warning"
-        to={`/event/${event.id}/update`}
-      >
-        Update
-      </Link>
-      <a
-        href="/event"
-        className="btn btn-outline-dark btn-danger mb-5 m-1"
-        bg="warning"
-        to={``}
-        onClick={() => deleteEvent(event.id)}
-      >
-        Delete
-      </a></div>
+          className="btn btn-outline-dark btn-warning mb-5 m-1"
+          bg="warning"
+          to={`/event/${event.id}/update`}
+        >
+          Update
+        </Link>
+        <a
+          href="/event"
+          className="btn btn-outline-dark btn-danger mb-5 m-1"
+          bg="warning"
+          to={``}
+          onClick={() => deleteEvent(event.id)}
+        >
+          Delete
+        </a></div>
   );
 };
 
