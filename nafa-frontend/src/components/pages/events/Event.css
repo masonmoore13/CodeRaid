@@ -1,18 +1,16 @@
-.header{
+.showEventsHeader{
     background-color: rgb(243, 239, 239);
     min-height: 50px;
     padding: 5px;
     padding-bottom: 5px;
     font-size:40pt;
-
 }
 .showEvents{
     display: flex;
     justify-content: center;
-    flex-flow: row wrap;
-    
+    flex-flow: row wrap;    
 }
-.cardBox{
+.showEventsCardbox{
     margin-left: auto;
     margin-right: auto;
     min-height: 100vh;
@@ -29,6 +27,13 @@
     
 }
 
-.banner{
+.eventDetailCardBox{
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100vh;
+    width: 60%;
+}
+
+.eventDetailBanner{
     width: 100%;
 }

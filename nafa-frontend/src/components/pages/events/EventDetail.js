@@ -30,8 +30,8 @@ const EventDetail = () => {
 
   return (
     <div className="eventDetail">
-      <Card className="cardBox" border="white" boxShadow="none">
-        <div className="bg"><img className="banner" src={event.banner_image} alt="..."></img></div>
+      <Card className="eventDetailCardBox" border="white" boxShadow="none">
+        <div className="bg"><img className="eventDetailBanner" src={event.banner_image} alt="..."></img></div>
 
         <div className="detailHeader display-4">{event.event_name}</div>
 
@@ -48,7 +48,6 @@ const EventDetail = () => {
             <p> {event.contact_number}</p>
             <p> {event.contact_email}</p>
             <p> {event.zip_code}</p>
-            
             <p><img src={event.gallery} height="300px" /></p>
           </div>
         </div>     
