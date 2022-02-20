@@ -1,3 +1,10 @@
+.createEvent{
+    min-height:90.5vh;
+}
+
+.eventUpdate{
+    min-height:90.5vh;
+}
 .showEventsHeader{
     background-color: rgb(243, 239, 239);
     min-height: 50px;

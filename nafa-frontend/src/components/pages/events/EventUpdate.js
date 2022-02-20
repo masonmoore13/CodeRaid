@@ -79,7 +79,7 @@ const EventUpdate = () => {
   };
 
   return (
-    <form className="w-50 mx-auto shadow p-5 ">
+    <form className="eventUpdate w-50 mx-auto shadow p-5 ">
       <h1 className="text-center mb-4"> Update Event</h1>
       Event Name
       <div class="col-md-6">
