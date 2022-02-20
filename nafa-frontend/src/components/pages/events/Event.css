@@ -12,7 +12,7 @@
     flex-flow: row wrap;
     
 }
-.cardBox{
+.eventDetail{
     margin-left: auto;
     margin-right: auto;
     min-height: 100vh;
@@ -26,9 +26,36 @@
 .eventDetail{
     text-align: center;
     font-size: 20pt;
+    min-height: 100vh;
     
 }
 
 .banner{
     width: 100%;
+}
+
+/* .event-detail-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+} */
+
+.cardBox{
+    width: 100%;
+}
+
+.event-detail-table{
+    min-height: 60vh;
+}
+
+.event-detail-table > tr > td{
+    width: 50%;
+}
+
+.event-detail-image{
+    height: 100%;
+    width: 100%;
+    padding: 4em;
 }
