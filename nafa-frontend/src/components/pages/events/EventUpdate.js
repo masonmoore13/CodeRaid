@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getEventById, updateEventById } from "../../../api/apiCalls";
 
 const EventUpdate = () => {
-  let navigate = useNavigate();
   const { id } = useParams();
 
   const [event_name, setEventName] = useState("");
@@ -75,10 +74,9 @@ const EventUpdate = () => {
     updateEventById(id, formField)
       .then((response) => {
         console.log(response.data);
-        //navigate.push("/");
       })
       .catch((error) => {
-        console.log("Error occured " + error.message);
+        console.log("Error ocurred " + error.message);
       }); 
   };
 
@@ -95,7 +93,7 @@ const EventUpdate = () => {
             onChange={(e) => setEventName(e.target.value)}
           />
         </div>
-        Despcription
+        Description
         <div className="col mb-2">
           <textarea
             type="text"

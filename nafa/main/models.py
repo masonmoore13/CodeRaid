@@ -17,7 +17,6 @@ class Event(models.Model):
     banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True, default='EventBannerDefault.jpg') 
     gallery = models.ImageField(upload_to='media/Event Media', null=True, blank=True,) 
     description = models.TextField(max_length=2500)
-    # media = models.ImageField(upload_to='media/Event Media', null=True, blank=True) 
     # rsvpd_members = models.ManyToManyField(User, blank=True)
     registration_fees = models.CharField(max_length=150, null=True, blank=True)
 
