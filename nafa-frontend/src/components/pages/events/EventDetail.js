@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { getEventById, deleteEventById } from "../../../api/apiCalls";
 import { Card, CardGroup, Col } from "react-bootstrap";
+import Modal from "./Modal"
 import "./Event.css";
 
 const EventDetail = () => {
@@ -28,6 +29,10 @@ const EventDetail = () => {
     navigate.push("/");
   };
 
+
+
+  
+
   return (
     <div className="eventDetail">
       <div className="bg">
@@ -38,9 +43,10 @@ const EventDetail = () => {
         ></img>
       </div>
 
-      <Card className="eventDetailCardBox text-start">
-        <div className="detailButtons display-3 d-flex justify-content-center">{event.event_name}</div>
-          <div className="eventNameHeader text-center">
+      <Card className="eventDetailCardBox">
+        <div className="eventNameHeader display-3 d-flex justify-content-center">
+          {event.event_name}
+          <div className="detailButtons ">
             <Link
               className="btn btn-outline-dark btn-warning mb-5 m-1"
               bg="warning"
@@ -50,38 +56,44 @@ const EventDetail = () => {
             </Link>
             <a
               href="/event"
-              className="btn btn-outline-dark btn-danger mb-5 m-1"
+              className="btn btn-outline-white btn-dark mb-5 m-1"
               bg="warning"
               to={``}
               onClick={() => deleteEvent(event.id)}
             >
               Delete
             </a>
-
+          </div>
         </div>
 
-        <CardGroup className="">
-          <Col className="m-1 shadow-lg">
-            <Card className="m-4 shadow-lg" border="" style={{ width: "30em" }}>
+        <CardGroup className="detailsBodyCard ">
+          <Col className="m-1 shadow-lg col-md-8 text-start" >
+            <Card className="m-4 shadow-lg d-flex " border="" style={{ width: "96%" }}>
               <p> {event.description}</p>
               <p> {event.date}</p>
               <p> {event.time}</p>
 
-              <img src={event.gallery} width="250px" alt="..."/>
+              <img src={event.gallery} width="250px" alt="..." />
             </Card>
           </Col>
 
-          <Col className="m-2 shadow-lg">
-            <Card className="m-4 shadow-lg" border="" style={{ width: "10em" }}>
-              <p> {event.address_line}</p>
+          <Col className="DetailsRightCol m-2 shadow-lg ">
+            <Card className="m-4 shadow-lg text-start" border="" style={{ width: "93%" }}>
+            <Card.Title className="text-center">Venue<hr/></Card.Title>
+            <p> {event.address_line}</p>
               <p> {event.city}</p>
               <p> {event.state}</p>
               <p> {event.zip_code}</p>
             </Card>
-            <Card className="m-4 shadow-lg" border="" style={{ width: "10em" }}>
+            <Card className="DetailsRightCol m-4 shadow-lg " border="" style={{ width: "93%" }}>
+            <Card.Title>Contact Info <hr/></Card.Title>
               <p> {event.contact_name}</p>
               <p> {event.contact_number}</p>
               <p> {event.contact_email}</p>
+            </Card>
+            <Card className="DetailsRightCol m-4 shadow-lg " border="" style={{ width: "93%" }}>
+            <Card.Title>Event Pictures <hr/></Card.Title>
+              
             </Card>
           </Col>
         </CardGroup>

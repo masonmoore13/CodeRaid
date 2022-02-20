@@ -37,9 +37,15 @@
     width: 60%; 
 }
 
-.btn{
-    
+.detailButtons{
+    position: absolute;
+    right: 10px;
+}
+
+.DetailsRightCol{
+    font-size: 15pt
 }
 .eventDetailBanner{
     width: 60%;
+    max-height: 400px;
 }
