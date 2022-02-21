@@ -76,7 +76,7 @@ const EventUpdate = () => {
   };
 
   return (
-    <form className="eventUpdate w-50 mx-auto shadow p-5 ">
+    <form className="eventUpdate w-75 mx-auto shadow p-5 ">
       <h1 className="text-center mb-4"> Update Event</h1>
       Event Name
       <div class="col-md-6">
@@ -122,7 +122,7 @@ const EventUpdate = () => {
         </div>
       </div>
       Address
-      <div className="col mb-2">
+      <div className="col mb-3">
         <input
           type="text"
           className="form-control form-control-lg"
@@ -252,10 +252,10 @@ const EventUpdate = () => {
           />
         </div>
       </div>
-      Fees
+      
       <div className="row mb-3">
         <div className="col ">
-          <input
+          Fees<input
             type="text"
             className=" col-auto form-control form-control-lg"
             placeholder="Registration Fee $0.00"
@@ -265,7 +265,7 @@ const EventUpdate = () => {
         </div>
 
         <div className="col ">
-          <input
+          Event Image<input
             type="file"
             className="form-control"
             onChange={(e) => setGallery(e.target.files[0])}
@@ -273,7 +273,7 @@ const EventUpdate = () => {
         </div>
 
         <div className="col ">
-          <input
+          Banner Image<input
             type="file"
             placeholder=""
             className="form-control"

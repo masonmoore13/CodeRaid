@@ -42,7 +42,7 @@ const CreateEvent = () => {
     formField.append("registration_fees", registration_fees);
 
     /* formField.append("rsvpd_members", rsvpd_members); */
-    /* formField.append("banner_image", banner_image); */
+    formField.append("banner_image", banner_image);
 
     if (gallery !== null) {
       formField.append("gallery", gallery);
@@ -55,7 +55,7 @@ const CreateEvent = () => {
   };
 
   return (
-    <form className=" createEvent w-50 mx-auto shadow p-5 ">
+    <form className=" createEvent w-75 mx-auto shadow p-5 flex-row">
       <h1 className="text-center mb-4">Add An Event</h1>
       Event Name
       <div class="col-md-6">
@@ -90,7 +90,7 @@ const CreateEvent = () => {
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
-        </div>{" "}
+        </div>
 
         <div class="col col-md-4">
           <input
@@ -103,7 +103,7 @@ const CreateEvent = () => {
         </div>
       </div>
       Address
-      <div className="col mb-2">
+      <div className="col mb-3">
         <input
           type="text"
           className="form-control form-control-lg"
@@ -112,7 +112,7 @@ const CreateEvent = () => {
           onChange={(e) => setAddressLine(e.target.value)}
         />
       </div>
-      <div className="row mb-2">
+      <div className="row mb-2 flex-row">
         <div className="col col-md-6">
           <input
             type="text"
@@ -123,8 +123,7 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div class="col">
-          {" "}
+        <div class="col mb-2 flex-sm-column-reverse">
           <select
             name="state"
             className="form-control form-control-lg"
@@ -203,8 +202,8 @@ const CreateEvent = () => {
         </div>
       </div>
       Contact Details
-      <div className="row mb-2">
-        <div className="col ">
+      <div className="row mb-3">
+        <div className="col col-md-4">
           <input
             type="text"
             className="form-control form-control-lg"
@@ -214,7 +213,7 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div className="col ">
+        <div className="col col-md-4">
           <input
             type="tel"
             className="form-control form-control-lg"
@@ -224,7 +223,7 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div className="col">
+        <div className="col col-md-4">
           <input
             type="text"
             className="form-control form-control-lg"
@@ -234,10 +233,10 @@ const CreateEvent = () => {
           />
         </div>
       </div>
-      Fees
+      
       <div className="row mb-3">
         <div className="col ">
-          <input
+          Fees<input
             type="text"
             className=" col-auto form-control form-control-lg"
             placeholder="Registration Fee $0.00"
@@ -246,11 +245,18 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div className="col ">
+        <div className="col "> Event Image
           <input
             type="file"
             className="form-control"
             onChange={(e) => setGallery(e.target.files[0])}
+          />
+        </div>
+        <div className="col "> 
+          Banner Image<input
+            type="file"
+            className="form-control"
+            onChange={(e) => setBannerImage(e.target.files[0])}
           />
         </div>
       </div>
