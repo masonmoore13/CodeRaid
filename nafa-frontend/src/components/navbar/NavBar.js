@@ -6,14 +6,21 @@ import {
   Form,
   FormControl,
   Button,
+  NavLink,
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
-import "./navbar.css"
+import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
+import { AiOutlineUser,AiOutlineLogin } from 'react-icons/ai'
 
 function NavBar() {
+  const navigate = useNavigate()
 
-
+  const logOut=()=>{
+    sessionStorage.removeItem("accessJWT");
+    localStorage.removeItem("nafaSite")
+    navigate("");
+  }
 
   return (
     <div>
@@ -26,7 +33,7 @@ function NavBar() {
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
+              style={{ maxHeight: "150px" }}
               navbarScroll
             >
               <NavDropdown title="Events" id="navbarScrollingDropdown">
@@ -45,15 +52,28 @@ function NavBar() {
               <Nav.Link as={Link} to="/about">
                 About
               </Nav.Link>
+            </Nav>
 
+            <Nav>
               <Nav.Link as={Link} to="/signup">
                 Signup
               </Nav.Link>
               <Nav.Link as={Link} to="/login">
-                Login
+                Login <AiOutlineLogin/>
               </Nav.Link>
+
+              <NavDropdown title={<AiOutlineUser />} id="navbarScrollingDropdown" className="mr-4">
+                <NavDropdown.Item href="/event"></NavDropdown.Item>
+                <NavDropdown.Item href="/event/createEvent">
+                  Username 
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={logOut}>
+                 Logout
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
-            <Form className="d-flex">
+
+            {/* <Form className="d-flex">
               <FormControl
                 type="search"
                 placeholder="Search"
@@ -61,7 +81,7 @@ function NavBar() {
                 aria-label="Search"
               />
               <Button variant="outline-warning">Search</Button>
-            </Form>
+            </Form> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

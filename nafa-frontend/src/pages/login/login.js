@@ -6,7 +6,7 @@ import Input from "../../components/input/Input";
 import "./loginpage.css";
 import { loginPending, loginSuccess, loginError } from "./loginSlice";
 import { userLogin } from '../../api/userApi'
-
+import { getUserProfile } from '../home/userActions'
 
 function Login() {
   const dispatch = useDispatch();
@@ -39,6 +39,7 @@ function Login() {
     // call the api, using try catch easier to understand
       userLogin({username, password}).then(isAuth=>{
         dispatch(loginSuccess())
+        dispatch(getUserProfile())
       }).catch(error =>{
         dispatch(loginError(error.response.data.detail))
       })
