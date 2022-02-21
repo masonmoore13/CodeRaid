@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { getEventById, deleteEventById } from "../../../api/apiCalls";
 import { Card, CardGroup, Col } from "react-bootstrap";
-import Modal from "./Modal"
+import Modal from "./Modal";
 import "./Event.css";
 
 const EventDetail = () => {
@@ -28,10 +28,6 @@ const EventDetail = () => {
       });
     navigate.push("/");
   };
-
-
-
-  
 
   return (
     <div className="eventDetail">
@@ -67,8 +63,12 @@ const EventDetail = () => {
         </div>
 
         <CardGroup className="detailsBodyCard ">
-          <Col className="m-1 shadow-lg col-md-8 text-start" >
-            <Card className="m-4 shadow-lg d-flex " border="" style={{ width: "96%" }}>
+          <Col className="m-1 shadow-lg col-md-8 text-start">
+            <Card
+              className="m-4 shadow-lg d-flex "
+              border=""
+              style={{ width: "96%" }}
+            >
               <p> {event.description}</p>
               <p> {event.date}</p>
               <p> {event.time}</p>
@@ -78,22 +78,47 @@ const EventDetail = () => {
           </Col>
 
           <Col className="DetailsRightCol m-2 shadow-lg ">
-            <Card className="m-4 shadow-lg text-start" border="" style={{ width: "93%" }}>
-            <Card.Title className="text-center">Venue<hr/></Card.Title>
-            <p> {event.address_line}</p>
+            <Card
+              className="m-4 shadow-lg text-start"
+              border=""
+              style={{ width: "93%", }}
+            >
+              <Card.Title className="text-center">
+                Venue
+                <hr />
+              </Card.Title>
+              <p> {event.address_line}</p>
               <p> {event.city}</p>
               <p> {event.state}</p>
               <p> {event.zip_code}</p>
+              <a
+                className="btn directionsButton btn-outline-dark btn-warning  w-50 mb-2 m-1"
+                bg="warning"
+                href={`http://maps.google.com/?q=${event.address_line} ${event.city} ${event.state} ${event.zip_code}`}
+              >
+                Get Directions
+              </a>
             </Card>
-            <Card className="DetailsRightCol m-4 shadow-lg " border="" style={{ width: "93%" }}>
-            <Card.Title>Contact Info <hr/></Card.Title>
+            <Card
+              className="DetailsRightCol m-4 shadow-lg "
+              border=""
+              style={{ width: "93%" }}
+            >
+              <Card.Title>
+                Contact Details <hr />
+              </Card.Title>
               <p> {event.contact_name}</p>
               <p> {event.contact_number}</p>
               <p> {event.contact_email}</p>
             </Card>
-            <Card className="DetailsRightCol m-4 shadow-lg " border="" style={{ width: "93%" }}>
-            <Card.Title>Event Pictures <hr/></Card.Title>
-              
+            <Card
+              className="DetailsRightCol m-4 shadow-lg "
+              border=""
+              style={{ width: "93%" }}
+            >
+              <Card.Title>
+                Event Pictures <hr />
+              </Card.Title>
             </Card>
           </Col>
         </CardGroup>
