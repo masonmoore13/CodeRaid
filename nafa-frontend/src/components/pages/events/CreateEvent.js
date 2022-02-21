@@ -37,12 +37,13 @@ const CreateEvent = () => {
     formField.append("contact_name", contact_name);
     formField.append("contact_number", contact_number);
     formField.append("contact_email", contact_email);
-    formField.append("gallery", gallery);
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
 
     /* formField.append("rsvpd_members", rsvpd_members); */
-    formField.append("banner_image", banner_image);
+    if (banner_image !== null) {
+      formField.append("gallery", gallery);
+    }
 
     if (gallery !== null) {
       formField.append("gallery", gallery);
@@ -233,10 +234,10 @@ const CreateEvent = () => {
           />
         </div>
       </div>
-      
       <div className="row mb-3">
         <div className="col ">
-          Fees<input
+          Fees
+          <input
             type="text"
             className=" col-auto form-control form-control-lg"
             placeholder="Registration Fee $0.00"
@@ -245,15 +246,18 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div className="col "> Event Image
+        <div className="col ">
+          {" "}
+          Event Image
           <input
             type="file"
             className="form-control"
             onChange={(e) => setGallery(e.target.files[0])}
           />
         </div>
-        <div className="col "> 
-          Banner Image<input
+        <div className="col ">
+          Banner Image
+          <input
             type="file"
             className="form-control"
             onChange={(e) => setBannerImage(e.target.files[0])}

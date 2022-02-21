@@ -62,8 +62,8 @@ const EventUpdate = () => {
       formField.append("gallery", gallery);
     }
 
-    if (gallery !== null) {
-      formField.append("gallery", gallery);
+    if (banner_image !== null) {
+      formField.append("banner_image", banner_image);
     }
 
     updateEventById(id, formField)

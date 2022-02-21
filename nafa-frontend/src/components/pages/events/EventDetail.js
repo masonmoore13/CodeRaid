@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { getEventById, deleteEventById } from "../../../api/apiCalls";
-import { Card, CardGroup, Col } from "react-bootstrap";
-import Modal from "./Modal";
+import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
 
 const EventDetail = () => {
   const [event, setEvent] = useState([]);
-
   const { id } = useParams();
   const navigate = useNavigate();
+
+  //Delete modal state and close/open functions
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     getEventById(id).then((response) => {
@@ -39,26 +42,74 @@ const EventDetail = () => {
         ></img>
       </div>
 
-      <Card className="eventDetailCardBox">
-        <div className="eventNameHeader display-3 d-flex justify-content-center">
-          {event.event_name}
-          <div className="detailButtons ">
-            <Link
-              className="btn btn-outline-dark btn-warning mb-5 m-1"
-              bg="warning"
-              to={`/event/${event.id}/update`}
-            >
-              Update
-            </Link>
-            <a
-              href="/event"
-              className="btn btn-outline-white btn-dark mb-5 m-1"
-              bg="warning"
-              to={``}
-              onClick={() => deleteEvent(event.id)}
-            >
-              Delete
-            </a>
+      <Card className="eventDetailCardBox ">
+        <div className=" display-3 d-flex flex-lg-wrap justify-content-center">
+          <div className="eventName">{event.event_name}</div>
+          <div className="justify-content-center">
+            <div className="detailButtons position">
+              <div className="deleteModal modal-fullscreen-sm-down">
+                <Button
+                  className="btn btn-outline-dark btn-warning m-1"
+                  bg="warning"
+                  href={`/event/${event.id}/update`}
+                >
+                  Update
+                </Button>
+
+                <Button variant="dark" onClick={handleShow}>
+                  Delete
+                </Button>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>
+                      Are you sure you want to delete this event?
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button
+                      href="/event"
+                      variant="dark"
+                      onClick={() => deleteEvent(event.id)}
+                    >
+                      Confirm Delete
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </div>
+              <div class="modal fade" id="exampleModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Modal title
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -81,7 +132,7 @@ const EventDetail = () => {
             <Card
               className="m-4 shadow-lg text-start"
               border=""
-              style={{ width: "93%", }}
+              style={{ width: "93%" }}
             >
               <Card.Title className="text-center">
                 Venue
