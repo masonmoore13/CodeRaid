@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import ButtonWithProgress from "../../buttonWithProgress/ButtonWithProgress";
 import Input from "../../input/Input";
+import './loginpage.css';
 
 
 const defaultProp = {
@@ -63,7 +64,7 @@ function Login({ props, actions = defaultProp }) {
   }
 
   return (
-    <div>
+    <div className="login-container">
       <Form>
         <h1>Login</h1>
         <Input

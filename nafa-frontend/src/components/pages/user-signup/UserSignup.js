@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import ButtonWithProgress from "../../buttonWithProgress/ButtonWithProgress";
 import Spinner from "react-bootstrap/Spinner";
 import Input from "../../input/Input";
+import './signUpPage.css';
 
 const defaultProp = {
   postSignup: () => {
@@ -76,7 +77,7 @@ function UserSignup({ props, actions = defaultProp }) {
 
  
   return (
-    <div>
+    <div className="signUp-container">
       <h1>Sign Up</h1>
       <Form>
         <Input
