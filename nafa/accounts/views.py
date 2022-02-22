@@ -78,7 +78,7 @@ class UserView(APIView):
         username = authenticate[1]['username']
         user = User.objects.get(username=username)
         serializer = UserSerializer(user)
-
+        return Response(serializer.data)
 # user view to see if the token is still active
 # class UserView(APIView):
 #     def get(self, request):
