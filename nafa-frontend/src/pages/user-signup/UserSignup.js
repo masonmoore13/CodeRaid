@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
-import Spinner from "react-bootstrap/Spinner";
+
 import Input from "../../components/input/Input";
 import './signUpPage.css';
 
@@ -23,6 +24,7 @@ function UserSignup({ props, actions = defaultProp }) {
 
   const [pendingApiCall, setPendingApiCall] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const onInputChange = (event) => {
     
@@ -58,6 +60,7 @@ function UserSignup({ props, actions = defaultProp }) {
       .postSignup(user)
       .then((response) => {
         setPendingApiCall(false);
+        navigate("/login")
       })
       .catch((apiError) => {
         if (apiError.response.data && apiError.response.data.validationErrors) {
