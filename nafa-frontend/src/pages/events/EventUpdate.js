@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD:nafa-frontend/src/components/pages/events/EventUpdate.js
 import { useParams, Link } from "react-router-dom";
-import { getEventById, updateEventById } from "../../../api/apiCalls";
-=======
-import { useNavigate, useParams } from "react-router-dom";
-import { getEventById, updateEventById } from "../../api/apiCalls"
->>>>>>> events-and-auth:nafa-frontend/src/pages/events/EventUpdate.js
+import { getEventById, updateEventById } from "../../api/apiCalls.js"
 
 const EventUpdate = () => {
   const { id } = useParams();

@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD:nafa-frontend/src/components/pages/events/EventDetail.js
-import { getEventById, deleteEventById } from "../../../api/apiCalls";
+import { getEventById, deleteEventById } from "../../api/apiCalls";
 import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
-=======
-import { getEventById, deleteEventById } from "../../api/apiCalls"
-import { Card } from "react-bootstrap";
->>>>>>> events-and-auth:nafa-frontend/src/pages/events/EventDetail.js
 import "./Event.css";
 
 const EventDetail = () => {
