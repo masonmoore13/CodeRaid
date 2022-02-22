@@ -1,6 +1,10 @@
 from django.contrib import admin
 from main.models import *
 
+admin.site.register(MultipleImage)
+class MultipleImageModel(admin.ModelAdmin):
+    list_display = ('id', 'image_name')
+
 admin.site.register(Event)
 class EventModel(admin.ModelAdmin):
     list_display = ('id', 'event_name')
