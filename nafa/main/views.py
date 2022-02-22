@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from main.serializers import *
 from main.models import *
+from rest_framework import filters
 
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
@@ -9,6 +10,8 @@ class GalleryView(viewsets.ModelViewSet):
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['event_name']
 
 class CampaignView(viewsets.ModelViewSet):
     queryset = Campaign.objects.all()
