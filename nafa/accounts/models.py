@@ -63,8 +63,8 @@ class User(AbstractUser):
     descriptions = models.TextField(max_length=2500, blank=True, null=True)
     achievements = models.TextField(max_length=2500, blank=True, null=True)
 
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
-    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+    USERNAME_FIELD = 'username'
 
     objects = UserManager()
     def __str__(self):

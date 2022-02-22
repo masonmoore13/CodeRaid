@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import ButtonWithProgress from "../../buttonWithProgress/ButtonWithProgress";
+import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 import Spinner from "react-bootstrap/Spinner";
-import Input from "../../input/Input";
+import Input from "../../components/input/Input";
 import './signUpPage.css';
 
 const defaultProp = {

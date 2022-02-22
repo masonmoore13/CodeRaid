@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Event.css";
-import { createEvent } from "../../../api/apiCalls";
+import React, { useState, useEffect } from "react";
+<<<<<<< HEAD:nafa-frontend/src/components/pages/events/EventUpdate.js
+import { useParams, Link } from "react-router-dom";
+import { getEventById, updateEventById } from "../../../api/apiCalls";
+=======
+import { useNavigate, useParams } from "react-router-dom";
+import { getEventById, updateEventById } from "../../api/apiCalls"
+>>>>>>> events-and-auth:nafa-frontend/src/pages/events/EventUpdate.js
 
-const CreateEvent = () => {
-  let navigate = useNavigate();
+const EventUpdate = () => {
+  const { id } = useParams();
 
   const [event_name, setEventName] = useState("");
   const [date, setDate] = useState("");
@@ -16,15 +20,34 @@ const CreateEvent = () => {
   const [contact_name, setContactName] = useState("");
   const [contact_number, setContactNumber] = useState("");
   const [contact_email, setContactEmail] = useState("");
-  const [gallery, setGallery] = useState("");
+
   const [description, setDescription] = useState("");
   const [registration_fees, setRegistrationFees] = useState("");
 
+  const [gallery, setGallery] = useState(null);
   const [rsvpd_members, setRsvpdMembers] = useState("");
-  const [banner_image, setBannerImage] = useState("");
+  const [banner_image, setBannerImage] = useState(null);
   const [media, setMedia] = useState("");
 
-  const CreateEventInfo = async () => {
+  useEffect(() => {
+    getEventById(id).then((response) => {
+      console.log(response.data.gallery);
+      setEventName(response.data.event_name);
+      setDate(response.data.date);
+      setTime(response.data.time);
+      setAddressLine(response.data.address_line);
+      setCity(response.data.city);
+      setState(response.data.state);
+      setZipCode(response.data.zip_code);
+      setContactName(response.data.contact_name);
+      setContactNumber(response.data.contact_number);
+      setContactEmail(response.data.contact_email);
+      setDescription(response.data.description);
+      setRegistrationFees(response.data.registration_fees);
+    });
+  }, [id]);
+
+  const updateSingleEvent = async () => {
     let formField = new FormData();
 
     formField.append("event_name", event_name);
@@ -40,24 +63,26 @@ const CreateEvent = () => {
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
 
-    /* formField.append("rsvpd_members", rsvpd_members); */
-    if (banner_image !== null) {
-      formField.append("gallery", gallery);
-    }
-
     if (gallery !== null) {
       formField.append("gallery", gallery);
     }
 
-    createEvent(formField).then((response) => {
-      console.log(response.data);
-      navigate.push("/");
-    });
+    if (banner_image !== null) {
+      formField.append("banner_image", banner_image);
+    }
+
+    updateEventById(id, formField)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("Error ocurred " + error.message);
+      });
   };
 
   return (
-    <form className=" createEvent w-75 mx-auto shadow p-5 flex-row">
-      <h1 className="text-center mb-4">Add An Event</h1>
+    <form className="eventUpdate w-75 mx-auto shadow p-5 ">
+      <h1 className="text-center mb-4"> Update Event</h1>
       Event Name
       <div class="col-md-6">
         <input
@@ -68,7 +93,7 @@ const CreateEvent = () => {
           onChange={(e) => setEventName(e.target.value)}
         />
       </div>
-      Despcription
+      Description
       <div className="col mb-2">
         <textarea
           type="text"
@@ -84,15 +109,13 @@ const CreateEvent = () => {
           <input
             className="form-control form-control-lg"
             type="date"
-            id="start"
-            value="2018-07-22"
+            placeholder="Date"
             min="2022-01-01"
             max="3050-12-31"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
-
         <div class="col col-md-4">
           <input
             className="form-control form-control-lg"
@@ -113,7 +136,7 @@ const CreateEvent = () => {
           onChange={(e) => setAddressLine(e.target.value)}
         />
       </div>
-      <div className="row mb-2 flex-row">
+      <div className="row mb-2">
         <div className="col col-md-6">
           <input
             type="text"
@@ -124,7 +147,7 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div class="col mb-2 flex-sm-column-reverse">
+        <div class="col">
           <select
             name="state"
             className="form-control form-control-lg"
@@ -203,8 +226,8 @@ const CreateEvent = () => {
         </div>
       </div>
       Contact Details
-      <div className="row mb-3">
-        <div className="col col-md-4">
+      <div className="row mb-2">
+        <div className="col ">
           <input
             type="text"
             className="form-control form-control-lg"
@@ -214,7 +237,7 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div className="col col-md-4">
+        <div className="col ">
           <input
             type="tel"
             className="form-control form-control-lg"
@@ -224,7 +247,7 @@ const CreateEvent = () => {
           />
         </div>
 
-        <div className="col col-md-4">
+        <div className="col">
           <input
             type="text"
             className="form-control form-control-lg"
@@ -247,29 +270,36 @@ const CreateEvent = () => {
         </div>
 
         <div className="col ">
-          {" "}
           Event Images
           <input
             type="file"
+            id="file"
             multiple
             className="form-control"
             onChange={(e) => setGallery(e.target.files[0])}
           />
         </div>
+
         <div className="col ">
           Banner Image
           <input
             type="file"
+            placeholder=""
             className="form-control"
             onChange={(e) => setBannerImage(e.target.files[0])}
           />
         </div>
       </div>
-      <a href="/event" className="btn btn-warning " onClick={CreateEventInfo}>
-        Add Event
-      </a>
+      <Link
+        className="btn btn-outline-dark btn-warning mb-5 m-1"
+        bg="warning"
+        to={`/event/${id}`}
+        onClick={updateSingleEvent}
+      >
+        Update Event
+      </Link>
     </form>
   );
 };
 
-export default CreateEvent;
+export default EventUpdate;
