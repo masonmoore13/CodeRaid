@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Alert, Button, Form, Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { Alert, Form, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 import Input from "../../components/input/Input";
 import "./loginpage.css";
-import { loginPending, loginSuccess, loginError } from "./loginSlice";
-import { userLogin } from '../../api/userApi'
-import { getUserProfile } from '../home/userActions'
+
+import { loginUser } from "./loginAction";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 function Login() {
   const dispatch = useDispatch();
-
-  const { isLoading, isAuth, error } = useSelector((state) => state.login);
+  const navigate = useNavigate()
+  const { isLoading, error } = useSelector((state) => state.login);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,21 +31,11 @@ function Login() {
     }
   };
 
-  const onClickLogin = (e) => {
+  const onClickLogin = async (e) => {
     e.preventDefault();
-
-    // login is pending before the api call
-    dispatch(loginPending());
-
-    // call the api, using try catch easier to understand
-      userLogin({username, password}).then(isAuth=>{
-        dispatch(loginSuccess())
-        dispatch(getUserProfile())
-      }).catch(error =>{
-        dispatch(loginError(error.response.data.detail))
-      })
-    // login is not pending after calling the api
-
+    // dispatch the actions
+     dispatch(loginUser({username, password}));
+     navigate("/");
   };
 
   let disableLogin = false;

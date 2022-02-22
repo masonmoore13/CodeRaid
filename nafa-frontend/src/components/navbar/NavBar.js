@@ -7,20 +7,27 @@ import {
   FormControl,
   Button,
   NavLink,
+  Dropdown,
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { AiOutlineUser,AiOutlineLogin } from 'react-icons/ai'
+import { AiOutlineUser, AiOutlineLogin } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { loginError } from "../../pages/login/loginSlice";
 
 function NavBar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const logOut=()=>{
+  const { isAuth } = useSelector((state) => state.login);
+  const {username } = useSelector((state)=> state.user.user)
+  const dispatch = useDispatch();
+  const logOut = () => {
     sessionStorage.removeItem("accessJWT");
-    localStorage.removeItem("nafaSite")
+    localStorage.removeItem("nafaSite");
+    dispatch(loginError(""))
     navigate("");
-  }
+  };
 
   return (
     <div>
@@ -37,11 +44,11 @@ function NavBar() {
               navbarScroll
             >
               <NavDropdown title="Events" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="/event">All Events</NavDropdown.Item>
-                <NavDropdown.Item href="/event/createEvent">
+                <NavDropdown.Item as={Link} to="/event">All Events</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/event/createEvent">
                   Create Event
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/event/Calendar">
+                <NavDropdown.Item as={Link} to="/event/Calendar">
                   Calendar
                 </NavDropdown.Item>
               </NavDropdown>
@@ -54,24 +61,32 @@ function NavBar() {
               </Nav.Link>
             </Nav>
 
-            <Nav>
-              <Nav.Link as={Link} to="/signup">
-                Signup
-              </Nav.Link>
-              <Nav.Link as={Link} to="/login">
-                Login <AiOutlineLogin/>
-              </Nav.Link>
-
-              <NavDropdown title={<AiOutlineUser />} id="navbarScrollingDropdown" className="mr-4">
-                <NavDropdown.Item href="/event"></NavDropdown.Item>
-                <NavDropdown.Item href="/event/createEvent">
-                  Username 
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={logOut}>
-                 Logout
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
+            {!isAuth ? (
+              <Nav>
+                <Nav.Link as={Link} to="/signup">
+                  Signup
+                </Nav.Link>
+                <Nav.Link as={Link} to="/login">
+                  Login <AiOutlineLogin />
+                </Nav.Link>
+              </Nav>
+            ) : (
+              <Nav >
+                <NavDropdown align={{ lg: 'end' }}
+                  title={<AiOutlineUser />}
+                 flip={true}
+                >
+                  
+                  <NavDropdown.Item href="#">
+                    {username}
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
+                  
+                </NavDropdown>
+                  
+                 
+              </Nav>
+            )}
 
             {/* <Form className="d-flex">
               <FormControl

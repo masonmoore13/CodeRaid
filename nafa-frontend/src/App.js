@@ -17,6 +17,7 @@ import CreateEvent from "./pages/events/CreateEvent";
 import ShowEvents from "./pages/events/ShowEvents";
 import EventDetail from "./pages/events/EventDetail";
 import EventUpdate from "./pages/events/EventUpdate";
+import RouterWrapper from "./components/router-wrapper/RouterWrapper";
 
 function App() {
   // will be changed later just for demo
@@ -31,11 +32,13 @@ function App() {
       <Navbar />
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/signup" element={<UserSignup actions={actions} />} />
-          <Route path="/login" element={<Login actions={actions} />} />
+          <Route element={<RouterWrapper />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/signup" element={<UserSignup actions={actions} />} />
+            <Route path="/login" element={<Login actions={actions} />} />
+          </Route>
 
           <Route exact path="/event" element={<ShowEvents />} />
           <Route path="/event/createEvent" element={<CreateEvent />} />

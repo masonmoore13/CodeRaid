@@ -6,7 +6,6 @@ export const getUserProfile = () => async dispatch =>{
     try{
         // pending before the api call
         dispatch(getUserPending());
-
         // call the api
         const user = await fetchUser() ;   
         console.log(user);
