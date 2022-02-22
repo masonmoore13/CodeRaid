@@ -2,11 +2,6 @@ from rest_framework import serializers
 from main.models import * 
 from .models import User
 
-class MultipleImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MultipleImage
-        fields = ('__all__')
-
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event

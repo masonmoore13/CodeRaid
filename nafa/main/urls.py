@@ -3,7 +3,6 @@ from main.views import *
 from rest_framework import routers
 
 route = routers.DefaultRouter()
-route.register("multipleImage", MultipleImageView, basename='multipleImageView')
 route.register("event", EventView, basename='eventView')
 route.register("campaign", CampaignView, basename='campaignView') 
 route.register("CategoryOfTeam", CategoryOfTeamView, basename='CategoryOfTeamView') 

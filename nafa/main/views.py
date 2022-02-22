@@ -2,10 +2,6 @@ from rest_framework import viewsets
 from main.serializers import *
 from main.models import *
 
-class MultipleImageView(viewsets.ModelViewSet):
-    queryset = MultipleImage.objects.all()
-    serializer_class = MultipleImageSerializer
-
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
