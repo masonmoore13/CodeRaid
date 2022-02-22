@@ -2,6 +2,10 @@ from rest_framework import viewsets
 from main.serializers import *
 from main.models import *
 
+class GalleryView(viewsets.ModelViewSet):
+    queryset = Gallery.objects.all()
+    serializer_class = GallerySerializer
+
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer

@@ -15,13 +15,20 @@ class Event(models.Model):
     contact_number = models.CharField(max_length=150, blank=True, null=True, default=None)
     contact_email = models.EmailField(max_length=150, blank=True, null=True, default=None)
     banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True, default='EventBannerDefault.jpg') 
-    gallery = models.ImageField(upload_to='media/Event Media', null=True, blank=True,) 
+    event_gallery = models.ImageField(upload_to='media/Event Media', null=True, blank=True,) 
     description = models.TextField(max_length=2500)
     # rsvpd_members = models.ManyToManyField(User, blank=True)
     registration_fees = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self):
       return(self.event_name)
+
+class Gallery(models.Model):
+    images = models.FileField(upload_to='media/Event Media',)
+    event = models.ForeignKey(Event, default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return (self.event.event_name)
 
 class Campaign(models.Model):
     campaign_name = models.CharField(max_length=150)
