@@ -120,15 +120,13 @@ const EventDetail = () => {
               border=""
               style={{ width: "96%" }}
             >
-              <p> {event.description}</p>
-              <p> {event.date}</p>
-              <p> {event.time}</p>
-
-              <img src={event.gallery} width="250px" alt="..." />
+              <p className="description m-2"> {event.description}</p>
+              <p className=" m-2"> {event.date}</p>
+              <p className=" m-2"> {event.time}</p>
             </Card>
           </Col>
 
-          <Col className="DetailsRightCol m-2 shadow-lg ">
+          <Col className="DetailsRightCol m-2 shadow-lg  ">
             <Card
               className="m-4 shadow-lg text-start"
               border=""
@@ -138,10 +136,10 @@ const EventDetail = () => {
                 Venue
                 <hr />
               </Card.Title>
-              <p> {event.address_line}</p>
-              <p> {event.city}</p>
-              <p> {event.state}</p>
-              <p> {event.zip_code}</p>
+              <p className=" mx-1"> {event.address_line}</p>
+              <p className=" mx-1"> {event.city}</p>
+              <p className=" mx-1"> {event.state}</p>
+              <p className=" mx-1"> {event.zip_code}</p>
               <a
                 className="btn directionsButton btn-outline-dark btn-warning  w-50 mb-2 m-1"
                 bg="warning"

@@ -9,7 +9,7 @@ class Event(models.Model):
     time = models.CharField(max_length=40,null=True, blank=True)
     address_line = models.CharField(max_length=250, null=True, blank=True)
     city = models.CharField(max_length=150, blank=True, null=True, default=None)
-    state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='Louisiana')
+    state = models.CharField(max_length=25, default=None)
     zip_code = models.CharField(max_length=150)
     contact_name = models.CharField(max_length=150, blank=True, null=True, default=None)
     contact_number = models.CharField(max_length=150, blank=True, null=True, default=None)

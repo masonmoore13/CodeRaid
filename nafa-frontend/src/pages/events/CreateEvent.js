@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Event.css";
-import { createEvent } from "../../api/apiCalls"
+import { createEvent } from "../../api/apiCalls";
 
 const CreateEvent = () => {
   let navigate = useNavigate();
@@ -71,6 +71,7 @@ const CreateEvent = () => {
       Despcription
       <div className="col mb-2">
         <textarea
+          rows="3"
           type="text"
           className="form-control form-control-lg"
           placeholder="Description of Event"
