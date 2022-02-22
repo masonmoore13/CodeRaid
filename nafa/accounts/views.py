@@ -9,7 +9,9 @@ import jwt
 import datetime
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-
+from rest_framework.authentication import get_authorization_header
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from nafa.settings import SIMPLE_JWT
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     default_error_messages = {
@@ -66,6 +68,16 @@ class Register(APIView):
 #         }
 
 #         return response
+
+class UserView(APIView):
+    def get(self, request):
+        authentication_classes = [JWTAuthentication]
+        print(request)
+        authenticate = JWTAuthentication().authenticate(request)
+        print(authenticate)
+        username = authenticate[1]['username']
+        user = User.objects.get(username=username)
+        serializer = UserSerializer(user)
 
 # user view to see if the token is still active
 # class UserView(APIView):
