@@ -248,9 +248,10 @@ const CreateEvent = () => {
 
         <div className="col ">
           {" "}
-          Event Image
+          Event Images
           <input
             type="file"
+            multiple
             className="form-control"
             onChange={(e) => setGallery(e.target.files[0])}
           />

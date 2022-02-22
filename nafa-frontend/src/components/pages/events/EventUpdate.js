@@ -252,10 +252,10 @@ const EventUpdate = () => {
           />
         </div>
       </div>
-      
       <div className="row mb-3">
         <div className="col ">
-          Fees<input
+          Fees
+          <input
             type="text"
             className=" col-auto form-control form-control-lg"
             placeholder="Registration Fee $0.00"
@@ -265,15 +265,19 @@ const EventUpdate = () => {
         </div>
 
         <div className="col ">
-          Event Image<input
+          Event Images
+          <input
             type="file"
+            id="file"
+            multiple
             className="form-control"
             onChange={(e) => setGallery(e.target.files[0])}
           />
         </div>
 
         <div className="col ">
-          Banner Image<input
+          Banner Image
+          <input
             type="file"
             placeholder=""
             className="form-control"
