@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getEventById, updateEventById } from "../../api/apiCalls.js"
+import { getEventById, updateEventById } from "../../api/apiCalls.js";
 
 const EventUpdate = () => {
   const { id } = useParams();
@@ -91,6 +91,7 @@ const EventUpdate = () => {
       Description
       <div className="col mb-2">
         <textarea
+          rows="6"
           type="text"
           className="form-control form-control-lg"
           placeholder="Description of Event"
@@ -170,9 +171,7 @@ const EventUpdate = () => {
             <option value="IN">Indiana</option>
             <option value="IA">Iowa</option>
             <option value="KS">Kansas</option>
-            <option selected value="LA">
-              Louisiana
-            </option>
+            <option value="LA">Louisiana</option>
             <option value="KY">Kentucky</option>
             <option value="ME">Maine</option>
             <option value="MD">Maryland</option>

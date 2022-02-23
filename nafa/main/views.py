@@ -1,30 +1,20 @@
 from rest_framework import viewsets
 from main.serializers import *
 from main.models import *
-from accounts.models import User
 from rest_framework import filters
-from rest_framework import generics
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-
 
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['event__id'] #search foreign key id
 
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    queryset = Event.objects.all()
-    search_fields = ['question_text']
-    filter_backends = (filters.SearchFilter,)
-
-    def retrieve(self, request, pk=None):
-        queryset = Event.objects.all()
-        eventObj = get_object_or_404(queryset, pk=pk)
-        serializer = EventSerializer(eventObj)
-        return Response(serializer.data)
-
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['event_name', 'address_line', 'city', 'date', ]
+    ordering_fields = ['event_name', 'id', ]
 
 class CampaignView(viewsets.ModelViewSet):
     queryset = Campaign.objects.all()

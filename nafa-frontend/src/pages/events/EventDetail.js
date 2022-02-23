@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { getEventById, deleteEventById } from "../../api/apiCalls";
+import {
+  getEventById,
+  deleteEventById,
+  getGalleryByEventId,
+} from "../../api/apiCalls";
 import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
 
@@ -9,18 +12,29 @@ const EventDetail = () => {
   const [event, setEvent] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [gallery, setGallery] = useState([]);
 
-  //Delete modal state and close/open functions
+  //Delete confirmation modal state and close/open functions
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //Get event by ID
   useEffect(() => {
     getEventById(id).then((response) => {
       setEvent(response.data);
     });
   }, [id]);
 
+  //Get Gallery by event id. All images associated with event id {}
+
+  useEffect(() => {
+    getGalleryByEventId(id).then((response) => {
+      setGallery(response.data);
+    });
+  }, []);
+
+  //Delete event by id
   const deleteEvent = async (id) => {
     deleteEventById(id)
       .then((response) => {
@@ -120,15 +134,13 @@ const EventDetail = () => {
               border=""
               style={{ width: "96%" }}
             >
-              <p> {event.description}</p>
-              <p> {event.date}</p>
-              <p> {event.time}</p>
-
-              <img src={event.gallery} width="250px" alt="..." />
+              <p className="description m-2"> {event.description}</p>
+              <p className=" m-2"> {event.date}</p>
+              <p className=" m-2"> {event.time}</p>
             </Card>
           </Col>
 
-          <Col className="DetailsRightCol m-2 shadow-lg ">
+          <Col className="DetailsRightCol m-2 shadow-lg  ">
             <Card
               className="m-4 shadow-lg text-start"
               border=""
@@ -138,10 +150,10 @@ const EventDetail = () => {
                 Venue
                 <hr />
               </Card.Title>
-              <p> {event.address_line}</p>
-              <p> {event.city}</p>
-              <p> {event.state}</p>
-              <p> {event.zip_code}</p>
+              <p className=" mx-1"> {event.address_line}</p>
+              <p className=" mx-1"> {event.city}</p>
+              <p className=" mx-1"> {event.state}</p>
+              <p className=" mx-1"> {event.zip_code}</p>
               <a
                 className="btn directionsButton btn-outline-dark btn-warning  w-50 mb-2 m-1"
                 bg="warning"
@@ -169,6 +181,17 @@ const EventDetail = () => {
             >
               <Card.Title>
                 Event Pictures <hr />
+                <div className="showEvents">
+                  {gallery.map((gallery, index) => (
+                    <div
+                      style={{ width: "10em" }}
+                      key={gallery.id}
+                    >
+                        <img src={gallery.images} height="135px"></img> <hr />
+
+                    </div>
+                  ))}
+                </div>
               </Card.Title>
             </Card>
           </Col>

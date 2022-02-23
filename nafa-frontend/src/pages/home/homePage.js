@@ -1,5 +1,4 @@
 import React from "react";
-import Gallery from "../../gallery/Gallery";
 import "./homePage.css";
 
 export default function Home() {
@@ -57,7 +56,12 @@ export default function Home() {
       <hr />
       
       {/* gallery container */}
-      <Gallery/>
+      <div className="gallery" id="gallery">
+        
+        {/* image inside container */}
+        <img id="pic" className="home-images" src="https://www.nevillealumni.org/sites/default/files/styles/front_page_slider/public/IMG_7189.JPG?itok=rYXn3Mg8" /> {/* have to use react props to change the photos here */}
+        
+      </div>
     </div>
   );
 }

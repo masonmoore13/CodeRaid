@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getEvents } from "../../api/apiCalls"
 
 const ShowEvents = () => {
-  const [events, setEvents] = useState([]);
+  const [event, setEvents] = useState([]);
 
   useEffect(() => {
     getEvents()
@@ -23,17 +23,19 @@ const ShowEvents = () => {
       <div className="showEventsHeader">Events</div>
       <Card className="showEventsCardbox" border="white" boxShadow="none">
         <div className="showEvents">
-          {events.map((event, index) => (
+          {event.map((event, index) => (
             <Card
               className="m-4 shadow-lg"
               border="dark"
-              style={{ width: "27em"}}
+              style={{ width: "27em" }}
               key={event.id}
             >
               <Card.Body>
-                <Card.Title>{event.event_name}</Card.Title>
-                <Card.Text> {event.time} </Card.Text>
-                <Card.Text> {event.description} </Card.Text>
+                <Card.Title style={{ fontSize: "30px" }}>
+                  {event.event_name} <hr/>
+                </Card.Title>
+                <Card.Text style={{ fontSize: "20px" }}> {event.date} </Card.Text>
+                <Card.Text style={{ fontSize: "20px" }}> {event.time} </Card.Text>
                 <Link
                   className="btn btn-outline-dark btn-warning mr-2"
                   to={`/event/${event.id}/`}
