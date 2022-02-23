@@ -16,7 +16,7 @@ export const login = (user)=>{
 
 // Gallery 
 export const getGalleryByEventId = (id) => {
-  return axios.get(`/main/api/gallery/?search=${id}/`);
+  return axios.get(`${eventGalleryUrl}${id}`);
 };
 
 export const getGallery= ()=>{

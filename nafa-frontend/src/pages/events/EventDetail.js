@@ -7,7 +7,6 @@ import "./Event.css";
 
 const EventDetail = () => {
   const [event, setEvent] = useState([]);
-
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -26,7 +25,7 @@ const EventDetail = () => {
   //Get Gallery by event id. All images associated with event id {}
     const [gallery, setGallery] = useState([]);
     useEffect(() => {
-    getGalleryById(id).then((response) => {
+    getGalleryByEventId(id).then((response) => {
       setGallery(response.data);
     });
   }, [id]);
@@ -53,7 +52,7 @@ const EventDetail = () => {
         ></img>
       </div>
 
-      {gallery.event_id}
+      {gallery.id}
          <img
                 className="eventDetailBanner"
                 src={gallery.images}
