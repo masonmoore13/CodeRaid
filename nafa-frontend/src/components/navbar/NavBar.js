@@ -34,7 +34,7 @@ function NavBar() {
       <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-            NAFA
+            Home
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -47,9 +47,6 @@ function NavBar() {
                 <NavDropdown.Item as={Link} to="/event">All Events</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/event/createEvent">
                   Create Event
-                </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/event/Calendar">
-                  Calendar
                 </NavDropdown.Item>
               </NavDropdown>
 
