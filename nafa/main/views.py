@@ -13,8 +13,8 @@ class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['event_name']
-    ordering_fields = ['event_name', 'id']
+    search_fields = ['event_name', 'address_line', 'city', 'date', ]
+    ordering_fields = ['event_name', 'id', ]
 
 class CampaignView(viewsets.ModelViewSet):
     queryset = Campaign.objects.all()
