@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { getEventById, deleteEventById } from "../../api/apiCalls";
+import { getEventById, deleteEventById, getGallery, getGalleryById, getGalleryByEventId } from "../../api/apiCalls";
 import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
 
 const EventDetail = () => {
   const [event, setEvent] = useState([]);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //Delete modal state and close/open functions
+  //Delete confirmation modal state and close/open functions
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //Get event by ID
   useEffect(() => {
     getEventById(id).then((response) => {
       setEvent(response.data);
     });
   }, [id]);
 
+  //Get Gallery by event id. All images associated with event id {}
+    const [gallery, setGallery] = useState([]);
+    useEffect(() => {
+    getGalleryById(id).then((response) => {
+      setGallery(response.data);
+    });
+  }, [id]);
+
+  //Delete event by id
   const deleteEvent = async (id) => {
     deleteEventById(id)
       .then((response) => {
@@ -42,6 +53,14 @@ const EventDetail = () => {
         ></img>
       </div>
 
+      {gallery.event_id}
+         <img
+                className="eventDetailBanner"
+                src={gallery.images}
+                alt="..."
+              ></img>
+
+              
       <Card className="eventDetailCardBox ">
         <div className=" display-3 d-flex flex-lg-wrap justify-content-center">
           <div className="eventName">{event.event_name}</div>

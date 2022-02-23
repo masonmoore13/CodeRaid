@@ -6,12 +6,15 @@ from rest_framework import filters
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['event__id'] #search foreign key id
 
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['event_name']
+    ordering_fields = ['event_name', 'id']
 
 class CampaignView(viewsets.ModelViewSet):
     queryset = Campaign.objects.all()
