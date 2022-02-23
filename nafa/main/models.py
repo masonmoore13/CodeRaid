@@ -27,8 +27,8 @@ class Gallery(models.Model):
     images = models.FileField(upload_to='media/Event Media',)
     event = models.ForeignKey(Event, default=None, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return (self.images)
+    def __int__(self):
+        return (self.id, self.event)
 
 class Campaign(models.Model):
     campaign_name = models.CharField(max_length=150)

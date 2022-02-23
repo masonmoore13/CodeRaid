@@ -91,7 +91,7 @@ const EventUpdate = () => {
       Description
       <div className="col mb-2">
         <textarea
-          rows="3"
+          rows="6"
           type="text"
           className="form-control form-control-lg"
           placeholder="Description of Event"

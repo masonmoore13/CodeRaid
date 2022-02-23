@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { getEventById, deleteEventById, getGallery, getGalleryById, getGalleryByEventId } from "../../api/apiCalls";
+import {
+  getEventById,
+  deleteEventById,
+  getGalleryByEventId,
+} from "../../api/apiCalls";
 import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
 
@@ -9,6 +12,7 @@ const EventDetail = () => {
   const [event, setEvent] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [gallery, setGallery] = useState([]);
 
   //Delete confirmation modal state and close/open functions
   const [show, setShow] = useState(false);
@@ -23,12 +27,12 @@ const EventDetail = () => {
   }, [id]);
 
   //Get Gallery by event id. All images associated with event id {}
-    const [gallery, setGallery] = useState([]);
-    useEffect(() => {
+
+  useEffect(() => {
     getGalleryByEventId(id).then((response) => {
       setGallery(response.data);
     });
-  }, [id]);
+  }, []);
 
   //Delete event by id
   const deleteEvent = async (id) => {
@@ -52,14 +56,6 @@ const EventDetail = () => {
         ></img>
       </div>
 
-      {gallery.id}
-         <img
-                className="eventDetailBanner"
-                src={gallery.images}
-                alt="..."
-              ></img>
-
-              
       <Card className="eventDetailCardBox ">
         <div className=" display-3 d-flex flex-lg-wrap justify-content-center">
           <div className="eventName">{event.event_name}</div>
@@ -185,6 +181,17 @@ const EventDetail = () => {
             >
               <Card.Title>
                 Event Pictures <hr />
+                <div className="showEvents">
+                  {gallery.map((gallery, index) => (
+                    <div
+                      style={{ width: "10em" }}
+                      key={gallery.id}
+                    >
+                        <img src={gallery.images} height="135px"></img> <hr />
+
+                    </div>
+                  ))}
+                </div>
               </Card.Title>
             </Card>
           </Col>
