@@ -6,52 +6,89 @@ import {
   Form,
   FormControl,
   Button,
+  NavLink,
+  Dropdown,
 } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import './navbar.css'
+import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
+import { AiOutlineUser, AiOutlineLogin } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { loginError } from "../../pages/login/loginSlice";
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  const { isAuth } = useSelector((state) => state.login);
+  const {username } = useSelector((state)=> state.user.user)
+  const dispatch = useDispatch();
+  const logOut = () => {
+    sessionStorage.removeItem("accessJWT");
+    localStorage.removeItem("nafaSite");
+    dispatch(loginError(""))
+    navigate("");
+  };
+
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">NAFA</Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            NAFA
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
+              style={{ maxHeight: "150px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/events">
-                Events
-              </Nav.Link>
+              <NavDropdown title="Events" id="navbarScrollingDropdown">
+                <NavDropdown.Item as={Link} to="/event">All Events</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/event/createEvent">
+                  Create Event
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/event/Calendar">
+                  Calendar
+                </NavDropdown.Item>
+              </NavDropdown>
+
               <Nav.Link as={Link} to="/contact">
                 Contact
               </Nav.Link>
               <Nav.Link as={Link} to="/about">
                 About
               </Nav.Link>
-
-              <Nav.Link as={Link} to="/signup">
-                Signup
-              </Nav.Link>
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown>
             </Nav>
-            <Form className="d-flex">
+
+            {!isAuth ? (
+              <Nav>
+                <Nav.Link as={Link} to="/signup">
+                  Signup
+                </Nav.Link>
+                <Nav.Link as={Link} to="/login">
+                  Login <AiOutlineLogin />
+                </Nav.Link>
+              </Nav>
+            ) : (
+              <Nav >
+                <NavDropdown align={{ lg: 'end' }}
+                  title={<AiOutlineUser />}
+                 flip={true}
+                >
+                  
+                  <NavDropdown.Item href="#">
+                    {username}
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
+                  
+                </NavDropdown>
+                  
+                 
+              </Nav>
+            )}
+
+            {/* <Form className="d-flex">
               <FormControl
                 type="search"
                 placeholder="Search"
@@ -59,12 +96,11 @@ function NavBar() {
                 aria-label="Search"
               />
               <Button variant="outline-warning">Search</Button>
-            </Form>
+            </Form> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div>
-      </div>
+      <div></div>
     </div>
   );
 }
