@@ -9,20 +9,26 @@ class Event(models.Model):
     time = models.CharField(max_length=40,null=True, blank=True)
     address_line = models.CharField(max_length=250, null=True, blank=True)
     city = models.CharField(max_length=150, blank=True, null=True, default=None)
-    state = models.CharField(max_length=25, choices=CONTIGUOUS_STATES, default='Louisiana')
+    state = models.CharField(max_length=25, default=None)
     zip_code = models.CharField(max_length=150)
     contact_name = models.CharField(max_length=150, blank=True, null=True, default=None)
     contact_number = models.CharField(max_length=150, blank=True, null=True, default=None)
     contact_email = models.EmailField(max_length=150, blank=True, null=True, default=None)
     banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True, default='EventBannerDefault.jpg') 
-    gallery = models.ImageField(upload_to='media/Event Media', null=True, blank=True,) 
+    
     description = models.TextField(max_length=2500)
-    # media = models.ImageField(upload_to='media/Event Media', null=True, blank=True) 
     # rsvpd_members = models.ManyToManyField(User, blank=True)
     registration_fees = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self):
       return(self.event_name)
+
+class Gallery(models.Model):
+    images = models.FileField(upload_to='media/Event Media',)
+    event = models.ForeignKey(Event, default=None, on_delete=models.CASCADE)
+
+    def __int__(self):
+        return (self.id, self.event)
 
 class Campaign(models.Model):
     campaign_name = models.CharField(max_length=150)
@@ -39,7 +45,7 @@ class Campaign(models.Model):
 
 class CategoryOfTeam(models.Model):
     category_name = models.CharField(max_length=150)
-    year = models.IntegerField()
+    year = models.IntegerField(null=False, default=2000)
     description = models.TextField(max_length=2500)
 
     def __str__(self):
@@ -50,7 +56,7 @@ class Team(models.Model):
 
     members_of_team = models.ManyToManyField(User, related_name='members_of_team') #Connects to members but not all members of old teams are site members
     coaches = models.ManyToManyField(User, related_name='coaches', blank=True)
-    type_of_team = models.ForeignKey(CategoryOfTeam, on_delete=models.CASCADE)
+    type_of_team = models.ForeignKey(CategoryOfTeam, on_delete=models.CASCADE, null=False, default="")
     description = models.TextField(max_length=2500)
     media = models.ImageField(upload_to='media/Team Media', blank=True)
 
@@ -68,7 +74,7 @@ class Scholarship(models.Model):
       return(self.scholarship_name)
 
 class Contribution(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default="")
     events = models.ManyToManyField(Event)
     campaigns = models.ManyToManyField(Campaign)
 

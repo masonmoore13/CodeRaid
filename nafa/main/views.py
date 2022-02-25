@@ -1,6 +1,13 @@
 from rest_framework import viewsets
 from main.serializers import *
 from main.models import *
+from rest_framework import filters
+
+class GalleryView(viewsets.ModelViewSet):
+    queryset = Gallery.objects.all()
+    serializer_class = GallerySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['event__id'] #search foreign key id
 
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
