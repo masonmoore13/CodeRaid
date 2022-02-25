@@ -34,4 +34,4 @@ jobs:
       if: github.ref == 'refs/heads/master' && job.status == 'success'
       run: |
         git remote add heroku https://heroku:$HEROKU_BACKEND_API_TOKEN@git.heroku.com/$HEROKU_BACKEND_APP_NAME.git
-        git subtree push --prefix djangodeploypractice heroku master 
+        git subtree push --prefix nafa heroku master 
