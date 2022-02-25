@@ -141,6 +141,9 @@ REST_FRAMEWORK = {
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+    ,
+    # this will make the error key to be `error`
+    'NON_FIELD_ERRORS_KEY': 'error'
 
 }
 REST_USE_JWT = True
@@ -220,3 +223,11 @@ CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
     'https://localhost:8000',
 )
+
+
+# email config
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "jny.bbk1@gmail.com"
+EMAIL_HOST_PASSWORD = "mgxupteotbyvttnj"

@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from .permissions import UserPermission
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication 
+from django.core.mail import send_mail
+
 
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()

@@ -62,6 +62,7 @@ class User(AbstractUser):
     have_paid_dues = models.BooleanField(default=False)
     descriptions = models.TextField(max_length=2500, blank=True, null=True)
     achievements = models.TextField(max_length=2500, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
 
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
     USERNAME_FIELD = 'username'

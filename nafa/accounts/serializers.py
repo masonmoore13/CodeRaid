@@ -1,8 +1,30 @@
+from attr import validate
 from rest_framework import serializers
 from .models import User
 import sys
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
+
+
+
+# register serializer
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(max_length=68, min_length=6, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ["email", "username", "password"]
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        username = attrs.get('username', '')
+
+        if not username.isalnum():
+            raise serializers.ValidationError("The username should only contain alphanumeric characters.")
+
+        return attrs
+
+
 
 
 class UserSerializer(serializers.ModelSerializer):
