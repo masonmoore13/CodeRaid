@@ -210,5 +210,5 @@ CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
     'https://localhost:8000',
     'https://nafa-backend.herokuapp.com',
-    'https://nafa-frontend.herokuapp.com/'
+    'https://nafa-frontend.herokuapp.com'
 )
