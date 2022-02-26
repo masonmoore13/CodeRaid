@@ -30,7 +30,7 @@ MEDIA_URL = '/'
 SECRET_KEY = 'django-insecure-lm)s(2@@drl7%$u=sy=-aiv669hgxd6w=9$_!i5bakcl$9u6c#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com',
                  'https://nafa-frontend.herokuapp.com',
@@ -211,7 +211,7 @@ DATABASES['default'].update(db_from_env)
 # Whitelisting react port
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
-    'https://localhost:8000',
+    'http://localhost:8000',
     'https://nafa-backend.herokuapp.com',
     'https://nafa-frontend.herokuapp.com'
 )
