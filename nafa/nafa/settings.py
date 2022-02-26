@@ -210,4 +210,5 @@ DATABASES['default'].update(db_from_env)
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
     'https://localhost:8000',
+    'https://nafa-backend.herokuapp.com'
 )
