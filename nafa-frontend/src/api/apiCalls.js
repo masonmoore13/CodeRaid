@@ -17,11 +17,11 @@ export const login = (user)=>{
 
 // Gallery 
 export const getGalleryByEventId = (id) => {
-  return axios.get(`${eventGalleryUrl}${id}`);
+  return axios.get(`${eventGalleryUrl}${id}/`);
 };
 
 export const getGallery= ()=>{
-    return axios.get(`${eventUrl}`)
+    return axios.get(`${eventUrl}/`)
 }
 export const createGallery = (eventObject)=>{
     return axios.post(eventUrl,eventObject);
