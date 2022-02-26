@@ -10,7 +10,12 @@ from django.contrib.sitemaps.views import sitemap
 from .sitemap import *
 
 sitemaps = {
-    'events': EventSiteMap
+    'events': EventSiteMap,
+    'campaigns': CampaignSiteMap,
+    'gallery': GallerySiteMap,
+    'CategoryOfTeam': CategoryOfTeamSiteMap,
+    'team': TeamSiteMap,
+    'scholarship': ScholarshipSiteMap
 }
 
 schema_view = get_schema_view(
