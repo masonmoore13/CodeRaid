@@ -1,10 +1,19 @@
 import axios from "axios";
 import { host, localHost } from '../config'
 
-const apiUrl = host+"/accounts/register/";
-const loginUrl = host+"/accounts/login/"
-const eventUrl= host+"/main/api/event/";
-const eventGalleryUrl = host+"/main/api/gallery/?search=";
+let address
+
+if (process.env.NODE_ENV !== 'production') {
+  address = localHost
+}else{
+  address = host
+}
+
+
+const apiUrl = address+"/accounts/register/";
+const loginUrl = address+"/accounts/login/"
+const eventUrl= address+"/main/api/event/";
+const eventGalleryUrl = address+"/main/api/gallery/?search=";
 
 // Auth
 export const signup = (user)=>{

@@ -1,9 +1,17 @@
 import axios from "axios";
 import { host, localHost } from '../config'
 
-const loginUrl = host+"/accounts/api/token/";
-const userProfileUrl = host+"/accounts/user/";
-const accessTokenUrl = host+"accounts/api/token/refresh/";
+let address
+
+if (process.env.NODE_ENV !== 'production') {
+  address = localHost
+}else{
+  address = host
+}
+
+const loginUrl = address+"/accounts/api/token/";
+const userProfileUrl = address+"/accounts/user/";
+const accessTokenUrl = address+"/accounts/api/token/refresh/";
 
 // export const userLogin = (formData) => {
 //   return new Promise(async (resolve, reject) => {
