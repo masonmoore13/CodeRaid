@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
+import django_heroku
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +32,9 @@ SECRET_KEY = 'django-insecure-lm)s(2@@drl7%$u=sy=-aiv669hgxd6w=9$_!i5bakcl$9u6c#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com', 'https://nafa-frontend.herokuapp.com']
+ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com',
+                 'https://nafa-frontend.herokuapp.com',
+                 '*']
 
 
 # Application definition
@@ -64,9 +67,9 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
