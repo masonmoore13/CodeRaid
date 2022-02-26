@@ -29,9 +29,9 @@ MEDIA_URL = '/'
 SECRET_KEY = 'django-insecure-lm)s(2@@drl7%$u=sy=-aiv669hgxd6w=9$_!i5bakcl$9u6c#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com', 'https://nafa-frontend.herokuapp.com/']
 
 
 # Application definition
@@ -172,8 +172,6 @@ SIMPLE_JWT = {
 }
 
 
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -211,5 +209,6 @@ DATABASES['default'].update(db_from_env)
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
     'https://localhost:8000',
-    'https://nafa-backend.herokuapp.com'
+    'https://nafa-backend.herokuapp.com',
+    'https://nafa-frontend.herokuapp.com/'
 )
