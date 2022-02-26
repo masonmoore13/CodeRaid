@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-lm)s(2@@drl7%$u=sy=-aiv669hgxd6w=9$_!i5bakcl$9u6c#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com', 'https://nafa-frontend.herokuapp.com/']
+ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com', 'https://nafa-frontend.herokuapp.com']
 
 
 # Application definition
