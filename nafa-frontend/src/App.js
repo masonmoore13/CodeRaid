@@ -37,7 +37,7 @@ function App() {
             <Route path="/about/" element={<About />} />
             <Route path="/contact/" element={<Contact />} />
             <Route path="/signup/" element={<UserSignup actions={actions} />} />
-            <Route path="/login" element={<Login actions={actions} />} />
+            <Route path="/login/" element={<Login actions={actions} />} />
             <Route exact path="/event/" element={<ShowEvents />} />
             <Route path="/event/createEvent/" element={<CreateEvent />} />
             <Route path="/event/:id/" element={<EventDetail />} />
