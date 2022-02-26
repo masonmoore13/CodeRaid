@@ -1,8 +1,9 @@
 import axios from "axios";
+import { host, localHost } from '../config'
 
-const loginUrl = "/accounts/api/token/";
-const userProfileUrl = "/accounts/user/";
-const accessTokenUrl = "accounts/api/token/refresh/";
+const loginUrl = host+"/accounts/api/token/";
+const userProfileUrl = host+"/accounts/user/";
+const accessTokenUrl = host+"accounts/api/token/refresh/";
 
 // export const userLogin = (formData) => {
 //   return new Promise(async (resolve, reject) => {
