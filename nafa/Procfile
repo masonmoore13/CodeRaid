@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn nafa.wsgi:application —-log-file - --log-level debug
+web: gunicorn nafa.wsgi:application --log-file - 
