@@ -134,9 +134,6 @@ const CreateEvent = () => {
             value={state}
             onChange={(e) => setState(e.target.value)}
           >
-            <option selected value="LA">
-              Louisiana
-            </option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>
@@ -266,7 +263,7 @@ const CreateEvent = () => {
           />
         </div>
       </div>
-      <a href="/event" className="btn btn-warning " onClick={CreateEventInfo}>
+      <a  className="btn btn-warning " onClick={CreateEventInfo}>
         Add Event
       </a>
     </form>
