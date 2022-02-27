@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
+# import django_heroku
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +32,9 @@ SECRET_KEY = 'django-insecure-lm)s(2@@drl7%$u=sy=-aiv669hgxd6w=9$_!i5bakcl$9u6c#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://nafa-backend.herokuapp.com',
+                 'https://nafa-frontend.herokuapp.com',
+                 '*']
 
 
 # Application definition
@@ -53,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'corsheaders',
     'drf_yasg',
@@ -65,9 +69,9 @@ SITE_ID = 2
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -185,8 +189,6 @@ SIMPLE_JWT = {
 }
 
 
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -223,7 +225,9 @@ DATABASES['default'].update(db_from_env)
 # Whitelisting react port
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
-    'https://localhost:8000',
+    'http://localhost:8000',
+    'https://nafa-backend.herokuapp.com',
+    'https://nafa-frontend.herokuapp.com'
 )
 
 

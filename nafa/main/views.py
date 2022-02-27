@@ -22,9 +22,6 @@ class GalleryView(viewsets.ModelViewSet):
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['event_name', 'address_line', 'city', 'date', ]
-    ordering_fields = ['event_name', 'id', ]
 
     authentication_classes = (JWTTokenUserAuthentication,)
     permission_classes = [UserPermission]
