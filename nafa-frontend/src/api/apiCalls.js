@@ -1,9 +1,19 @@
 import axios from "axios";
+import { host, localHost } from '../config'
 
-const apiUrl = "/accounts/register/";
-const loginUrl = "/accounts/login/"
-const eventUrl= "/main/api/event/";
-const eventGalleryUrl = "/main/api/gallery/?search=";
+let address
+
+if (process.env.NODE_ENV !== 'production') {
+  address = localHost
+}else{
+  address = host
+}
+
+
+const apiUrl = address+"/accounts/register/";
+const loginUrl = address+"/accounts/login/"
+const eventUrl= address+"/main/api/event/";
+const eventGalleryUrl = address+"/main/api/gallery/?search=";
 
 // Auth
 export const signup = (user)=>{
@@ -16,11 +26,11 @@ export const login = (user)=>{
 
 // Gallery 
 export const getGalleryByEventId = (id) => {
-  return axios.get(`${eventGalleryUrl}${id}`);
+  return axios.get(`${eventGalleryUrl}${id}/`);
 };
 
 export const getGallery= ()=>{
-    return axios.get(`${eventUrl}`)
+    return axios.get(`${eventUrl}/`)
 }
 export const createGallery = (eventObject)=>{
     return axios.post(eventUrl,eventObject);

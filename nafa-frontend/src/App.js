@@ -34,14 +34,14 @@ function App() {
         <Routes>
           <Route element={<RouterWrapper />}>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/signup" element={<UserSignup actions={actions} />} />
-            <Route path="/login" element={<Login actions={actions} />} />
-            <Route exact path="/event" element={<ShowEvents />} />
-            <Route path="/event/createEvent" element={<CreateEvent />} />
+            <Route path="/about/" element={<About />} />
+            <Route path="/contact/" element={<Contact />} />
+            <Route path="/signup/" element={<UserSignup actions={actions} />} />
+            <Route path="/login/" element={<Login actions={actions} />} />
+            <Route exact path="/event/" element={<ShowEvents />} />
+            <Route path="/event/createEvent/" element={<CreateEvent />} />
             <Route path="/event/:id/" element={<EventDetail />} />
-            <Route path="/event/:id/update" element={<EventUpdate />} />
+            <Route path="/event/:id/update/" element={<EventUpdate />} />
           </Route>
 
           <Route path="*" exact element={<PageNotFound />} />
