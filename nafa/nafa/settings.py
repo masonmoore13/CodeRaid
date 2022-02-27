@@ -58,11 +58,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg',
+    'django.contrib.sitemaps',
 ]
 
 
-SITE_ID = 1
+SITE_ID = 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,6 +96,13 @@ TEMPLATES = [
         },
     },
 ]
+
+# permissions
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 WSGI_APPLICATION = 'nafa.wsgi.application'
 
@@ -138,8 +147,13 @@ REST_FRAMEWORK = {
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+    ,
+    # this will make the error key to be `error`
+    'NON_FIELD_ERRORS_KEY': 'error'
 
 }
+REST_USE_JWT = True
+
 
 
 SIMPLE_JWT = {
@@ -215,3 +229,11 @@ CORS_ORIGIN_WHITELIST = (
     'https://nafa-backend.herokuapp.com',
     'https://nafa-frontend.herokuapp.com'
 )
+
+
+# email config
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "jny.bbk1@gmail.com"
+EMAIL_HOST_PASSWORD = "mgxupteotbyvttnj"
