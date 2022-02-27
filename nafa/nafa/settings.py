@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
-import django_heroku
+# import django_heroku
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
