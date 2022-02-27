@@ -1,8 +1,5 @@
-from ast import Try
-from attr import validate
 from rest_framework import serializers
 from .models import User
-import sys
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
