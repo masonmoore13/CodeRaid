@@ -9,6 +9,19 @@
     left: auto;
 }
 
+.auth-button>a{
+	color: white;
+}
+
+.auth-button>a:hover{
+	color: rgb(242,182,92);
+}
+
+
+.auth-button>a:focus{
+	color: rgb(242,182,92);
+}
+
 .nav-link:hover{
 	background-color: #F2C93C;
 	color: black !important;

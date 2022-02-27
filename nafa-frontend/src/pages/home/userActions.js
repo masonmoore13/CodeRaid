@@ -8,7 +8,7 @@ export const getUserProfile = () => async dispatch =>{
         dispatch(getUserPending());
         // call the api
         const user = await fetchUser() ;   
-        console.log(user);
+        //console.log(user);
         //success if success 
         if(user.data){
             return dispatch(getUserSuccess(user.data))

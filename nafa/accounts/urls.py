@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import  Logout,  MyTokenObtainPairView, VerifyEmail, SetNewPassword,RequestPasswordResetEmail, RegisterView, UserView, PasswordTokenCheck
 from rest_framework_simplejwt.views import (
-    TokenRefreshView,
+    TokenRefreshView,TokenVerifyView
 )
 
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('reset-password/<uidb64>//<token>//', PasswordTokenCheck.as_view(), name="reset_password_confirm"),
     path('set-new-password/', SetNewPassword.as_view(), name="set-new-password"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify')
 ]
