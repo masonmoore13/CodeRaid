@@ -6,6 +6,7 @@ function ButtonWithProgress(props) {
   return (
     <>
       <Button
+      type="submit"
         className="d-flex justify-content-center"
         onClick={props.onClick}
         disabled={props.disabled}

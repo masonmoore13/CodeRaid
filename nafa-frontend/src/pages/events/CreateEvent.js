@@ -264,7 +264,7 @@ const CreateEvent = () => {
           />
         </div>
       </div>
-      <a className="btn btn-warning " onClick={CreateEventInfo}>
+      <a className="btn btn-warning" onClick={CreateEventInfo}>
         Add Event
       </a>
     </form>

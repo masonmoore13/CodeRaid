@@ -21,6 +21,7 @@ const userSlice = createSlice({
     getUserFaliure: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
+      state.user= {}
     },
   },
 });
