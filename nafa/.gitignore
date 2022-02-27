@@ -1,7 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 
-__pycache__/
 migrations/
 
+
+# Django #
+*.log
+*.pot
 *.pyc
+__pycache__
+db.sqlite3
+media
