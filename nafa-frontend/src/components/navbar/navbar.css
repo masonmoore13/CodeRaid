@@ -8,3 +8,9 @@
     right: 0;
     left: auto;
 }
+
+.nav-link:hover{
+	background-color: #F2C93C;
+	color: black !important;
+	transition: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
