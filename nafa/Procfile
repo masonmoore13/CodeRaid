@@ -1,3 +1,4 @@
-release: python manage.py makemigrations
+release: python manage.py makemigrations accounts
+release: python manage.py makemigrations main
 release: python manage.py migrate
 web: gunicorn nafa.wsgi:application --log-file - 
