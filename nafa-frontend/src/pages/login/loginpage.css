@@ -22,5 +22,8 @@
   }
 
   .options>a{
-    color:  rgb(242,182,92);;  
+    color:  rgb(242,182,92);;
+  }
+  .btn-warning{
+    color: black !important;
   }
