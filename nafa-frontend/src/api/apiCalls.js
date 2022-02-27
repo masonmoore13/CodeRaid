@@ -1,13 +1,13 @@
 import axios from "axios";
-import { host, localHost } from '../config'
+import address from '../config'
 
-let address
+// let address
 
-if (process.env.NODE_ENV !== 'production') {
-  address = localHost
-}else{
-  address = host
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   address = localHost
+// }else{
+//   address = host
+// }
 
 
 const apiUrl = address+"/accounts/register/";

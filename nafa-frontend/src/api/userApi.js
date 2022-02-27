@@ -1,36 +1,16 @@
 import axios from "axios";
-import { host, localHost } from '../config'
+import address from "../config";
 
-let address
-
-if (process.env.NODE_ENV !== 'production') {
-  address = localHost
-}else{
-  address = host
-}
-
-const loginUrl = address+"/accounts/api/token/";
-const userProfileUrl = address+"/accounts/user/";
-const accessTokenUrl = address+"/accounts/api/token/refresh/";
-
-// export const userLogin = (formData) => {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       const res = await axios.post(loginUrl, formData);
-//       console.log(res);
-//       resolve(res);
-//     } catch (error) {
-//       console.log(error.response);
-//        reject(error.response);
-//     }
-//   });
-// };
+const loginUrl = address + "/accounts/api/token/";
+const userProfileUrl = address + "/accounts/user/";
+const accessTokenUrl = address + "/accounts/api/token/refresh/";
+const verifyTokenUrl = address + "/accounts/api/token/verify/";
 
 export const userLogin = (formData) => {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await axios.post(loginUrl, formData);
-      console.log(res.status);
+
       resolve(res.data);
       if (res.status === 200) {
         sessionStorage.setItem("accessJWT", res.data.access);
@@ -42,8 +22,7 @@ export const userLogin = (formData) => {
         );
       }
     } catch (error) {
-      console.log(error.message);
-      reject(error);
+      return reject(error);
     }
   });
 };
@@ -52,7 +31,7 @@ export const fetchUser = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const accessJWT = sessionStorage.getItem("accessJWT");
-      
+
       if (!accessJWT) {
         return reject("Token not found");
       }
@@ -61,39 +40,55 @@ export const fetchUser = () => {
           Authorization: "Bearer " + accessJWT,
         },
       });
+
       resolve(res);
     } catch (error) {
-      console.log(error.message);
       reject(error);
     }
   });
 };
 
-export const fetchNewAccessJWT = (refreshJWT) => {
+export const fetchNewAccessJWT = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const { refreshJWT } = JSON.parse(localStorage.getItem("nafaSite"));
-
       if (!refreshJWT) {
         return reject("Token not found");
       }
 
-      const res = await axios.post(accessTokenUrl,{
-        "refresh": refreshJWT
-      })
-      console.log(res);
-      if(res.status === 200){
-        sessionStorage.setItem("accessJWT", res.data.access)
+      const res = await axios.post(accessTokenUrl, {
+        refresh: refreshJWT,
+      });
+      if (res.status === 200) {
+        sessionStorage.setItem("accessJWT", res.data.access);
       }
       resolve(true);
-
     } catch (error) {
-      console.log(error);
-      if(error.status === 401){
+      if (error.response.status === 401) {
         localStorage.removeItem("nafaSite");
+        sessionStorage.removeItem("accessJWT");
       }
       reject(false);
     }
-    
+  });
+};
+
+export const verifyToken = () => {
+  return new Promise(async (resolve, reject) => {
+    // send the request.. only accessJWT verification needed
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+      const res = await axios.post(verifyTokenUrl, { token: accessJWT });
+      // if 200 then token verified and resolve true
+      if (res.status === 200) {
+        resolve(true);
+      }
+    } catch (error) {
+      if (error.response.status === 401 || error.response.status === 400) {
+        reject(false);
+      }
+    }
+
+    // if not delete that token and resolve false
   });
 };

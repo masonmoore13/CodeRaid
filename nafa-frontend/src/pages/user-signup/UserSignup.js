@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 
 import Input from "../../components/input/Input";
-import './signUpPage.css';
+import "./signUpPage.css";
 
 const defaultProp = {
   postSignup: () => {
@@ -27,7 +28,6 @@ function UserSignup({ props, actions = defaultProp }) {
   const navigate = useNavigate();
 
   const onInputChange = (event) => {
-    
     const { value, name } = event.target;
 
     setForm((previousForm) => {
@@ -40,13 +40,10 @@ function UserSignup({ props, actions = defaultProp }) {
     setErrors((previousErrors) => {
       return {
         ...previousErrors,
-        [name]: undefined
+        [name]: undefined,
       };
     });
-  
   };
-
- 
 
   const onClickSignup = () => {
     const { username, email, password } = form;
@@ -60,77 +57,85 @@ function UserSignup({ props, actions = defaultProp }) {
       .postSignup(user)
       .then((response) => {
         setPendingApiCall(false);
-        navigate("/login")
+        navigate("/login");
       })
       .catch((apiError) => {
-        if (apiError.response.data && apiError.response.data.validationErrors) {
-          setErrors(apiError.response.data.validationErrors);
+        if (apiError.response.data) {
+          setErrors(apiError.response.data);
         }
         setPendingApiCall(false);
       });
   };
 
-
   let passwordRepeatError;
   const { password, passwordRepeat } = form;
   if (password || passwordRepeat) {
     passwordRepeatError =
-      password === passwordRepeat ? '' : 'Does not match to password';
+      password === passwordRepeat ? "" : "Does not match to password";
   }
 
- 
   return (
     <div className="signUp-container">
-      <h1>Sign Up</h1>
-      <Form>
-        <Input
-          label="Username"
-          type="text"
-          placeholder="Your Username"
-          name="username"
-          onChange={onInputChange}
-          hasError={errors.username && true}
-          error={errors.username}
-        />
+      <div className="jumbotron">
+        <Row>
+          <Col>
+            <h2 className="text-center">Sign Up</h2>
+            <hr />
+            <Form>
+              <Input
+                label="Username"
+                type="text"
+                placeholder="Your Username"
+                name="username"
+                onChange={onInputChange}
+                hasError={errors.username && true}
+                error={errors.username}
+              />
 
-        <Input
-          label="Email address"
-          type="email"
-          name="email"
-          placeholder="name@example.com"
-          onChange={onInputChange}
-          hasError={errors.email && true}
-          error={errors.email}
-        />
-        
-        <Input
-            label="Password"
-            type="password"
-            name="password"
-            placeholder="password"
-            onChange={onInputChange}
-            hasError={errors.password && true}
-            error={errors.password}
-          />
-       
-        <Input
-            label="Repeat your Password"
-            type="password"
-            name="passwordRepeat"
-            placeholder="Repeat your password"
-            onChange={onInputChange}
-            hasError={passwordRepeatError && true}
-            error={passwordRepeatError}
-          />
+              <Input
+                label="Email address"
+                type="email"
+                name="email"
+                placeholder="name@example.com"
+                onChange={onInputChange}
+                hasError={errors.email && true}
+                error={errors.email}
+              />
 
-        <ButtonWithProgress
-          onClick={onClickSignup}
-          disabled={pendingApiCall || passwordRepeatError ? true : false}
-          pendingApiCall={pendingApiCall}
-          text="Sign up"
-        >
-        </ButtonWithProgress>
-      </Form>
+              <Input
+                label="Password"
+                type="password"
+                name="password"
+                placeholder="password"
+                onChange={onInputChange}
+                hasError={errors.password && true}
+                error={errors.password}
+              />
+
+              <Input
+                label="Repeat your Password"
+                type="password"
+                name="passwordRepeat"
+                placeholder="Repeat your password"
+                onChange={onInputChange}
+                hasError={passwordRepeatError && true}
+                error={passwordRepeatError}
+              />
+              <div className="signup-option">
+                <ButtonWithProgress
+                  onClick={onClickSignup}
+                  disabled={
+                    pendingApiCall || passwordRepeatError ? true : false
+                  }
+                  pendingApiCall={pendingApiCall}
+                  text="Sign up"
+                ></ButtonWithProgress>
+                <span>Have an Account? <Link to="/login">Login?</Link></span>
+              </div>
+            </Form>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

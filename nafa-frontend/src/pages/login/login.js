@@ -4,21 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 import Input from "../../components/input/Input";
 import "./loginpage.css";
-
-import { loginUser } from "./loginAction";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { loginError, loginPending, loginSuccess } from "./loginSlice";
+import { userLogin } from "../../api/userApi";
+import { getUserProfile } from "../home/userActions";
+import { Link } from "react-router-dom";
 
 function Login() {
+  // used to dispatch actions
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { isLoading, error } = useSelector((state) => state.login);
+
+  // username and password state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // state changes of username and password
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-
     switch (name) {
       case "username":
         setUsername(value);
@@ -31,11 +35,25 @@ function Login() {
     }
   };
 
-  const onClickLogin = async (e) => {
+  // when the login button is clicked
+  const onClickLogin = (e) => {
     e.preventDefault();
-    // dispatch the actions
-     dispatch(loginUser({username, password}));
-     navigate("/");
+    // pending before the api call
+    dispatch(loginPending());
+    // call the api
+    userLogin({ username, password })
+      .then((res) => {
+        dispatch(loginSuccess());
+        dispatch(getUserProfile());
+        if (!error) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        setUsername("");
+        setPassword("");
+        dispatch(loginError(error.response.data.detail));
+      });
   };
 
   let disableLogin = false;
@@ -60,6 +78,7 @@ function Login() {
                 placeholder="Your Username"
                 name="username"
                 onChange={handleOnChange}
+                value={username}
                 //   hasError={errors.username && true}
                 //   error={errors.username}
               />
@@ -70,6 +89,7 @@ function Login() {
                 name="password"
                 placeholder="password"
                 onChange={handleOnChange}
+                value={password}
                 // hasError={errors.password && true}
                 // error={errors.password}
               />
@@ -96,7 +116,10 @@ function Login() {
 
         <Row>
           <Col>
-            <a href="#!">Forgot password?</a>
+            <div className="options">
+              <a href="#!">Forgot password?</a>
+              <Link to="/signup">SignUp?</Link>
+            </div>
           </Col>
         </Row>
       </div>

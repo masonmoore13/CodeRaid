@@ -10,8 +10,10 @@ export const loginUser = (user) => async dispatch =>{
         const res = await userLogin(user) ;   
         dispatch(loginSuccess())  
         dispatch(getUserProfile());
+        return true
     }catch(error){
         console.log(error)
         dispatch(loginError(error.response.data.detail))
+        return false
     }
 }
