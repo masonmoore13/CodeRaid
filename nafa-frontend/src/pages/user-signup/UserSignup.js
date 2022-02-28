@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 
 import Input from "../../components/input/Input";
+import RecaptchaComponent from "../../components/recaptcha/RecaptchaComponent";
 import "./signUpPage.css";
 
 const defaultProp = {
@@ -26,6 +27,23 @@ function UserSignup({ props, actions = defaultProp }) {
   const [pendingApiCall, setPendingApiCall] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+  
+  
+  
+  const handleRecapthca = (value) => {
+    if(errors){
+    }
+    setRecaptchaVerified(true);
+  };
+
+  const handleErrorRecaptcha = () => {
+    setRecaptchaVerified(false);
+  };
+  
+   
+
 
   const onInputChange = (event) => {
     const { value, name } = event.target;
@@ -121,11 +139,17 @@ function UserSignup({ props, actions = defaultProp }) {
                 hasError={passwordRepeatError && true}
                 error={passwordRepeatError}
               />
+              <RecaptchaComponent
+                handleRecapthca={handleRecapthca}
+                handleErrorRecaptcha={handleErrorRecaptcha}
+              />
+			  
               <div className="signup-option">
+              
                 <ButtonWithProgress
                   onClick={onClickSignup}
                   disabled={
-                    pendingApiCall || passwordRepeatError ? true : false
+                    pendingApiCall || passwordRepeatError ? true : false||!recaptchaVerified
                   }
                   pendingApiCall={pendingApiCall}
                   text="Sign up"

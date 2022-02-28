@@ -1,11 +1,14 @@
 import React from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
-export const RecaptchaComponent = () => {
+const RecaptchaComponent = ({ handleRecapthca }) => {
   return (
     <ReCAPTCHA
       sitekey="6LeyrKQeAAAAANzwYlkhakli2O2gIbC0dNHdM81p"
       onChange={handleRecapthca}
-      theme="dark"
+      theme = "dark"
     />
   );
 };
+
+export default RecaptchaComponent;
