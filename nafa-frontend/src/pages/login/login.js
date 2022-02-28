@@ -9,6 +9,8 @@ import { loginError, loginPending, loginSuccess } from "./loginSlice";
 import { userLogin } from "../../api/userApi";
 import { getUserProfile } from "../home/userActions";
 import { Link } from "react-router-dom";
+import RecaptchaComponent from "../../components/recaptcha/RecaptchaComponent";
+
 
 function Login() {
   // used to dispatch actions
@@ -19,6 +21,15 @@ function Login() {
   // username and password state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [recaptchaVerified, setRecaptchaVerified] = useState(false);
+
+  const handleRecapthca = (value) => {
+    setRecaptchaVerified(true);
+  };
+
+  const handleErrorRecaptcha = () => {
+    setRecaptchaVerified(false);
+  };
 
   // state changes of username and password
   const handleOnChange = (e) => {
@@ -101,10 +112,15 @@ function Login() {
                   </Alert>
                 </div>
               )}
+
+              <RecaptchaComponent
+                handleRecapthca={handleRecapthca}
+                handleErrorRecaptcha={handleErrorRecaptcha}
+              />
               <div className="mt-4 mb-2 d-flex justify-content-center">
                 <ButtonWithProgress
                   onClick={onClickLogin}
-                  disabled={disableLogin || isLoading}
+                  disabled={disableLogin || isLoading || !recaptchaVerified}
                   text="Login"
                   pendingApiCall={isLoading}
                 />
