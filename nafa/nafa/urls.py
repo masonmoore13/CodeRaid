@@ -44,34 +44,34 @@ urlpatterns = [
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
 
-# # run this on startup
-# def populateUser():
-#     print(User.objects.all())
-#     user = User.objects.filter(username="nafa")
-#     if user.exists():
-#         print("Superuser Already Exists: nafa | p:****")
-#     else:
-#         u = User.objects.create_superuser("nafa@wafa.com", "nafa", "nafa")
-#         u.save()
+# run this on startup
+def populateUser():
+    print(User.objects.all())
+    user = User.objects.filter(username="nafa")
+    if user.exists():
+        print("Superuser Already Exists: nafa | p:****")
+    else:
+        u = User.objects.create_superuser("nafa@wafa.com", "nafa", "nafa")
+        u.save()
 
-# from main.models import Event
-# def populateEvents():
-#     event = Event.objects.filter(event_name="NAFA Event 2022")
-#     if event.exists():
-#         print("Events exits")
-#     else:
-#         eventObj = Event(
-#             event_name = "NAFA Event 2022",
-#             date = "2022-02-23",
-#             address_line = "4006 Spurgeon Drive",
-#             city = "Monroe",
-#             zip_code = "71203",
-#             contact_name = "Bibek Bhandari",
-#             contact_number = "3187894132",
-#             description = "This is an event"
-#         )
-#         eventObj.save()
+from main.models import Event
+def populateEvents():
+    event = Event.objects.filter(event_name="NAFA Event 2022")
+    if event.exists():
+        print("Events exits")
+    else:
+        eventObj = Event(
+            event_name = "NAFA Event 2022",
+            date = "2022-02-23",
+            address_line = "4006 Spurgeon Drive",
+            city = "Monroe",
+            zip_code = "71203",
+            contact_name = "Bibek Bhandari",
+            contact_number = "3187894132",
+            description = "This is an event"
+        )
+        eventObj.save()
 
-# populateUser()
+populateUser()
 
-# populateEvents()
+populateEvents()
