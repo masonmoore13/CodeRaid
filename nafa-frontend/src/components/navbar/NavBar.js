@@ -1,52 +1,90 @@
 import React from "react";
-import {
-  Nav,
-  Navbar,
-  Container,
-  Form,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Nav, Navbar, Container } from "react-bootstrap";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import './navbar.css'
+import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
+import { LinkContainer } from "react-router-bootstrap";
+import { AiOutlineUser, AiOutlineLogin } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { loginError } from "../../pages/login/loginSlice";
+import { getUserFaliure } from "../../pages/home/userSlice";
 
 function NavBar() {
+  const navigate = useNavigate();
+
+  const { isAuth } = useSelector((state) => state.login);
+  const { username } = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const logOut = () => {
+    sessionStorage.removeItem("accessJWT");
+    localStorage.removeItem("nafaSite");
+    dispatch(loginError(""));
+    dispatch(getUserFaliure(""));
+    navigate("/");
+  };
+
   return (
     <div>
-      <Navbar bg="dark" variant="dark" expand="lg" className="navigation">
+      <Navbar
+        collapseOnSelect
+        bg="dark"
+        variant="dark"
+        expand="lg"
+        className="navigation"
+      >
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">NAFA</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
+          <LinkContainer to="/">
+            <Navbar.Brand>Home</Navbar.Brand>
+          </LinkContainer>
+
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-              navbarScroll
+              // style={{ maxHeight: "150px" }}
+              // navbarScroll
             >
-              <Nav.Link as={Link} to="/events">
-                Events
-              </Nav.Link>
-              <Nav.Link as={Link} to="/contact">
-                Contact
-              </Nav.Link>
-              <Nav.Link as={Link} to="/about">
-                About
-              </Nav.Link>
+              <NavDropdown title="Events" id="navbarScrollingDropdown">
+                <LinkContainer to="/event">
+                  <NavDropdown.Item>All Events</NavDropdown.Item>
+                </LinkContainer>
 
-              <Nav.Link as={Link} to="/signup">
-                Signup
-              </Nav.Link>
-              
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
+                <NavDropdown.Item as={Link} to="/event/createEvent">
+                  Create Event
+                </NavDropdown.Item>
+              </NavDropdown>
+              <LinkContainer to="/contact">
+                <Nav.Link>Contact</Nav.Link>
+              </LinkContainer>
 
-              <Nav.Link as={Link} to="/scholarships">
-                Scholarships
-              </Nav.Link>
+              <LinkContainer to="/about">
+                <Nav.Link>About</Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/scholarships">
+                <Nav.Link>Scholarships</Nav.Link>
+              </LinkContainer>
             </Nav>
-            <Form className="d-flex">
+
+            {!isAuth ? (
+              <div className="ml-auto d-flex auth-button">
+                <LinkContainer to="/signup" className="auth-button">
+                  <Nav.Link>Signup</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/login" className="auth-button">
+                  <Nav.Link>
+                    Login <AiOutlineLogin />
+                  </Nav.Link>
+                </LinkContainer>
+              </div>
+            ) : (
+              <NavDropdown align={{ lg: "end" }} title={<AiOutlineUser />}>
+                <NavDropdown.Item href="#">{username}</NavDropdown.Item>
+                <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
+              </NavDropdown>
+            )}
+
+            {/* <Form className="d-flex">
               <FormControl
                 type="search"
                 placeholder="Search"
@@ -54,12 +92,11 @@ function NavBar() {
                 aria-label="Search"
               />
               <Button variant="outline-warning">Search</Button>
-            </Form>
+            </Form> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div>
-      </div>
+      <div></div>
     </div>
   );
 }

@@ -16,12 +16,12 @@ class UserAdmin(BaseUserAdmin):
       (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                      'groups', 'user_permissions')}),
       (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (_('user_info'), {'fields': ('address_line_1', 'city', 'state', 'have_paid_dues',  'phone_no', 'username')}),
+        (_('user_info'), {'fields': ('address_line_1', 'city', 'state', 'have_paid_dues',  'phone_no', 'username', 'is_verified')}),
   )
   add_fieldsets = (
       (None, {
           'classes': ('wide', ),
-          'fields': ('email', 'username', 'password1', 'password2', 'address_line_1', 'city', 'state', 'have_paid_dues'),
+          'fields': ('email', 'username', 'password1', 'password2', 'address_line_1', 'city', 'state', 'have_paid_dues', 'is_verified'),
       }),
   )
   list_display = ['email', 'first_name', 'last_name', 'is_staff', "phone_no"]

@@ -1,10 +1,21 @@
 dj-database-url==0.5.0
 Django==3.2.0
-gunicorn==20.0.4
-psycopg2-binary==2.8.6
+gunicorn
+psycopg2
 whitenoise==5.2.0
 django-address
 django-allauth
 django-rest-allauth
 django-restframework
+<<<<<<< HEAD
 django-cors-headers
+=======
+django-cors-headers==3.11.0
+djangorestframework-simplejwt
+django-rest-auth
+Pillow
+django-heroku==0.3.1
+coreapi==2.3.3
+drf_yasg
+attr
+>>>>>>> 958e284cf86c851c90a0e157be8607e418636705

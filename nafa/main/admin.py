@@ -1,16 +1,12 @@
 from django.contrib import admin
-from .models import Event
-from .models import Campaign
-from .models import CategoryOfTeam
-from .models import Team
-from .models import Scholarship
-from .models import Contribution
-from .models import Role
-from .models import Contact
+from main.models import *
 
+admin.site.register(Gallery)
+class GalleryModel(admin.ModelAdmin):
+    list_display = ('id', 'image')
 
 admin.site.register(Event)
-class EvemtModel(admin.ModelAdmin):
+class EventModel(admin.ModelAdmin):
     list_display = ('id', 'event_name')
 
 admin.site.register(Campaign)

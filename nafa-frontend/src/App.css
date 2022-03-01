@@ -1,31 +1,14 @@
-.app{
-    background-image: url("http://neville.mcschools.net/sites/neville/cache/file/063634A1-78AA-4903-AAA9AA82850127C8.jpg");
-    background-repeat: no-repeat;
-    background-attachment:fixed;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    align-self: center;
-    min-height:100vh;
-} 
-
-.cardBox{
-    margin-left: 10%;
-    margin-right: 10%;
-    background-color: rgb(0, 0, 0, 0.5);
-    min-height: 100vh;
-} 
-
-.content-container{
-        text-align: justify;
-        margin-left: 5%;
-        margin-right: 5%;
-        align-content: center;
-        background-color: rgb(33,37,41);
-        color: white;
-        padding: 1.5em;
+.app-container{
+    min-height: 89vh;    
 }
 
- .content{
-     color:white; 
- }
+*{
+    font-family: 'PT Sans', sans-serif;
+}
+
+body{
+    background-color: #e1dfdf !important;
+}
+a{
+    color: #F2C93C !important;
+}

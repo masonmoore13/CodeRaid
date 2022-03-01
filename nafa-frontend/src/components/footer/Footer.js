@@ -9,7 +9,6 @@ import { IconContext } from "react-icons";
 export default function Footer() {
     return (
         <div className="footer">
-            <div className="footer-content">
                 <div className="text">ⓒNeville High School</div>
                 <IconContext.Provider value={{ className: 'react-icons' }}>
                     <ul className="icons">
@@ -20,7 +19,6 @@ export default function Footer() {
                         <li><a href=""><HiLink /></a></li>
                     </ul>
                 </IconContext.Provider>
-            </div>
         </div>
     );
 }

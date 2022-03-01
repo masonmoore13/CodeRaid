@@ -1,13 +1,12 @@
-import { Button } from 'react-bootstrap';
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
-
-
+import { Button } from "react-bootstrap";
+import React from "react";
+import { Spinner } from "react-bootstrap";
 
 function ButtonWithProgress(props) {
-    return ( 
-        <>
-    <Button
+  return (
+    <>
+      <Button
+      type="submit"
         className="d-flex justify-content-center"
         onClick={props.onClick}
         disabled={props.disabled}
@@ -18,9 +17,9 @@ function ButtonWithProgress(props) {
           </Spinner>
         )}
         {props.text}
-      </Button>{" "}
-      </>
-    )
+      </Button>
+    </>
+  );
 }
 
 export default ButtonWithProgress;

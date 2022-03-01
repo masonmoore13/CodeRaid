@@ -6,7 +6,7 @@ from django.core.wsgi import get_wsgi_application
 
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nsaOfficial.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nafa.settings')
 
 
 
