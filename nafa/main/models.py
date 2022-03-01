@@ -94,9 +94,4 @@ class Contact(models.Model):
     message = models.TextField(max_length=2500)
 
     def __str__(self):
-<<<<<<< HEAD
       return(self.sender_email)
-=======
-      return(self.sender_email)
-
->>>>>>> 958e284cf86c851c90a0e157be8607e418636705

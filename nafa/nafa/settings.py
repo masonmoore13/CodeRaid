@@ -59,11 +59,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'corsheaders',
-<<<<<<< HEAD
-=======
     'drf_yasg',
     'django.contrib.sitemaps',
->>>>>>> 958e284cf86c851c90a0e157be8607e418636705
 ]
 
 
@@ -100,17 +97,12 @@ TEMPLATES = [
     },
 ]
 
-<<<<<<< HEAD
-# Mitchell created this for testing
-# REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES':['rest_framework.permission.AllowAny']}
-=======
 # permissions
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
 }
->>>>>>> 958e284cf86c851c90a0e157be8607e418636705
 
 WSGI_APPLICATION = 'nafa.wsgi.application'
 

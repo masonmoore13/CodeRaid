@@ -2,14 +2,11 @@ from rest_framework import serializers
 from main.models import * 
 from .models import User
 
-<<<<<<< HEAD
-=======
 class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('__all__')
 
->>>>>>> 958e284cf86c851c90a0e157be8607e418636705
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
