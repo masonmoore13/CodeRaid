@@ -15,7 +15,7 @@ const Sidebar = () => {
               <MdLineStyle className="sidebarIcons"/>
               Home
             </Link>
-            <Link to="/dashboard/userprofile" className="sidebarListItem">
+            <Link to="/dashboard/userprofile/" className="sidebarListItem">
               <AiOutlineUser className="sidebarIcons" />
               Profile
             </Link>
@@ -30,7 +30,7 @@ const Sidebar = () => {
         <div className="sideBarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            <Link  to="/dashboard/userlist" className="sidebarListItem">
+            <Link  to="/dashboard/userlist/" className="sidebarListItem">
               <MdLineStyle className="sidebarIcons"/>
               Users
             </Link>

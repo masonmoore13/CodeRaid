@@ -11,6 +11,10 @@ const RouterWrapper = () => {
   const dispatch = useDispatch();
   
   
+
+ 
+  console.log(user.user);
+
   // rerender if some part of state is change. useEffect.
   useEffect(() => {
     // updates the access token based on user token
@@ -41,20 +45,22 @@ const RouterWrapper = () => {
       }
     };
 
+    !isAuth &&
+    sessionStorage.getItem("accessJWT") &&
+    localStorage.getItem("nafaSite") &&
+    dispatch(loginSuccess());
+    
+
     // if the user is logged in but doesn't have a userProfile then fetches it
-    isAuth && !user.username && dispatch(getUserProfile());
+    isAuth && !user.user && dispatch(getUserProfile());
 
     // check if there is a valid auth token if the user is logged in
     isAuth && tokenCheck();
 
     // if not logged in but there are tokens in storage then log them in
-    !isAuth &&
-      sessionStorage.getItem("accessJWT") &&
-      localStorage.getItem("nafaSite") &&
-      dispatch(loginSuccess());
-      
+   
     // if valid then dispatch loginSuccess()
-  }, [isAuth, dispatch, user.username]);
+  }, [isAuth, dispatch, user.user]);
   return <Outlet />;
 };
 

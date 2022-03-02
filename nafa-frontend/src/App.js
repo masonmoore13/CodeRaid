@@ -46,15 +46,15 @@ function App() {
             <Route path="/event/createEvent/" element={<CreateEvent />} />
             <Route path="/event/:id/" element={<EventDetail />} />
             <Route path="/event/:id/update/" element={<EventUpdate />} />
+                        
 
-            <Route path="dashboard" element={<Dashboard />}>
-              <Route path="home" element={<DashboardHome />} />
-              <Route path="userlist" element={<Userlist />} />\
-              <Route path="userprofile" element={<Userprofile />} />
+            <Route path="/dashboard" exact element={<Dashboard />}>
+              <Route path="home" exact element={<DashboardHome />} />
+              <Route path="userlist" exact element={<Userlist />} />
+              <Route path="userprofile/" exact element={<Userprofile />} />
             </Route>
           </Route>
 
-          
           <Route path="*" exact element={<PageNotFound />} />
         </Routes>
 
