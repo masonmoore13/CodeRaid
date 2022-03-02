@@ -1,6 +1,8 @@
 from operator import truediv
 from django.shortcuts import render
 from rest_framework.views import APIView
+
+from main.models import UserProfile
 from .serializers import RegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -21,8 +23,9 @@ from django.conf import settings
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from rest_framework.permissions import IsAuthenticated
 
-
+from main.serializers import UserProfileSerializer
 # overriding obtain token to our custom need
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     default_error_messages = {
@@ -202,15 +205,24 @@ class SetNewPassword(generics.GenericAPIView):
 #         return response
 
 class UserView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
-        authentication_classes = [JWTAuthentication]
-        print(request)
-        authenticate = JWTAuthentication().authenticate(request)
-        print(authenticate)
-        username = authenticate[1]['username']
-        user = User.objects.get(username=username)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        user = request.user
+        
+        try:
+            userProfile = UserProfile.objects.get(user=user)
+        except UserProfile.DoesNotExist:
+            UserProfile.objects.create(user=user)
+        
+        userProfile = UserProfile.objects.get(user=user)
+        userProfileSerializer = UserProfileSerializer(userProfile)
+        
+        userSerializer = UserSerializer(user)
+        
+        response_dictonary = {"user": userSerializer.data, "userProfile":userProfileSerializer.data }
+        return Response(response_dictonary)
+
+
 # user view to see if the token is still active
 # class UserView(APIView):
 #     def get(self, request):

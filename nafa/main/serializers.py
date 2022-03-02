@@ -2,6 +2,14 @@ from rest_framework import serializers
 from main.models import * 
 from .models import User
 
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('__all__')
+
+
+
 class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
