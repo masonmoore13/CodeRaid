@@ -1,0 +1,13 @@
+.dashboard-container{
+    
+}
+
+.side-bar-col{
+    height: calc(100vh - 110px);
+    background-color: rgb(244, 246, 252);
+    position: sticky;
+}
+
+.mainpage-col{
+    height: calc(100vh - 110px);
+}
