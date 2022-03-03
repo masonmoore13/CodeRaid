@@ -30,7 +30,7 @@ class UserProfile(models.Model):
     achievements = models.TextField(max_length=2500, blank=True, null=True)
     bio = models.TextField(max_length=2500,blank=True, null=True)
     profile_picture = models.ImageField(
-        upload_to='media', null=True, blank=True, default='DefaultProfilePicture.jpg')
+        upload_to='media', null=True, blank=True)
 
     def __str__(self):
         return(self.first_name)  # want to return username

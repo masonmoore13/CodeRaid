@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Table, Card } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
@@ -7,10 +7,14 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
 import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
-import { getUserProfile} from "../../../api/apiCalls"
+import { getUserProfile } from "../../../api/apiCalls";
+import "./userlist.css";
+import {data} from "../../../dummyUserData"
 
 export default function UserList() {
   const [userList, setUserList] = useState([]);
+
+  const navigate = useNavigate();
 
   const columns = [
     //{ dataField: "id", text: "Id", sort: true },
@@ -74,15 +78,16 @@ export default function UserList() {
   });
 
   useEffect(() => {
-    getUserProfile()
-      .then((result) => setUserList(result.data))
+    getUserProfile().then((result) => {
+      console.log(result.data);
+      setUserList(result.data);
+    });
   }, []);
 
-  
   //Get relationship by first user ID.
   // const { id } = useParams("");
   // const [relationship, setRelationship] = useState([]);
-  
+
   // useEffect(() => {
   //   getRelationship().then((result) => {
   //     setUserList(result.data);
@@ -92,7 +97,6 @@ export default function UserList() {
   const CaptionElement = () => (
     <h3
       style={{
-
         textAlign: "center",
         color: "black",
         padding: "0.3em",
@@ -101,20 +105,31 @@ export default function UserList() {
       User Search
     </h3>
   );
+
+  const rowClasses = "data-row";
+
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      navigate(`/dashboard/userprofile/${row.id}`);
+    },
+  };
+
+  console.log(userList);
+
   return (
     <div className="table">
       <BootstrapTable
         bootstrap4
         striped
         bordered
-        condensed
         caption={<CaptionElement />}
-        hover
         keyField="id"
         columns={columns}
-        data={userList}
+        data={ userList }
         filter={filterFactory()}
         pagination={pagination}
+        rowClasses={rowClasses}
+        rowEvents={rowEvents}
       />
     </div>
   );

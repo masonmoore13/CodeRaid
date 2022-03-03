@@ -12,13 +12,13 @@ import {
 import { FaAddressCard } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
-import { updateUserProfileById } from "../../../api/apiCalls";
-import { useNavigate } from "react-router-dom";
+import { updateUserProfileById,getUserProfileById } from "../../../api/apiCalls";
+import { useNavigate, useParams  } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
-const Userprofile = ({ id }) => {
+const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
 
   const navigate = useNavigate();
@@ -40,9 +40,18 @@ const Userprofile = ({ id }) => {
     profile_picture: "",
   });
 
+  let {id} = useParams()
+
   useEffect(() => {
     if (!id) {
       setUserProfileData(userProfile);
+    }
+    
+    if(id){
+      getUserProfileById(id).then((res)=>{
+        console.log(res)
+        setUserProfileData(res.data)
+      })
     }
   }, [id, userProfile]);
 
@@ -51,16 +60,32 @@ const Userprofile = ({ id }) => {
     user = userD;
   }
 
+  const notify = () => {
+    toast.warn("Your profile has been updated!", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
+
   const handleOnClick = (e) => {
+    e.preventDefault();
     let userId;
     if (!id) {
       console.log(userProfile.id);
       userId = userProfile.id;
+    }else{
+      userId = id;
     }
     updateUserProfileById(userProfileData, userId)
       .then((res) => {
         console.log(res);
-        navigate("/dashboard/userprofile/");
+        // notify();
+        if(!id){
+          navigate("/dashboard/userprofile/")
+        }else{
+          navigate(`/dashboard/userprofile/${id}/`)
+        }
+        
+        //window.reload();
       })
       .catch((error) => {});
   };
@@ -71,6 +96,7 @@ const Userprofile = ({ id }) => {
     console.log(name);
 
     if (event.target.files !== null) {
+      console.log(event.target.files[0])
       setUserProfileData((previousForm) => {
         return {
           ...previousForm,
@@ -96,11 +122,6 @@ const Userprofile = ({ id }) => {
   };
 
   //Toast on profile update
-  const notify = () => {
-    toast.warn("Your profile has been updated!", {
-      position: toast.POSITION.TOP_CENTER,
-    });
-  };
 
   return (
     <div className="user">
@@ -116,8 +137,8 @@ const Userprofile = ({ id }) => {
           <div className="userShowTop">
             <img
               src={
-                userprofile.profile_picture
-                  ? userProfile.profile_picture
+                userProfileData.profile_picture
+                  ? userProfileData.profile_picture
                   : userprofile
               }
               alt=""
@@ -125,11 +146,11 @@ const Userprofile = ({ id }) => {
             />
             <div className="userShowTopTitle">
               <span className="userShowUsername">
-                {userProfile.first_name} {userProfile.middle_name}{" "}
-                {userProfile.last_name}{" "}
+                {userProfileData.first_name} {userProfileData.middle_name}{" "}
+                {userProfileData.last_name}{" "}
               </span>
               <span className="userShowCurrentWork">
-                {userProfile.current_work}
+                {userProfileData.current_work}
               </span>
             </div>
           </div>
@@ -138,13 +159,13 @@ const Userprofile = ({ id }) => {
 
             <div className="userShowInfo">
               <MdPermIdentity className="userShowIcon" />
-              <span className="userShowUserInfoTitle">{user.username}</span>
+              <span className="userShowUserInfoTitle">{userProfileData.username}</span>
             </div>
 
             <div className="userShowInfo">
               <MdOutlineDateRange className="userShowIcon" />
               <span className="userShowUserInfoTitle">
-                {userProfile.birth_date}
+                {userProfileData.birth_date}
               </span>
             </div>
 
@@ -152,15 +173,15 @@ const Userprofile = ({ id }) => {
             <div className="userShowInfo">
               <MdPhoneIphone className="userShowIcon" />
               <span className="userShowUserInfoTitle">
-                {userProfile.phone_no}
+                {userProfileData.phone_no}
               </span>
             </div>
 
             <div className="userShowInfo">
               <FaAddressCard className="userShowIcon" />
               <span className="userShowUserInfoTitle">
-                {userProfile.address_line_1} | {userProfile.city} |{" "}
-                {userProfile.state}
+                {userProfileData.address_line_1} | {userProfileData.city} |{" "}
+                {userProfileData.state}
               </span>
             </div>
 
@@ -169,7 +190,7 @@ const Userprofile = ({ id }) => {
             <div className="userShowInfo">
               <GiAchievement className="userShowIcon" />
               <span className="userShowUserInfoTitle">
-                {userProfile.achievements}
+                {userProfileData.achievements}
               </span>
             </div>
           </div>
@@ -327,7 +348,7 @@ const Userprofile = ({ id }) => {
               <Button
                 variant="warning"
                 className="userUpdateButton"
-                onClick={(handleOnClick(), notify)}
+                onClick={handleOnClick}
               >
                 Update
               </Button>

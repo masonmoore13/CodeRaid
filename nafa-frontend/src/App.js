@@ -52,6 +52,7 @@ function App() {
               <Route path="home" exact element={<DashboardHome />} />
               <Route path="userlist" exact element={<Userlist />} />
               <Route path="userprofile/" exact element={<Userprofile />} />
+              <Route path="userprofile/:id/" exact element={<Userprofile />} />
             </Route>
           </Route>
 

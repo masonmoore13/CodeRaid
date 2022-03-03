@@ -76,3 +76,7 @@ export const updateUserProfileById = ((userProfile,id) => {
 export const getUserProfile = ()=>{
     return axios.get(`${userProfileUrl}/`)
 }
+
+export const getUserProfileById = (id)=>{
+    return axios.get(`${userProfileUrl}/${id}/`)
+}
