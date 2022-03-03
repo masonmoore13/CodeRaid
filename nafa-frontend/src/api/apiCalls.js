@@ -14,6 +14,7 @@ const apiUrl = address+"/accounts/register/";
 const loginUrl = address+"/accounts/login/"
 const eventUrl= address+"/main/api/event/";
 const eventGalleryUrl = address+"/main/api/gallery/?search=";
+const userProfileUrl = address + '/main/api/userProfile'
 
 // Auth
 export const signup = (user)=>{
@@ -63,3 +64,11 @@ export const deleteEventById = (id)=>{
 export const updateEventById = (id, eventObject)=>{
     return axios.put(`${eventUrl}${id}/`,eventObject);
 }
+
+
+
+// Profile
+
+export const updateUserProfileById = ((userProfile,id) => {
+    return axios.patch(`${userProfileUrl}/${id}/`,userProfile);
+})

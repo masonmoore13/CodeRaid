@@ -80,7 +80,7 @@ function NavBar() {
                 </NavDropdown.Item>
 
                 <NavDropdown.Item><Link to="/dashboard/userprofile">Profile</Link></NavDropdown.Item>
-
+                <NavDropdown.Item><Link to="/dashboard/home">Dashboard</Link></NavDropdown.Item>
                 <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
               </NavDropdown>
             )}

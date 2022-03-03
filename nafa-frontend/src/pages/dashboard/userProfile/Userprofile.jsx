@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
 import { Button, Form } from "react-bootstrap";
-import userprofile from '../../../Assets/images/userprofile.png'
+import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
   MdOutlineDateRange,
@@ -12,15 +12,15 @@ import {
 import { FaAddressCard } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
-
-let userProfile
-const Userprofile = ({id}) => {
-
-  let { user,userProfile } = useSelector((state) => state.user.user);
+import { updateUserProfileById } from "../../../api/apiCalls";
+import { useNavigate } from "react-router-dom";
 
 
+const Userprofile = ({ id }) => {
+  let { user, userProfile } = useSelector((state) => state.user.user);
 
-  const [userProfileData, setUserProfileData]= useState({
+  const navigate = useNavigate()
+  const [userProfileData, setUserProfileData] = useState({
     first_name: "",
     middle_name: "",
     last_name: "",
@@ -35,47 +35,57 @@ const Userprofile = ({id}) => {
     has_contrubitions: "",
     achievements: "",
     bio: "",
-    profile_picture: ""
+    profile_picture: "",
   });
 
-    useEffect(()=>{
-    if(!id){
-      setUserProfileData(userProfile)
+  useEffect(() => {
+    if (!id) {
+      setUserProfileData(userProfile);
     }
-  })
- 
+  }, [id, userProfile]);
 
-  if(!userProfile){
-    userProfile = data
-    user = userD
+  if (!userProfile) {
+    userProfile = data;
+    user = userD;
   }
+
+  const handleOnClick = (e) => {
+    let userId;
+    if (!id) {
+      console.log(userProfile.id);
+      userId = userProfile.id;
+    }
+    updateUserProfileById(userProfileData, userId)
+      .then((res) => {
+        console.log(res);
+        navigate("/dashboard/userprofile/");
+      })
+      .catch((error) => {
+        
+      });
+  };
 
   const onInputChange = (event) => {
     const { value, name } = event.target;
-    
-    console.log(name)
 
-    if(event.target.files !== null){
-      console.log("nulllll");
+    console.log(name);
+
+    if (event.target.files !== null) {
       setUserProfileData((previousForm) => {
         return {
           ...previousForm,
-          profile_picture: event.target.files[0]
+          profile_picture: event.target.files[0],
         };
       });
       //value = event.target.files[0]
     }
 
- 
-
     setUserProfileData((prevState) => {
-      console.log("lulllll");
       return {
         ...prevState,
         [name]: value,
       };
     });
-    console.log(value)
 
     // setErrors((previousErrors) => {
     //   return {
@@ -97,12 +107,23 @@ const Userprofile = ({id}) => {
       <div className="userContainer">
         <div className="userShow">
           <div className="userShowTop">
-            <img src={userprofile.profile_picture?userProfile.profile_picture:userprofile} alt="" className="userShowImg" />
+            <img
+              src={
+                userprofile.profile_picture
+                  ? userProfile.profile_picture
+                  : userprofile
+              }
+              alt=""
+              className="userShowImg"
+            />
             <div className="userShowTopTitle">
               <span className="userShowUsername">
-                {userProfile.first_name} {userProfile.middle_name} {userProfile.last_name}{" "}
+                {userProfile.first_name} {userProfile.middle_name}{" "}
+                {userProfile.last_name}{" "}
               </span>
-              <span className="userShowCurrentWork">{userProfile.current_work}</span>
+              <span className="userShowCurrentWork">
+                {userProfile.current_work}
+              </span>
             </div>
           </div>
           <div className="userShowBottom">
@@ -115,19 +136,24 @@ const Userprofile = ({id}) => {
 
             <div className="userShowInfo">
               <MdOutlineDateRange className="userShowIcon" />
-              <span className="userShowUserInfoTitle">{userProfile.birth_date}</span>
+              <span className="userShowUserInfoTitle">
+                {userProfile.birth_date}
+              </span>
             </div>
 
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
               <MdPhoneIphone className="userShowIcon" />
-              <span className="userShowUserInfoTitle">{userProfile.phone_no}</span>
+              <span className="userShowUserInfoTitle">
+                {userProfile.phone_no}
+              </span>
             </div>
 
             <div className="userShowInfo">
               <FaAddressCard className="userShowIcon" />
               <span className="userShowUserInfoTitle">
-                {userProfile.address_line_1} | {userProfile.city} | {userProfile.state}
+                {userProfile.address_line_1} | {userProfile.city} |{" "}
+                {userProfile.state}
               </span>
             </div>
 
@@ -135,7 +161,9 @@ const Userprofile = ({id}) => {
 
             <div className="userShowInfo">
               <GiAchievement className="userShowIcon" />
-              <span className="userShowUserInfoTitle">{userProfile.achievements}</span>
+              <span className="userShowUserInfoTitle">
+                {userProfile.achievements}
+              </span>
             </div>
           </div>
         </div>
@@ -271,16 +299,31 @@ const Userprofile = ({id}) => {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src={userProfileData.profile_picture?userProfileData.profile_picture:userprofile}
+                  src={
+                    userProfileData.profile_picture
+                      ? userProfileData.profile_picture
+                      : userprofile
+                  }
                   alt=""
-                  
                 />
+
                 <label htmlFor="file">
                   <MdPublish size={20} className="userUpdateIcon" />
                 </label>
-                <input type="file" id="file" style={{ display: "none" }}  onChange={onInputChange}/>
+                <input
+                  type="file"
+                  id="file"
+                  style={{ display: "none" }}
+                  onChange={onInputChange}
+                />
               </div>
-              <Button variant= "warning" className="userUpdateButton">Update</Button>
+              <Button
+                variant="warning"
+                className="userUpdateButton"
+                onClick={handleOnClick}
+              >
+                Update
+              </Button>
             </div>
           </Form>
         </div>
