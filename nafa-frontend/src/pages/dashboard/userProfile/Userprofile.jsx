@@ -11,7 +11,7 @@ import {
 } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   updateUserProfileById,
   getUserProfileById,
@@ -19,6 +19,10 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { getUserProfile } from '../../home/userActions'
+import address from "../../../config";
+
 toast.configure();
 
 const Userprofile = () => {
@@ -44,20 +48,33 @@ const Userprofile = () => {
     profile_picture: null,
   });
 
+  const dispatch= useDispatch()
+
   let { id } = useParams();
 
   useEffect(() => {
     if (!id) {
+      
       setUserProfileData(userProfile);
+
+      if(userProfileData.profile_picture !== null){
+        setUserProfileData(prevData => {
+          return {
+            ...prevData,
+            profile_picture: address+prevData.profile_picture
+          }
+        })
+      }
+     
     }
 
     if (id) {
       getUserProfileById(id).then((res) => {
-        console.log(res);
         setUserProfileData(res.data);
+        
       });
     }
-  }, [id, userProfile]);
+  }, [id, userProfile,userProfileData.profile_picture]);
 
   if (!userProfile) {
     userProfile = data;
@@ -84,7 +101,7 @@ const Userprofile = () => {
     
     for(var key in userProfileData){
       if(userProfileData[key] != null ){
-        
+        console.log(imageChanged);
         if(key === "profile_picture" && imageChanged=== false) {continue;}
 
         formField.append(key, userProfileData[key])
@@ -95,8 +112,10 @@ const Userprofile = () => {
       .then((res) => {
         console.log(res);
         // notify();
+    
         if (!id) {
-          navigate("/dashboard/userprofile/");
+          dispatch(getUserProfile())
+          navigate("/dashboard/home");
         } else {
           navigate(`/dashboard/userprofile/${id}/`);
         }
@@ -153,9 +172,7 @@ const Userprofile = () => {
           <div className="userShowTop">
             <img
               src={
-                userProfileData.profile_picture
-                  ? userProfileData.profile_picture
-                  : userprofile
+                userProfileData.profile_picture? userProfileData.profile_picture : userprofile
               }
               alt=""
               className="userShowImg"
@@ -374,6 +391,7 @@ const Userprofile = () => {
                   className="form-control"
                   onChange={(e) => setUserProfileData((prevData)=>{
                     setImageChanged(true)
+                    console.log(imageChanged);
                     return{
                       ...prevData,
                       profile_picture: e.target.files[0]

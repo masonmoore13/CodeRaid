@@ -50,42 +50,51 @@ class MyTokenObtainPairView(TokenObtainPairView):
    
 
 # generic registration with email
-class RegisterView(generics.GenericAPIView):
+# class RegisterView(generics.GenericAPIView):
 
-    serializer_class = RegisterSerializer
+#     serializer_class = UserSerializer
 
+#     def post(self, request):
+#         user=request.data
+#         serializer = self.serializer_class(data=user)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+
+#         user_data = serializer.data
+#         userObj = User.objects.get(username=user_data['username'])
+
+#         # generate refresh token for the user to activate
+#         token = RefreshToken.for_user(userObj).access_token
+
+#         # get current site and attach token to it
+#         current_site = get_current_site(request).domain
+#         relativeLink = reverse('verify_email')
+
+#         # need to update this after deployment to our desired web address
+#         absurl = 'http://localhost:8000'+ relativeLink + "?token=" + str(token)
+        
+#         # email the activation lijnk
+#         email_body = "Hi " + userObj.username + " use the link below to verify\n" + absurl
+#         # data to send email
+#         data ={
+#             'domain':absurl,
+#             'email_subject': "Verify Your Email",
+#             "email_body": email_body,
+#             "to_email": userObj.email
+#         }
+#         # email the activation link
+#         Util.send_email(data)
+#         return Response(user_data, status=status.HTTP_201_CREATED)
+
+
+# registration api view
+class RegisterView(APIView):
+    # post view
     def post(self, request):
-        user=request.data
-        serializer = self.serializer_class(data=user)
+        serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
-        user_data = serializer.data
-        userObj = User.objects.get(username=user_data['username'])
-
-        # generate refresh token for the user to activate
-        token = RefreshToken.for_user(userObj).access_token
-
-        # get current site and attach token to it
-        current_site = get_current_site(request).domain
-        relativeLink = reverse('verify_email')
-
-        # need to update this after deployment to our desired web address
-        absurl = 'http://localhost:8000'+ relativeLink + "?token=" + str(token)
-        
-        # email the activation lijnk
-        email_body = "Hi " + userObj.username + " use the link below to verify\n" + absurl
-        # data to send email
-        data ={
-            'domain':absurl,
-            'email_subject': "Verify Your Email",
-            "email_body": email_body,
-            "to_email": userObj.email
-        }
-        # email the activation link
-        Util.send_email(data)
-        return Response(user_data, status=status.HTTP_201_CREATED)
-
+        return Response(serializer.data)
 
 
 #  view to verify the user email address
