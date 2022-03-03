@@ -13,7 +13,7 @@ function NavBar() {
   const navigate = useNavigate();
 
   const { isAuth } = useSelector((state) => state.login);
-  const { username } = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const logOut = () => {
     sessionStorage.removeItem("accessJWT");
@@ -75,7 +75,12 @@ function NavBar() {
               </div>
             ) : (
               <NavDropdown align={{ lg: "end" }} title={<AiOutlineUser />}>
-                <NavDropdown.Item href="#">{username}</NavDropdown.Item>
+                <NavDropdown.Item href="#">
+                  {user ? user.username : ""}
+                </NavDropdown.Item>
+
+                <NavDropdown.Item><Link to="/dashboard/userprofile">Profile</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="/dashboard/home">Dashboard</Link></NavDropdown.Item>
                 <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
               </NavDropdown>
             )}

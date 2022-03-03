@@ -18,6 +18,10 @@ import ShowEvents from "./pages/events/ShowEvents";
 import EventDetail from "./pages/events/EventDetail";
 import EventUpdate from "./pages/events/EventUpdate";
 import RouterWrapper from "./components/router-wrapper/RouterWrapper";
+import Dashboard from "./pages/dashboard/Dashboard";
+import DashboardHome from "./pages/dashboard/dashboard-home/DashboardHome";
+import Userlist from "./pages/dashboard/user/Userlist";
+import Userprofile from "./pages/dashboard/userProfile/Userprofile";
 
 function App() {
   // will be changed later just for demo
@@ -42,11 +46,20 @@ function App() {
             <Route path="/event/createEvent/" element={<CreateEvent />} />
             <Route path="/event/:id/" element={<EventDetail />} />
             <Route path="/event/:id/update/" element={<EventUpdate />} />
+                        
+
+            <Route path="/dashboard" exact element={<Dashboard />}>
+              <Route path="home" exact element={<DashboardHome />} />
+              <Route path="userlist" exact element={<Userlist />} />
+              <Route path="userprofile/" exact element={<Userprofile />} />
+              <Route path="userprofile/:id/" exact element={<Userprofile />} />
+            </Route>
           </Route>
 
           <Route path="*" exact element={<PageNotFound />} />
         </Routes>
-        <Footer />
+
+        {/* <Footer /> */}
       </div>
     </Router>
   );

@@ -38,14 +38,13 @@ export default function Home() {
           </ul>
         </div>
 
-        {/* sign-in/register card */}
-        <div className="card">
-          <div className="card-header">
-            <h4>Sign-In/Register</h4>
-          </div>
-          <hr />
-          <div style={{ textAlign: "center" }}>Register here</div>
-        </div>
+        <iframe
+          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FNeville-Alumni-and-Friends-Association-310455590523&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+          height="600"
+          width="500"
+          title="facebookPage"
+          className="fbPage"
+        ></iframe>
 
       </div>
       
