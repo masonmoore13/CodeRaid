@@ -14,12 +14,14 @@ import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { updateUserProfileById } from "../../../api/apiCalls";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
 const Userprofile = ({ id }) => {
   let { user, userProfile } = useSelector((state) => state.user.user);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
     middle_name: "",
@@ -60,9 +62,7 @@ const Userprofile = ({ id }) => {
         console.log(res);
         navigate("/dashboard/userprofile/");
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   };
 
   const onInputChange = (event) => {
@@ -93,6 +93,13 @@ const Userprofile = ({ id }) => {
     //     [name]: undefined,
     //   };
     // });
+  };
+
+  //Toast on profile update
+  const notify = () => {
+    toast.warn("Your profile has been updated!", {
+      position: toast.POSITION.TOP_CENTER,
+    });
   };
 
   return (
@@ -320,7 +327,7 @@ const Userprofile = ({ id }) => {
               <Button
                 variant="warning"
                 className="userUpdateButton"
-                onClick={handleOnClick}
+                onClick={(handleOnClick(), notify)}
               >
                 Update
               </Button>
