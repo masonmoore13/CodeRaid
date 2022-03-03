@@ -8,6 +8,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('__all__')
 
+    extra_kwargs = {'profile_picture': {'required': True}}
 
 
 class GallerySerializer(serializers.ModelSerializer):

@@ -12,8 +12,11 @@ import {
 import { FaAddressCard } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
-import { updateUserProfileById,getUserProfileById } from "../../../api/apiCalls";
-import { useNavigate, useParams  } from "react-router-dom";
+import {
+  updateUserProfileById,
+  getUserProfileById,
+} from "../../../api/apiCalls";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
@@ -22,6 +25,7 @@ const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
 
   const navigate = useNavigate();
+  const[imageChanged, setImageChanged] = useState(false);
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
     middle_name: "",
@@ -37,21 +41,21 @@ const Userprofile = () => {
     has_contrubitions: "",
     achievements: "",
     bio: "",
-    profile_picture: "",
+    profile_picture: null,
   });
 
-  let {id} = useParams()
+  let { id } = useParams();
 
   useEffect(() => {
     if (!id) {
       setUserProfileData(userProfile);
     }
-    
-    if(id){
-      getUserProfileById(id).then((res)=>{
-        console.log(res)
-        setUserProfileData(res.data)
-      })
+
+    if (id) {
+      getUserProfileById(id).then((res) => {
+        console.log(res);
+        setUserProfileData(res.data);
+      });
     }
   }, [id, userProfile]);
 
@@ -72,19 +76,31 @@ const Userprofile = () => {
     if (!id) {
       console.log(userProfile.id);
       userId = userProfile.id;
-    }else{
+    } else {
       userId = id;
     }
-    updateUserProfileById(userProfileData, userId)
+    
+    let formField = new FormData();
+    
+    for(var key in userProfileData){
+      if(userProfileData[key] != null ){
+        
+        if(key === "profile_picture" && imageChanged=== false) {continue;}
+
+        formField.append(key, userProfileData[key])
+      }
+    }
+
+    updateUserProfileById(formField, userId)
       .then((res) => {
         console.log(res);
         // notify();
-        if(!id){
-          navigate("/dashboard/userprofile/")
-        }else{
-          navigate(`/dashboard/userprofile/${id}/`)
+        if (!id) {
+          navigate("/dashboard/userprofile/");
+        } else {
+          navigate(`/dashboard/userprofile/${id}/`);
         }
-        
+
         //window.reload();
       })
       .catch((error) => {});
@@ -95,16 +111,16 @@ const Userprofile = () => {
 
     console.log(name);
 
-    if (event.target.files !== null) {
-      console.log(event.target.files[0])
-      setUserProfileData((previousForm) => {
-        return {
-          ...previousForm,
-          profile_picture: event.target.files[0],
-        };
-      });
-      //value = event.target.files[0]
-    }
+    // if (event.target.files !== null) {
+    //   console.log(event.target.files[0])
+    //   setUserProfileData((previousForm) => {
+    //     return {
+    //       ...previousForm,
+    //       profile_picture: event.target.files[0],
+    //     };
+    //   });
+    //   //value = event.target.files[0]
+    // }
 
     setUserProfileData((prevState) => {
       return {
@@ -146,8 +162,8 @@ const Userprofile = () => {
             />
             <div className="userShowTopTitle">
               <span className="userShowUsername">
-                {userProfileData.first_name} {userProfileData.middle_name}{" "}
-                {userProfileData.last_name}{" "}
+                {userProfileData.first_name?userProfileData.first_name:""} {userProfileData.middle_name}
+                {userProfileData.last_name}
               </span>
               <span className="userShowCurrentWork">
                 {userProfileData.current_work}
@@ -159,7 +175,9 @@ const Userprofile = () => {
 
             <div className="userShowInfo">
               <MdPermIdentity className="userShowIcon" />
-              <span className="userShowUserInfoTitle">{userProfileData.username}</span>
+              <span className="userShowUserInfoTitle">
+                {userProfileData.username}
+              </span>
             </div>
 
             <div className="userShowInfo">
@@ -301,6 +319,18 @@ const Userprofile = () => {
               </div>
 
               <div className="userUpdateItem">
+                <label>GradYear: </label>
+                <input
+                  type="text"
+                  className="userUpdateInput"
+                  value={userProfileData.grad_year}
+                  onChange={onInputChange}
+                  name="grad_year"
+                />
+              </div>
+
+
+              <div className="userUpdateItem">
                 <label>Current Work: </label>
                 <input
                   type="textarea"
@@ -340,9 +370,15 @@ const Userprofile = () => {
                 </label>
                 <input
                   type="file"
-                  id="file"
-                  style={{ display: "none" }}
-                  onChange={onInputChange}
+                  placeholder=""
+                  className="form-control"
+                  onChange={(e) => setUserProfileData((prevData)=>{
+                    setImageChanged(true)
+                    return{
+                      ...prevData,
+                      profile_picture: e.target.files[0]
+                    }
+                  })}
                 />
               </div>
               <Button
