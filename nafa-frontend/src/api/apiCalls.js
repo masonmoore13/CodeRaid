@@ -72,3 +72,7 @@ export const updateEventById = (id, eventObject)=>{
 export const updateUserProfileById = ((userProfile,id) => {
     return axios.patch(`${userProfileUrl}/${id}/`,userProfile);
 })
+
+export const getUserProfile = ()=>{
+    return axios.get(`${userProfileUrl}/`)
+}
