@@ -70,7 +70,9 @@ export const updateEventById = (id, eventObject)=>{
 // Profile
 
 export const updateUserProfileById = ((userProfile,id) => {
-    return axios.patch(`${userProfileUrl}/${id}/`,userProfile);
+    return axios.patch(`${userProfileUrl}/${id}/`,userProfile,{
+        "Content-Type": "multipart/form-data",
+      },);
 })
 
 export const getUserProfile = ()=>{

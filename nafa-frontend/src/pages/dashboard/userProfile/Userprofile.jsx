@@ -11,25 +11,23 @@ import {
 } from "react-icons/md";
 import { FaAddressCard } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   updateUserProfileById,
   getUserProfileById,
 } from "../../../api/apiCalls";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { getUserProfile } from '../../home/userActions'
-import address from "../../../config";
 
 toast.configure();
 
 const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
 
-  const navigate = useNavigate();
-  const[imageChanged, setImageChanged] = useState(false);
+  const [preview, setPreview] = useState("");
+
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
     middle_name: "",
@@ -48,33 +46,19 @@ const Userprofile = () => {
     profile_picture: null,
   });
 
-  const dispatch= useDispatch()
-
   let { id } = useParams();
-
+ 
   useEffect(() => {
     if (!id) {
-      
-      setUserProfileData(userProfile);
-
-      if(userProfileData.profile_picture !== null){
-        setUserProfileData(prevData => {
-          return {
-            ...prevData,
-            profile_picture: address+prevData.profile_picture
-          }
-        })
-      }
-     
+      id = userProfile.id
     }
 
     if (id) {
       getUserProfileById(id).then((res) => {
         setUserProfileData(res.data);
-        
       });
     }
-  }, [id, userProfile,userProfileData.profile_picture]);
+  }, [userProfile]);
 
   if (!userProfile) {
     userProfile = data;
@@ -91,34 +75,38 @@ const Userprofile = () => {
     e.preventDefault();
     let userId;
     if (!id) {
-      console.log(userProfile.id);
       userId = userProfile.id;
     } else {
       userId = id;
     }
-    
-    let formField = new FormData();
-    
-    for(var key in userProfileData){
-      if(userProfileData[key] != null ){
-        console.log(imageChanged);
-        if(key === "profile_picture" && imageChanged=== false) {continue;}
 
-        formField.append(key, userProfileData[key])
+    let formField = new FormData();
+    for (var key in userProfileData) {
+      if (userProfileData[key] != null) {
+        if (
+          key === "profile_picture" &&
+          !(userProfileData[key] instanceof File)
+        ) {
+          console.log(userProfileData[key] );
+          console.log("skipped");
+          continue;
+        }
+
+        formField.append(key, userProfileData[key]);
       }
     }
 
     updateUserProfileById(formField, userId)
       .then((res) => {
-        console.log(res);
         // notify();
-    
-        if (!id) {
-          dispatch(getUserProfile())
-          navigate("/dashboard/home");
-        } else {
-          navigate(`/dashboard/userprofile/${id}/`);
-        }
+        console.log(res);
+        window.location.reload();
+        notify();
+        // if (!id) {
+        //   navigate("/dashboard/home");
+        // } else {
+        //   navigate(`/dashboard/userprofile/${id}/`);
+        // }
 
         //window.reload();
       })
@@ -126,20 +114,21 @@ const Userprofile = () => {
   };
 
   const onInputChange = (event) => {
-    const { value, name } = event.target;
+    const { value, name, files } = event.target;
 
-    console.log(name);
+    console.log(files + " " + name);
 
-    // if (event.target.files !== null) {
-    //   console.log(event.target.files[0])
-    //   setUserProfileData((previousForm) => {
-    //     return {
-    //       ...previousForm,
-    //       profile_picture: event.target.files[0],
-    //     };
-    //   });
-    //   //value = event.target.files[0]
-    // }
+    if (files) {
+      setUserProfileData((prevState) => {
+        return {
+          ...prevState,
+          profile_picture: files[0],
+        };
+      });
+      const objectUrl = URL.createObjectURL(files[0])
+      setPreview(objectUrl)
+      return;
+    }
 
     setUserProfileData((prevState) => {
       return {
@@ -161,7 +150,7 @@ const Userprofile = () => {
   return (
     <div className="user">
       <div className="userTitleContainer">
-        <h1 className="userTitle">Edit User</h1>
+        <h1 className="userTitle">Edit</h1>
         <Button variant="success" className="userAddButton">
           Create
         </Button>
@@ -172,14 +161,17 @@ const Userprofile = () => {
           <div className="userShowTop">
             <img
               src={
-                userProfileData.profile_picture? userProfileData.profile_picture : userprofile
+                userProfileData.profile_picture
+                  ? userProfileData.profile_picture
+                  : userprofile
               }
-              alt=""
+              alt="Profile pic"
               className="userShowImg"
             />
             <div className="userShowTopTitle">
               <span className="userShowUsername">
-                {userProfileData.first_name?userProfileData.first_name:""} {userProfileData.middle_name}
+                {userProfileData.first_name ? userProfileData.first_name : ""}{" "}
+                {userProfileData.middle_name}
                 {userProfileData.last_name}
               </span>
               <span className="userShowCurrentWork">
@@ -192,9 +184,7 @@ const Userprofile = () => {
 
             <div className="userShowInfo">
               <MdPermIdentity className="userShowIcon" />
-              <span className="userShowUserInfoTitle">
-                {userProfileData.username}
-              </span>
+              <span className="userShowUserInfoTitle">{user.username}</span>
             </div>
 
             <div className="userShowInfo">
@@ -346,7 +336,6 @@ const Userprofile = () => {
                 />
               </div>
 
-
               <div className="userUpdateItem">
                 <label>Current Work: </label>
                 <input
@@ -372,15 +361,23 @@ const Userprofile = () => {
 
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
-                <img
-                  className="userUpdateImg"
-                  src={
-                    userProfileData.profile_picture
-                      ? userProfileData.profile_picture
-                      : userprofile
-                  }
-                  alt=""
-                />
+                {preview.length? (
+                  <img
+                    className="userUpdateImg"
+                    src={
+                      preview
+                    }
+                    alt="Profile pic"
+                  />
+                ) : (
+                  <img
+                    className="userUpdateImg"
+                    src={
+                      userProfileData.profile_picture ? userProfileData.profile_picture: userprofile
+                    }
+                    alt="Profile pic"
+                  />
+                )}
 
                 <label htmlFor="file">
                   <MdPublish size={20} className="userUpdateIcon" />
@@ -389,14 +386,7 @@ const Userprofile = () => {
                   type="file"
                   placeholder=""
                   className="form-control"
-                  onChange={(e) => setUserProfileData((prevData)=>{
-                    setImageChanged(true)
-                    console.log(imageChanged);
-                    return{
-                      ...prevData,
-                      profile_picture: e.target.files[0]
-                    }
-                  })}
+                  onChange={onInputChange}
                 />
               </div>
               <Button
