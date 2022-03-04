@@ -46,10 +46,10 @@ const Userprofile = () => {
   });
 
   let { id } = useParams();
-
+ 
   useEffect(() => {
     if (!id) {
-      id = userProfile.id;
+      id = userProfile.id
     }
 
     if (id) {
@@ -124,8 +124,8 @@ const Userprofile = () => {
           profile_picture: files[0],
         };
       });
-      const objectUrl = URL.createObjectURL(files[0]);
-      setPreview(objectUrl);
+      const objectUrl = URL.createObjectURL(files[0])
+      setPreview(objectUrl)
       return;
     }
 
@@ -360,19 +360,19 @@ const Userprofile = () => {
 
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
-                {preview.length ? (
+                {preview.length? (
                   <img
                     className="userUpdateImg"
-                    src={preview}
+                    src={
+                      preview
+                    }
                     alt="Profile pic"
                   />
                 ) : (
                   <img
                     className="userUpdateImg"
                     src={
-                      userProfileData.profile_picture
-                        ? userProfileData.profile_picture
-                        : userprofile
+                      userProfileData.profile_picture ? userProfileData.profile_picture: userprofile
                     }
                     alt="Profile pic"
                   />

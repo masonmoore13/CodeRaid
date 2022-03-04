@@ -150,6 +150,9 @@ export const getTeams = () => {
   return axios.get(`${teamUrl}`);
 };
 
+
+
+
 // Relationship
 const relationshipUrl = address + "/main/api/relationship/";
 const RelationshipByUserIdUrl = address + "/main/api/relationship/?search=";
