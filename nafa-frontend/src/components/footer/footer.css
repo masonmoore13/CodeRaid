@@ -2,9 +2,8 @@
   background-color: rgb(33, 37, 41);
   color: white;
   height: 2em;
-bottom: 0;
+  bottom: 0;
   width: 100%;
-  position: absolute ; /* footer not sticking to bottom */
 }
 
 .text {
@@ -30,4 +29,17 @@ bottom: 0;
 
 .react-icons:hover {
   color: goldenrod;
+}
+
+@media screen and (max-width: 600px) {
+
+  .text{
+    position:absolute;
+    left:0;
+  }
+
+  .icons{
+    position:absolute;
+    right:0;
+  }
 }

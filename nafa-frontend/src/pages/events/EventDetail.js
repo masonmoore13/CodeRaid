@@ -7,6 +7,11 @@ import {
 } from "../../api/apiCalls";
 import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
+import {
+  ImagerDisplay,
+  imagerShow,
+  ImagerImg,
+} from "../../components/imageModalResize/ImageModalResize";
 
 const EventDetail = () => {
   const [event, setEvent] = useState([]);
@@ -27,7 +32,6 @@ const EventDetail = () => {
   }, [id]);
 
   //Get Gallery by event id. All images associated with event id {}
-
   useEffect(() => {
     getGalleryByEventId(id).then((response) => {
       setGallery(response.data);
@@ -47,7 +51,7 @@ const EventDetail = () => {
   };
 
   return (
-    <div className="eventDetail">
+    <div className="eventDetail w-100">
       <div className="bg">
         <img
           className="eventDetailBanner"
@@ -56,9 +60,9 @@ const EventDetail = () => {
         ></img>
       </div>
 
-      <Card className="eventDetailCardBox ">
-        <div className=" display-3 d-flex flex-lg-wrap justify-content-center">
-          <div className="eventName">{event.event_name}</div>
+      <Card className="eventDetailCardBox style={{ whiteSpace: 'nowrap' }}">
+        <div className="titleContainer d-flex flex-lg-wrap justify-content-center">
+          <div className="eventName display-3">{event.event_name}</div>
           <div className="justify-content-center">
             <div className="detailButtons position">
               <div className="deleteModal modal-fullscreen-sm-down">
@@ -127,22 +131,22 @@ const EventDetail = () => {
           </div>
         </div>
 
-        <CardGroup className="detailsBodyCard ">
-          <Col className="m-1 shadow-lg col-md-8 text-start">
+        <CardGroup className="detailsBodyCard justify-content-center">
+          <Col className=" m-1 shadow-sm col-lg-8  text-start ">
             <Card
-              className="m-4 shadow-lg d-flex "
+              className="detailsLeftCol mx-auto shadow-sm  "
               border=""
               style={{ width: "96%" }}
             >
-              <p className="description m-2"> {event.description}</p>
+              <p className="description m-2">{event.description}</p>
               <p className=" m-2"> {event.date}</p>
               <p className=" m-2"> {event.time}</p>
             </Card>
           </Col>
 
-          <Col className="DetailsRightCol m-2 shadow-lg  ">
+          <Col className="DetailsRightCol m-2 col-lg-3 shadow-sm  ">
             <Card
-              className="m-4 shadow-lg text-start"
+              className="venueCard m-3 shadow-sm text-start"
               border=""
               style={{ width: "93%" }}
             >
@@ -155,7 +159,7 @@ const EventDetail = () => {
               <p className=" mx-1"> {event.state}</p>
               <p className=" mx-1"> {event.zip_code}</p>
               <a
-                className="btn directionsButton btn-outline-dark btn-warning  w-50 mb-2 m-1"
+                className="btn directionsButton btn-outline-dark btn-warning  w-50 mb-2 m-1 white-space: nowrap"
                 bg="warning"
                 href={`http://maps.google.com/?q=${event.address_line} ${event.city} ${event.state} ${event.zip_code}`}
               >
@@ -163,7 +167,7 @@ const EventDetail = () => {
               </a>
             </Card>
             <Card
-              className="DetailsRightCol m-4 shadow-lg "
+              className="contactDetails m-3 shadow-sm "
               border=""
               style={{ width: "93%" }}
             >
@@ -175,20 +179,23 @@ const EventDetail = () => {
               <p> {event.contact_email}</p>
             </Card>
             <Card
-              className="DetailsRightCol m-4 shadow-lg "
+              className="DetailsRightCol m-3 shadow-md "
               border=""
               style={{ width: "93%" }}
             >
               <Card.Title>
                 Event Pictures <hr />
-                <div className="showEvents">
+                <div className="showGallery d-flex flex-wrap m-3">
                   {gallery.map((gallery, index) => (
-                    <div
-                      style={{ width: "10em" }}
-                      key={gallery.id}
-                    >
-                        <img src={gallery.images} height="135px"></img> <hr />
+                    <div style={{ width: "10em" }} key={gallery.id}>
+                      <ImagerDisplay z-index="2000" />
 
+                      <ImagerImg
+                        width="175px"
+                        min
+                        src={gallery.images}
+                        alt="event images"
+                      />
                     </div>
                   ))}
                 </div>

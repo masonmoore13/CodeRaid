@@ -22,7 +22,6 @@ const CreateEvent = () => {
 
   const [rsvpd_members, setRsvpdMembers] = useState("");
   const [banner_image, setBannerImage] = useState("");
-  const [media, setMedia] = useState("");
 
   const CreateEventInfo = async () => {
     let formField = new FormData();
@@ -42,11 +41,7 @@ const CreateEvent = () => {
 
     /* formField.append("rsvpd_members", rsvpd_members); */
     if (banner_image !== null) {
-      formField.append("gallery", gallery);
-    }
-
-    if (gallery !== null) {
-      formField.append("gallery", gallery);
+      formField.append("banner_image", banner_image);
     }
 
     createEvent(formField).then((response) => {
@@ -56,8 +51,13 @@ const CreateEvent = () => {
   };
 
   return (
-    <form className=" createEvent w-75 mx-auto shadow p-5 flex-row">
-      <h1 className="text-center mb-4">Add An Event</h1>
+    <form
+      className=" createEvent w-75 mx-auto shadow p-5 flex-row"
+      style={{ whiteSpace: "nowrap" }}
+    >
+      <h1 className="text-center mb-4" style={{ whiteSpace: "nowrap" }}>
+        Add An Event
+      </h1>
       Event Name
       <div class="col-md-6">
         <input
@@ -86,7 +86,6 @@ const CreateEvent = () => {
             className="form-control form-control-lg"
             type="date"
             id="start"
-            value="2018-07-22"
             min="2022-01-01"
             max="3050-12-31"
             value={date}
@@ -127,7 +126,7 @@ const CreateEvent = () => {
 
         <div class="col mb-2 flex-sm-column-reverse">
           <select
-            name="state"
+            xl={2}
             className="form-control form-control-lg"
             placeholder="State"
             name="State"
@@ -264,7 +263,7 @@ const CreateEvent = () => {
           />
         </div>
       </div>
-      <a className="btn btn-warning" onClick={CreateEventInfo}>
+      <a href='/event' className="btn btn-warning " onClick={CreateEventInfo}>
         Add Event
       </a>
     </form>

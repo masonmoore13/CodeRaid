@@ -5,6 +5,10 @@ admin.site.register(Gallery)
 class GalleryModel(admin.ModelAdmin):
     list_display = ('id', 'image')
 
+admin.site.register(Relationship)
+class RelationshipModel(admin.ModelAdmin):
+    list_display = ('relationship_type', 'user__username')
+
 admin.site.register(Event)
 class EventModel(admin.ModelAdmin):
     list_display = ('id', 'event_name')

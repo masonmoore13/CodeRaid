@@ -4,20 +4,16 @@ from accounts.models import User
 from .states import CONTIGUOUS_STATES
 
 
-
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name="useraccount")
-    
+    user = models.OneToOneField(
+        User, null=True, on_delete=models.CASCADE, related_name="useraccount")
+
     first_name = models.CharField(max_length=150, blank=True, null=True)
     middle_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     maiden_name = models.CharField(max_length=150, blank=True, null=True)
     grad_year = models.IntegerField(blank=True, null=True)
     birth_date = models.CharField(max_length=150, blank=True, null=True)
-
-    # Create relationship table(married, relatives), link user to user via relationship table?
-    #spouse_name = models.CharField(max_length=60, blank=True, null=True)
-    #spouse_grad_year = models.CharField(max_length=60, blank=True, null=True)
     phone_no = models.CharField(max_length=10, blank=True, null=True)
     address_line_1 = models.CharField(max_length=150, blank=True, null=True)
     city = models.CharField(max_length=150, blank=True,
@@ -28,34 +24,54 @@ class UserProfile(models.Model):
     has_contributions = models.BooleanField(default=False)
     have_paid_dues = models.BooleanField(default=False)
     achievements = models.TextField(max_length=2500, blank=True, null=True)
-    bio = models.TextField(max_length=2500,blank=True, null=True)
+    bio = models.TextField(max_length=2500, blank=True, null=True)
     profile_picture = models.ImageField(
         upload_to='media', null=True, blank=True)
 
     def __str__(self):
         return(self.first_name)  # want to return username
 
+class Relationship(models.Model):
+    relationship_type = models.CharField(
+        max_length=400, null=False, default="Friend")
+    user = models.ForeignKey(
+        User, default=None, related_name="user1", on_delete=models.CASCADE)
+    user2 = models.ForeignKey(
+        User, default=None, related_name="user2", on_delete=models.CASCADE)
 
+    def __str__(self):
+      return(self.relationship_type)  # want to return username
 
 class Event(models.Model):
     event_name = models.CharField(max_length=150)
     date = models.CharField(max_length=40)
-    time = models.CharField(max_length=40,null=True, blank=True)
+    time = models.CharField(max_length=40, null=True, blank=True)
     address_line = models.CharField(max_length=250, null=True, blank=True)
-    city = models.CharField(max_length=150, blank=True, null=True, default=None)
+    city = models.CharField(max_length=150, blank=True,
+                            null=True, default=None)
     state = models.CharField(max_length=50, default='LA')
     zip_code = models.CharField(max_length=150)
-    contact_name = models.CharField(max_length=150, blank=True, null=True, default=None)
-    contact_number = models.CharField(max_length=150, blank=True, null=True, default=None)
-    contact_email = models.EmailField(max_length=150, blank=True, null=True, default=None)
-    banner_image = models.FileField(upload_to='media/Event Media', null=True, blank=True, default='EventBannerDefault.jpg') 
-    
+    contact_name = models.CharField(
+        max_length=150, blank=True, null=True, default=None)
+    contact_number = models.CharField(
+        max_length=150, blank=True, null=True, default=None)
+    contact_email = models.EmailField(
+        max_length=150, blank=True, null=True, default=None)
+    banner_image = models.ImageField(default="EventBannerDefault.jpg")
+
     description = models.TextField(max_length=2500)
     # rsvpd_members = models.ManyToManyField(User, blank=True)
     registration_fees = models.CharField(max_length=150, null=True, blank=True)
 
     def __str__(self):
-      return(self.event_name)
+        return(self.event_name)
+
+    @property
+    def imageURL(self):
+        if self.banner_image:
+            return self.banner_image.url
+        else:
+            return "/media/EventBannerDefault.jpg"
 
 class Gallery(models.Model):
     images = models.FileField(upload_to='media/Event Media',)
@@ -64,18 +80,22 @@ class Gallery(models.Model):
     def __int__(self):
         return (self.id, self.event)
 
+
 class Campaign(models.Model):
     campaign_name = models.CharField(max_length=150)
-    members_who_donated  = models.ManyToManyField(User, blank=True)
+    members_who_donated = models.ManyToManyField(User, blank=True)
     media = models.ImageField(upload_to='media/Campaign Media', blank=True)
     gallery = models.FileField(upload_to='media/Campaign Media', blank=True)
-    banner_image = models.ImageField(upload_to='media/Campaign Media',  blank=True)
+    banner_image = models.ImageField(
+        upload_to='media/Campaign Media',  blank=True)
     goal = models.DecimalField(max_digits=10, decimal_places=2)
-    amount_collected = models.DecimalField(max_digits=10, decimal_places=2, default='0', blank=True)
+    amount_collected = models.DecimalField(
+        max_digits=10, decimal_places=2, default='0', blank=True)
     contact_details = models.CharField(max_length=150)
 
     def __str__(self):
-      return(self.campaign_name)
+        return(self.campaign_name)
+
 
 class CategoryOfTeam(models.Model):
     category_name = models.CharField(max_length=150)
@@ -83,44 +103,54 @@ class CategoryOfTeam(models.Model):
     description = models.TextField(max_length=2500)
 
     def __str__(self):
-      return(self.category_name)
+        return(self.category_name)
 
-#Basketball, cheerleading, etc.       
+# Basketball, cheerleading, etc.
+
+
 class Team(models.Model):
 
-    members_of_team = models.ManyToManyField(User, related_name='members_of_team') #Connects to members but not all members of old teams are site members
+    # Connects to members but not all members of old teams are site members
+    members_of_team = models.ManyToManyField(
+        User, related_name='members_of_team')
     coaches = models.ManyToManyField(User, related_name='coaches', blank=True)
-    type_of_team = models.ForeignKey(CategoryOfTeam, on_delete=models.CASCADE, null=False, default="")
+    type_of_team = models.ForeignKey(
+        CategoryOfTeam, on_delete=models.CASCADE, null=False, default="")
     description = models.TextField(max_length=2500)
     media = models.ImageField(upload_to='media/Team Media', blank=True)
 
     def __str__(self):
-      return(str(self.type_of_team.year) + " " +self.type_of_team.category_name)
+        return(str(self.type_of_team.year) + " " + self.type_of_team.category_name)
+
 
 class Scholarship(models.Model):
     scholarship_name = models.CharField(max_length=150)
     description = models.TextField(max_length=2500)
     image = models.ImageField(upload_to='media/Scholarship Media',  blank=True)
-    team_organization = models.ManyToManyField(Team,  blank=True) 
+    team_organization = models.ManyToManyField(Team,  blank=True)
     amount = models.CharField(max_length=150)
 
     def __str__(self):
-      return(self.scholarship_name)
+        return(self.scholarship_name)
+
 
 class Contribution(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default="")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=False, default="")
     events = models.ManyToManyField(Event)
     campaigns = models.ManyToManyField(Campaign)
 
     def __str__(self):
-      return(self.user.username)
+        return(self.user.username)
+
 
 class Role(models.Model):
     role_title = models.CharField(max_length=150, blank=True)
     user = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
-      return(self.role_title)
+        return(self.role_title)
+
 
 class Contact(models.Model):
     sender_email = models.CharField(max_length=150)
@@ -128,5 +158,4 @@ class Contact(models.Model):
     message = models.TextField(max_length=2500)
 
     def __str__(self):
-      return(self.sender_email)
-
+        return(self.sender_email)

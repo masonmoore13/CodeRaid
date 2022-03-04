@@ -1,6 +1,8 @@
 from django.urls import path, include
 from main.views import *
 from rest_framework import routers
+from django.conf.urls.static import static
+from django.conf import settings
 
 route = routers.DefaultRouter()
 route.register("gallery", GalleryView, basename='galleryView')
@@ -17,3 +19,4 @@ route.register("userProfile", UserProfileView, basename='UserProfileView')
 urlpatterns = [
     path('api/', include(route.urls)), 
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

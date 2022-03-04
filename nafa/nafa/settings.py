@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Set the root for media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/'
+MEDIA_URL = '/media/'
+STATIC_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/

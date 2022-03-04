@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getEventById, updateEventById } from "../../api/apiCalls.js";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { CardGroup, Col, Modal, Button } from "react-bootstrap";
+import {
+  getEventById,
+  updateEventById,
+  createGalleryImage,
+  deleteGalleryById,
+  getGalleryByEventId,
+} from "../../api/apiCalls.js";
+import {
+  ImagerDisplay,
+  imagerShow,
+  ImagerImg,
+} from "../../components/imageModalResize/ImageModalResize";
+import { BsTrashFill } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
 const EventUpdate = () => {
   const { id } = useParams();
@@ -15,15 +29,12 @@ const EventUpdate = () => {
   const [contact_name, setContactName] = useState("");
   const [contact_number, setContactNumber] = useState("");
   const [contact_email, setContactEmail] = useState("");
-
   const [description, setDescription] = useState("");
   const [registration_fees, setRegistrationFees] = useState("");
-
-  const [gallery, setGallery] = useState(null);
   const [rsvpd_members, setRsvpdMembers] = useState("");
   const [banner_image, setBannerImage] = useState(null);
-  const [media, setMedia] = useState("");
 
+  //Populates form data
   useEffect(() => {
     getEventById(id).then((response) => {
       console.log(response.data.gallery);
@@ -58,10 +69,6 @@ const EventUpdate = () => {
     formField.append("description", description);
     formField.append("registration_fees", registration_fees);
 
-    if (gallery !== null) {
-      formField.append("gallery", gallery);
-    }
-
     if (banner_image !== null) {
       formField.append("banner_image", banner_image);
     }
@@ -74,6 +81,48 @@ const EventUpdate = () => {
         console.log("Error ocurred " + error.message);
       });
   };
+
+  //Gallery stuff
+
+  const [images, setImages] = useState(false);
+  const [event, setEventId] = useState(id);
+
+  let navigate = useNavigate();
+
+  const CreateGalleryInfo = async () => {
+    let formField = new FormData();
+
+    if (images !== null) {
+      formField.append("images", images);
+    }
+
+    formField.append("event", event);
+    setEventId(id);
+
+    createGalleryImage(formField).then((response) => {
+      console.log(response.data);
+      navigate.push("/");
+    });
+  };
+
+  const deleteImage = async (id) => {
+    deleteGalleryById(id)
+      .then((response) => {
+        console.log("delete successful");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    navigate.push("/");
+  };
+
+  //Get Gallery by event id. Used to render images on the page
+  const [gallery, setGallery] = useState([]);
+  useEffect(() => {
+    getGalleryByEventId(id).then((response) => {
+      setGallery(response.data);
+    });
+  }, []);
 
   return (
     <form className="eventUpdate w-75 mx-auto shadow p-5 ">
@@ -127,7 +176,7 @@ const EventUpdate = () => {
         <input
           type="text"
           className="form-control form-control-lg"
-          placeholder="Enter street address"
+          placeholder="Enter street address/location i.e. Neville High School or 123 Main St"
           value={address_line}
           onChange={(e) => setAddressLine(e.target.value)}
         />
@@ -145,7 +194,6 @@ const EventUpdate = () => {
 
         <div class="col">
           <select
-            name="state"
             className="form-control form-control-lg"
             placeholder="State"
             name="State"
@@ -270,7 +318,7 @@ const EventUpdate = () => {
             id="file"
             multiple
             className="form-control"
-            onChange={(e) => setGallery(e.target.files[0])}
+            onChange={(e) => setImages(e.target.files[0])}
           />
         </div>
 
@@ -278,7 +326,6 @@ const EventUpdate = () => {
           Banner Image
           <input
             type="file"
-            placeholder=""
             className="form-control"
             onChange={(e) => setBannerImage(e.target.files[0])}
           />
@@ -287,11 +334,35 @@ const EventUpdate = () => {
       <Link
         className="btn btn-outline-dark btn-warning mb-5 m-1"
         bg="warning"
-        to={`/event/${id}`}
-        onClick={updateSingleEvent}
+        to={``}
+        onClick={() => {
+          updateSingleEvent();
+          CreateGalleryInfo();
+        }}
       >
         Update Event
       </Link>
+      <div className="showGallery ">
+        {gallery.map((gallery, index) => (
+          <div style={{ width: "10em" }} key={gallery.id}>
+            <ImagerDisplay z-index="2000" />
+            <ImagerImg width="200px" src={gallery.images} alt="event images" />
+            <IconContext.Provider value={{ color: "red", size: "50px" }}>
+              <div>
+                <Button
+                  className="button  bg-white btn-outline-light"
+                  type="button"
+                  onClick={() => (
+                    deleteGalleryById(gallery.id), window.location.reload()
+                  )}
+                >
+                  <BsTrashFill />
+                </Button>
+              </div>
+            </IconContext.Provider>
+          </div>
+        ))}
+      </div>
     </form>
   );
 };

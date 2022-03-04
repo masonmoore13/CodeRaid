@@ -55,7 +55,7 @@
   font-size: 15pt;
 }
 .eventDetailBanner {
-  width: 60%;
+  width: 60.2%;
   max-height: 400px;
 }
 
@@ -63,6 +63,37 @@
   text-indent: 25px;
 }
 
-.btn-warning{
-  color: black !important;
+@media screen and (max-width: 600px){
+
+  .showEventsCardbox{
+    width: 100%;
+  }
+
+  .eventDetailCardBox{
+    width: 100%;
+  }
+
+  .DetailsRightCol{
+    justify-content: center;
+  }
+
+  .venueCard{
+    width: 93%;
+  }
+
+  .eventDetailBanner{
+    width: 100%;
+  }
+
+  .titleContainer{
+    flex-direction: column;
+  }
+
+  .eventName{
+    width: 100%;
+  }
+
+  .detailsLeftCol{
+    text-align: center !important;
+  }
 }

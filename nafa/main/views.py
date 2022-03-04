@@ -31,8 +31,6 @@ class EventView(viewsets.ModelViewSet):
 
     permission_classes = [UserPermission]
 
-
-
 class CampaignView(viewsets.ModelViewSet):
     queryset = Campaign.objects.all()
     serializer_class = CampaignSerializer
