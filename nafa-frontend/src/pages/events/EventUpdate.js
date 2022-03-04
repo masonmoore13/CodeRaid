@@ -15,6 +15,7 @@ import {
 } from "../../components/imageModalResize/ImageModalResize";
 import { BsTrashFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import "./Event.css"
 
 const EventUpdate = () => {
   const { id } = useParams();
@@ -84,7 +85,7 @@ const EventUpdate = () => {
 
   //Gallery stuff
 
-  const [images, setImages] = useState();
+  const [images, setImages] = useState(false);
   const [event, setEventId] = useState(id);
 
   let navigate = useNavigate();
@@ -124,12 +125,8 @@ const EventUpdate = () => {
     });
   }, []);
 
-  const fileHandler = (e) => {
-          setImages(e.target.files[0])
-    }
-
   return (
-    <form className="eventUpdate w-75 mx-auto shadow p-5 ">
+    <form className="eventUpdate w-75 mx-auto shadow p-5 " >
       <h1 className="text-center mb-4"> Update Event</h1>
       Event Name
       <div class="col-md-6">
@@ -142,7 +139,7 @@ const EventUpdate = () => {
         />
       </div>
       Description
-      <div className="col mb-2">
+      <div className="col mb-2" md={1}>
         <textarea
           rows="6"
           type="text"
@@ -322,7 +319,7 @@ const EventUpdate = () => {
             id="file"
             multiple
             className="form-control"
-            onChange={fileHandler}
+            onChange={(e) => setImages(e.target.files[0])}
           />
         </div>
 
@@ -357,7 +354,7 @@ const EventUpdate = () => {
                   className="button  bg-white btn-outline-light"
                   type="button"
                   onClick={() => (
-                    deleteImage(gallery.id), window.location.reload()
+                    deleteGalleryById(gallery.id), window.location.reload()
                   )}
                 >
                   <BsTrashFill />

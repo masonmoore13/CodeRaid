@@ -51,7 +51,7 @@ const EventDetail = () => {
   };
 
   return (
-    <div className="eventDetail w-100">
+    <div className="eventDetail w-100 text-center ">
       <div className="bg">
         <img
           className="eventDetailBanner"
@@ -60,79 +60,74 @@ const EventDetail = () => {
         ></img>
       </div>
 
-      <Card className="eventDetailCardBox style={{ whiteSpace: 'nowrap' }}">
+      <Card className="eventDetailCardBox mx-auto">
         <div className="titleContainer d-flex flex-lg-wrap justify-content-center">
           <div className="eventName display-3">{event.event_name}</div>
-          <div className="justify-content-center">
-            <div className="detailButtons position">
-              <div className="deleteModal modal-fullscreen-sm-down">
-                <Button
-                  className="btn btn-outline-dark btn-warning m-1"
-                  bg="warning"
-                  href={`/event/${event.id}/update`}
-                >
-                  Update
-                </Button>
+          <div className="deleteModal modal-fullscreen-sm-down">
+            <Button
+              className="btn btn-outline-dark btn-warning m-1"
+              href={`/event/${event.id}/update`}
+            >
+              Update
+            </Button>
 
-                <Button variant="dark" onClick={handleShow}>
-                  Delete
+            <Button variant="dark" onClick={handleShow}>
+              Delete
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  Are you sure you want to delete this event?
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
                 </Button>
-                <Modal show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>
-                      Are you sure you want to delete this event?
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button
-                      href="/event"
-                      variant="dark"
-                      onClick={() => deleteEvent(event.id)}
-                    >
-                      Confirm Delete
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              </div>
-              <div class="modal fade" id="exampleModal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">
-                        Modal title
-                      </h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">...</div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                      <button type="button" class="btn btn-primary">
-                        Save changes
-                      </button>
-                    </div>
-                  </div>
+                <Button
+                  href="/event"
+                  variant="dark"
+                  onClick={() => deleteEvent(event.id)}
+                >
+                  Confirm Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
+          <div class="modal fade" id="exampleModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">...</div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <CardGroup className="detailsBodyCard justify-content-center">
-          <Col className=" m-1 shadow-sm col-lg-8  text-start ">
+        <CardGroup className="detailsBodyCard">
+          <Col className="shadow-sm col-lg-8  text-start ">
             <Card
               className="detailsLeftCol mx-auto shadow-sm  "
               border=""
@@ -147,7 +142,6 @@ const EventDetail = () => {
           <Col className="DetailsRightCol m-2 col-lg-3 shadow-sm  ">
             <Card
               className="venueCard m-3 shadow-sm text-start"
-              border=""
               style={{ width: "93%" }}
             >
               <Card.Title className="text-center">

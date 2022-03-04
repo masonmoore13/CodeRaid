@@ -19,43 +19,39 @@ const ShowEvents = () => {
   }, []);
 
   return (
-    <div className="completedEvents">
-      <div className="showEventsHeader">Events</div>
-      <Card className="showEventsCardbox" border="white" boxShadow="none">
-        <div className="showEvents">
-          {event.map((event, index) => (
-            <Card
-              className="m-4 shadow-lg"
-              border="dark"
-              style={{ width: "27em" }}
-              key={event.id}
-            >
-              <Card.Body>
-                <Card.Title style={{ fontSize: "30px" }}>
-                  {event.event_name} <hr />
-                </Card.Title>
-                <Card.Text style={{ fontSize: "20px" }}>
-                  {" "}
-                  {event.date}{" "}
-                </Card.Text>
-                <Card.Text style={{ fontSize: "20px" }}>
-                  {" "}
-                  {event.time}{" "}
-                </Card.Text>
-                <Link
-                  className="btn btn-outline-dark btn-warning mr-2"
-                  to={`/event/${event.id}/`}
-                >
-                  Event Details
-                </Link>
-              </Card.Body>
-            </Card>
-          ))}
-        </div>
-        <hr />
-        Completed Events
-      </Card>
-    </div>
+    <Card
+      className="showEventsCardbox text-center mx-auto col-sm-12"
+      style={{ width: "60%" }}
+      xs={44}
+    >
+      <div className="header display-3">Events</div> <hr />
+      <div className="showEvents d-flex flex-row flex-wrap justify-content-center">
+        {event.map((event, index) => (
+          <Card
+            className="m-4 shadow-lg"
+            border="dark"
+            style={{ width: "27em" }}
+            key={event.id}
+          >
+            <Card.Body>
+              <Card.Title style={{ fontSize: "30px" }}>
+                {event.event_name} <hr />
+              </Card.Title>
+              <Card.Text style={{ fontSize: "20px" }}>{event.date}</Card.Text>
+              <Card.Text style={{ fontSize: "20px" }}>{event.time} </Card.Text>
+              <Link
+                className="btn btn-outline-dark btn-warning mr-2"
+                to={`/event/${event.id}/`}
+              >
+                Event Details
+              </Link>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+      <hr />
+      Completed Events
+    </Card>
   );
 };
 
