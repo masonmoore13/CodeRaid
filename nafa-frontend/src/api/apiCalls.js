@@ -55,8 +55,28 @@ export const createGalleryImage = (galleryObject) => {
 export const getGalleryById = (id) => {
   return axios.get(`${galleryUrl}${id}/`);
 };
+// export const deleteGalleryById = (id) => {
+//   return axios.delete(`${galleryUrl}${id}/`);
+// };
 export const deleteGalleryById = (id) => {
-  return axios.delete(`${galleryUrl}${id}/`);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.delete(`${galleryUrl}${id}/`,  {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 export const updateGalleryById = (id, galleryObject) => {
   return axios.put(`${galleryUrl}${id}/`, galleryObject);

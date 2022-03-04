@@ -84,7 +84,7 @@ const EventUpdate = () => {
 
   //Gallery stuff
 
-  const [images, setImages] = useState(false);
+  const [images, setImages] = useState();
   const [event, setEventId] = useState(id);
 
   let navigate = useNavigate();
@@ -123,6 +123,10 @@ const EventUpdate = () => {
       setGallery(response.data);
     });
   }, []);
+
+  const fileHandler = (e) => {
+          setImages(e.target.files[0])
+    }
 
   return (
     <form className="eventUpdate w-75 mx-auto shadow p-5 ">
@@ -318,7 +322,7 @@ const EventUpdate = () => {
             id="file"
             multiple
             className="form-control"
-            onChange={(e) => setImages(e.target.files[0])}
+            onChange={fileHandler}
           />
         </div>
 
@@ -353,7 +357,7 @@ const EventUpdate = () => {
                   className="button  bg-white btn-outline-light"
                   type="button"
                   onClick={() => (
-                    deleteGalleryById(gallery.id), window.location.reload()
+                    deleteImage(gallery.id), window.location.reload()
                   )}
                 >
                   <BsTrashFill />
