@@ -15,6 +15,8 @@ route.register("Contribution", ContributionView, basename='ContributionView')
 route.register("Role", RoleView, basename='RoleView') 
 route.register("Contact", ContactView, basename='ContactView') ,
 route.register("userProfile", UserProfileView, basename='UserProfileView')
+route.register("relationship", RelationshipView, basename='RelationshipView')
+
 
 urlpatterns = [
     path('api/', include(route.urls)), 

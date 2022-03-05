@@ -150,15 +150,12 @@ export const getTeams = () => {
   return axios.get(`${teamUrl}`);
 };
 
-
-
-
 // Relationship
 const relationshipUrl = address + "/main/api/relationship/";
 const RelationshipByUserIdUrl = address + "/main/api/relationship/?search=";
 export const getRelationship = () => {
   return axios.get(`${relationshipUrl}`);
 };
-export const getRelationshipbyUserId = (id) => {
+export const getRelationshipByUserId = (id) => {
   return axios.get(`${RelationshipByUserIdUrl}${id}`);
 };

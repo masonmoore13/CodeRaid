@@ -22,7 +22,6 @@ const ShowEvents = () => {
     <Card
       className="showEventsCardbox text-center mx-auto col-sm-12"
       style={{ width: "60%" }}
-      xs={44}
     >
       <div className="header display-3">Events</div> <hr />
       <div className="showEvents d-flex flex-row flex-wrap justify-content-center">

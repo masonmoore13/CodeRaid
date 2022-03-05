@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Card } from "react-bootstrap";
 import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import {
   updateUserProfileById,
   getUserProfileById,
+  getRelationshipByUserId,
+  getRelationship,
 } from "../../../api/apiCalls";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -46,10 +48,10 @@ const Userprofile = () => {
   });
 
   let { id } = useParams();
- 
+
   useEffect(() => {
     if (!id) {
-      id = userProfile.id
+      id = userProfile.id;
     }
 
     if (id) {
@@ -124,8 +126,8 @@ const Userprofile = () => {
           profile_picture: files[0],
         };
       });
-      const objectUrl = URL.createObjectURL(files[0])
-      setPreview(objectUrl)
+      const objectUrl = URL.createObjectURL(files[0]);
+      setPreview(objectUrl);
       return;
     }
 
@@ -144,7 +146,13 @@ const Userprofile = () => {
     // });
   };
 
-  //Toast on profile update
+  // Relationship fetch
+  const [relationship, setRelationship] = useState([]);
+  useEffect(() => {
+    getRelationshipByUserId(userProfile.user).then((response) => {
+      setRelationship(response.data);
+    });
+  }, []);
 
   return (
     <div className="user">
@@ -360,19 +368,19 @@ const Userprofile = () => {
 
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
-                {preview.length? (
+                {preview.length ? (
                   <img
                     className="userUpdateImg"
-                    src={
-                      preview
-                    }
+                    src={preview}
                     alt="Profile pic"
                   />
                 ) : (
                   <img
                     className="userUpdateImg"
                     src={
-                      userProfileData.profile_picture ? userProfileData.profile_picture: userprofile
+                      userProfileData.profile_picture
+                        ? userProfileData.profile_picture
+                        : userprofile
                     }
                     alt="Profile pic"
                   />
@@ -388,6 +396,24 @@ const Userprofile = () => {
                   onChange={onInputChange}
                 />
               </div>
+
+              <Card className="relationshipsCard w-100 text-center">
+                <Card.Body>
+                  <Card.Title className="header mx-auto">
+                    Relationships
+                  </Card.Title>
+                  <hr />
+                  {relationship.map((relationship, index) => (
+                    <Card.Text className="namesRelationship">
+                      {relationship.relationship_type} - {relationship.user2}
+                    </Card.Text>
+                  ))}
+                </Card.Body>
+                <Button className="btn-outline-dark btn-success w-50 mx-auto">
+                  Add a Relationship
+                </Button>
+              </Card>
+
               <Button
                 variant="warning"
                 className="userUpdateButton"
