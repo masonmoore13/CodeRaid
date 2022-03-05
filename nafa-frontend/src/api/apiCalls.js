@@ -122,7 +122,9 @@ export const updateEventById = (id, eventObject) => {
 
 // Profile
 const userProfileUrl = address + "/main/api/userProfile";
-const userProfileSearch = address + "/accounts/api/UserProfile/?search=";
+const userProfileSearch = address + "/main/api/userProfile/?search=";
+const userProfileByIdSearch = address + "/main/api/UserProfileByIdView/?search=";
+
 export const getProfileByUserID = (id) => {
   return axios.get(`${userProfileSearch}${id}`);
 };
@@ -132,8 +134,13 @@ export const getUserProfile = () => {
 export const createUserProfile = (userProfileObject) => {
   return axios.post(userProfileUrl, userProfileObject);
 };
+//This is the url Sital is using in profile
 export const getUserProfileById = (id) => {
   return axios.get(`${userProfileUrl}/${id}/`);
+};
+//using this to filter relationships by profile id
+export const profileIdFilter = (id) => {
+  return axios.get(`${userProfileByIdSearch}${id}`);
 };
 export const deleteUserProfileId = (id) => {
   return axios.delete(`${userProfileUrl}${id}/`);

@@ -16,7 +16,8 @@ import {
   updateUserProfileById,
   getUserProfileById,
   getRelationshipByUserId,
-  getRelationship,
+  getProfileByUserID,
+  profileIdFilter,
 } from "../../../api/apiCalls";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -147,12 +148,24 @@ const Userprofile = () => {
   };
 
   // Relationship fetch
+ 
   const [relationship, setRelationship] = useState([]);
+  const [user2Info, setUser2Info] = useState([]);
+
   useEffect(() => {
-    getRelationshipByUserId(userProfile.user).then((response) => {
-      setRelationship(response.data);
+    const result = getRelationshipByUserId(userProfile.id).then((response) => {
+       relationship.user2 = setRelationship(response.data);
     });
   }, []);
+
+  
+  useEffect(() => {
+     profileIdFilter(relationship.user2).then((response) => {
+       // 7 should be relationship.user2
+       setUser2Info(response.data);
+     });
+  }, []);
+  // Relationship fetch
 
   return (
     <div className="user">
@@ -397,7 +410,7 @@ const Userprofile = () => {
                 />
               </div>
 
-              <Card className="relationshipsCard w-100 text-center">
+              <Card className="relationshipsCard w-100 text-center d-inline-flex">
                 <Card.Body>
                   <Card.Title className="header mx-auto">
                     Relationships
@@ -405,9 +418,14 @@ const Userprofile = () => {
                   <hr />
                   {relationship.map((relationship, index) => (
                     <Card.Text className="namesRelationship">
-                      {relationship.relationship_type} - {relationship.user2}
+                      {relationship.relationship_type}{user2Info.map((user2Info, index) => (
+                    <Card.Text className="name">
+                      {user2Info.first_name} {user2Info.last_name}
                     </Card.Text>
                   ))}
+                    </Card.Text>
+                  ))}
+                  <div></div>
                 </Card.Body>
                 <Button className="btn-outline-dark btn-success w-50 mx-auto">
                   Add a Relationship

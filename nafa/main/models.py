@@ -29,15 +29,15 @@ class UserProfile(models.Model):
         upload_to='media', null=True, blank=True)
 
     def __str__(self):
-        return(self.first_name)  # want to return username
+        return(self.first_name + " " + self.last_name)  # want to return username
 
 class Relationship(models.Model):
     relationship_type = models.CharField(
         max_length=400, null=False, default="Friend")
     user = models.ForeignKey(
-        User, default=None, related_name="user1", on_delete=models.CASCADE)
+        UserProfile, default=None, related_name="user1", on_delete=models.CASCADE)
     user2 = models.ForeignKey(
-        User, default=None, related_name="user2", on_delete=models.CASCADE)
+        UserProfile, default=None, related_name="user2", on_delete=models.CASCADE)
 
     def __str__(self):
       return(self.relationship_type)  # want to return username
