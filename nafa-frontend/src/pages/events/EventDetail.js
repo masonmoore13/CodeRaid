@@ -9,7 +9,6 @@ import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
 import {
   ImagerDisplay,
-  imagerShow,
   ImagerImg,
 } from "../../components/imageModalResize/ImageModalResize";
 
@@ -51,16 +50,14 @@ const EventDetail = () => {
   };
 
   return (
-    <div className="eventDetail w-100 text-center ">
-      <div className="bg">
-        <img
-          className="eventDetailBanner"
-          src={event.banner_image}
-          alt="..."
-        ></img>
-      </div>
+    <div className="container-md w-100 text-center ">
+      <img
+        className="container rounded"
+        src={event.banner_image}
+        alt="..."
+      ></img>
 
-      <Card className="eventDetailCardBox mx-auto">
+      <Card className="container-md mx-auto mx-auto">
         <div className="titleContainer d-flex flex-lg-wrap justify-content-center">
           <div className="eventName display-3">{event.event_name}</div>
           <div className="deleteModal modal-fullscreen-sm-down">
@@ -94,36 +91,6 @@ const EventDetail = () => {
               </Modal.Footer>
             </Modal>
           </div>
-          <div class="modal fade" id="exampleModal">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
-                    Modal title
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">...</div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Save changes
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <CardGroup className="detailsBodyCard">
@@ -139,7 +106,7 @@ const EventDetail = () => {
             </Card>
           </Col>
 
-          <Col className="DetailsRightCol m-2 col-lg-3 shadow-sm  ">
+          <Col className="DetailsRightCol m-2 col-lg-3 shadow-sm ">
             <Card
               className="venueCard m-3 shadow-sm text-start"
               style={{ width: "93%" }}
@@ -148,13 +115,12 @@ const EventDetail = () => {
                 Venue
                 <hr />
               </Card.Title>
-              <p className=" mx-1"> {event.address_line}</p>
-              <p className=" mx-1"> {event.city}</p>
-              <p className=" mx-1"> {event.state}</p>
-              <p className=" mx-1"> {event.zip_code}</p>
+              <h5 className=" mx-1"> {event.address_line}</h5>
+              <h6 className=" mx-1"> {event.city}</h6>
+              <h6 className=" mx-1"> {event.state}</h6>
+              <h6 className=" mx-1"> {event.zip_code}</h6>
               <a
-                className="btn directionsButton btn-outline-dark btn-warning  w-50 mb-2 m-1 white-space: nowrap"
-                bg="warning"
+                className="btn btn-outline-dark btn-warning mx-auto 50 mb-2 m-1 "
                 href={`http://maps.google.com/?q=${event.address_line} ${event.city} ${event.state} ${event.zip_code}`}
               >
                 Get Directions
@@ -168,9 +134,9 @@ const EventDetail = () => {
               <Card.Title>
                 Contact Details <hr />
               </Card.Title>
-              <p> {event.contact_name}</p>
-              <p> {event.contact_number}</p>
-              <p> {event.contact_email}</p>
+              <h5> {event.contact_name}</h5>
+              <h6> {event.contact_email}</h6>
+              <h6> {event.contact_number}</h6>  
             </Card>
             <Card
               className="DetailsRightCol m-3 shadow-md "

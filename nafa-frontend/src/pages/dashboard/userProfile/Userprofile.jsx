@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
-import { Button, Form, Card } from "react-bootstrap";
+import { Button, Form, Card, Modal, ModalBody } from "react-bootstrap";
 import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
@@ -16,7 +16,6 @@ import {
   updateUserProfileById,
   getUserProfileById,
   getRelationshipByUserId,
-  getProfileByUserID,
   profileIdFilter,
 } from "../../../api/apiCalls";
 import { useParams } from "react-router-dom";
@@ -148,24 +147,26 @@ const Userprofile = () => {
   };
 
   // Relationship fetch
- 
+  
   const [relationship, setRelationship] = useState([]);
   const [user2Info, setUser2Info] = useState([]);
-
   useEffect(() => {
-    const result = getRelationshipByUserId(userProfile.id).then((response) => {
-       relationship.user2 = setRelationship(response.data);
+    getRelationshipByUserId(userProfile.id).then((response) => {
+      setRelationship(response.data);
     });
   }, []);
 
-  
-  useEffect(() => {
-     profileIdFilter(relationship.user2).then((response) => {
-       // 7 should be relationship.user2
-       setUser2Info(response.data);
-     });
-  }, []);
-  // Relationship fetch
+  useEffect(() => { 
+    profileIdFilter(relationship.user2).then((response) => {
+      // 7 should be relationship.user2
+      setUser2Info(response.data);
+    });
+  }, [relationship]);
+
+  // Relationship Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div className="user">
@@ -418,18 +419,39 @@ const Userprofile = () => {
                   <hr />
                   {relationship.map((relationship, index) => (
                     <Card.Text className="namesRelationship">
-                      {relationship.relationship_type}{user2Info.map((user2Info, index) => (
-                    <Card.Text className="name">
-                      {user2Info.first_name} {user2Info.last_name}
+                      {relationship.relationship_type}
+                      {user2Info.map((user2Info, index) => (
+                        <Card.Text className="name">
+                          {user2Info.first_name} {user2Info.last_name}
+                        </Card.Text>
+                      ))}
                     </Card.Text>
                   ))}
-                    </Card.Text>
-                  ))}
-                  <div></div>
                 </Card.Body>
-                <Button className="btn-outline-dark btn-success w-50 mx-auto">
-                  Add a Relationship
+
+                <Button variant="success w-50 mx-auto" onClick={handleShow}>
+                  Add Relationship
                 </Button>
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  centered
+                  size="lg"
+                  className="text-center"
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title className="modal-header ">
+                      Choose a user and select type of relationship
+                    </Modal.Title>
+                  </Modal.Header>
+                  <ModalBody>Herro</ModalBody>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="success">Add Relationship</Button>
+                  </Modal.Footer>
+                </Modal>
               </Card>
 
               <Button

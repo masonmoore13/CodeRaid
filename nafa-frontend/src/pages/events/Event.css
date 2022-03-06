@@ -1,33 +1,5 @@
-.createEvent {
-  min-height: 90.5vh;
-}
-
-.eventUpdate {
-  min-height: 90.5vh;
-}
-
-.eventDetailCardBox {
-  min-height: 90vh;
-  width: 60%;
-}
-
-.DetailCardBox {
-  width: 60%;
-}
-
-.directionsButton {
-  position: relative;
-  left: 25%;
-}
 .eventName {
   width: 85%;
-}
-.DetailsRightCol {
-  font-size: 15pt;
-}
-.eventDetailBanner {
-  width: 60%;
-  max-height: 400px;
 }
 
 .description{
