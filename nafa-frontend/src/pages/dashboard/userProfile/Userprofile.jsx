@@ -17,7 +17,7 @@ import {
   getUserProfileById,
   getRelationshipByUserId,
 } from "../../../api/apiCalls";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -408,10 +408,17 @@ const Userprofile = () => {
                   </Card.Title>
                   <hr />
                   {relationship.map((relationship, index) => (
-                    <Card.Text className="namesRelationship">
-                      {relationship.relationship_type}{" "}
-                      {relationship.relationship_name}
-                       
+                    <Card.Text className="text-start">
+                      {relationship.relationship_type + ": "}
+                      <Link
+                        className=""
+                        to={``}
+                        onClick={() => {
+                          window.location.href = `/dashboard/userprofile/${relationship.user2}/`;
+                        }}
+                      >
+                        {relationship.relationship_name}
+                      </Link>
                     </Card.Text>
                   ))}
                 </Card.Body>
