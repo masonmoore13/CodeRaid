@@ -414,7 +414,7 @@ const Userprofile = () => {
               <Card className="relationshipsCard w-100 text-center d-inline-flex">
                 <Card.Body>
                   <Card.Title className="header mx-auto">
-                    Relationships
+                    Friends & Family
                   </Card.Title>
                   <hr />
                   {relationship.map((relationship, index) => (
