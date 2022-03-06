@@ -24,7 +24,7 @@ const ShowEvents = () => {
       <div className="showEvents d-flex flex-row flex-wrap justify-content-center">
         {event.map((event, index) => (
           <Card
-            className="m-4 shadow-lg"
+            className="m-5 shadow-lg"
             border="dark"
             style={{ width: "27em" }}
             key={event.id}

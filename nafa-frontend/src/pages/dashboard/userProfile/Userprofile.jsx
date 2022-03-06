@@ -151,7 +151,7 @@ const Userprofile = () => {
   const [relationship, setRelationship] = useState([]);
   const [user2Info, setUser2Info] = useState([]);
   useEffect(() => {
-    getRelationshipByUserId(userProfile.id).then((response) => {
+    getRelationshipByUserId(id).then((response) => {
       setRelationship(response.data);
     });
   }, []);
