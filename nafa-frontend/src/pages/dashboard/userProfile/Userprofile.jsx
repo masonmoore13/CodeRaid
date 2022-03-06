@@ -16,7 +16,6 @@ import {
   updateUserProfileById,
   getUserProfileById,
   getRelationshipByUserId,
-  profileIdFilter,
 } from "../../../api/apiCalls";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -147,21 +146,12 @@ const Userprofile = () => {
   };
 
   // Relationship fetch
-  
   const [relationship, setRelationship] = useState([]);
-  const [user2Info, setUser2Info] = useState([]);
   useEffect(() => {
     getRelationshipByUserId(id).then((response) => {
       setRelationship(response.data);
     });
   }, []);
-
-  useEffect(() => { 
-    profileIdFilter(relationship.user2).then((response) => {
-      // 7 should be relationship.user2
-      setUser2Info(response.data);
-    });
-  }, [relationship]);
 
   // Relationship Modal
   const [show, setShow] = useState(false);
@@ -411,7 +401,7 @@ const Userprofile = () => {
                 />
               </div>
 
-              <Card className="relationshipsCard w-100 text-center d-inline-flex">
+              <Card className="relationshipsCard w-100 text-center">
                 <Card.Body>
                   <Card.Title className="header mx-auto">
                     Friends & Family
@@ -419,18 +409,15 @@ const Userprofile = () => {
                   <hr />
                   {relationship.map((relationship, index) => (
                     <Card.Text className="namesRelationship">
-                      {relationship.relationship_type}
-                      {user2Info.map((user2Info, index) => (
-                        <Card.Text className="name">
-                          {user2Info.first_name} {user2Info.last_name}
-                        </Card.Text>
-                      ))}
+                      {relationship.relationship_type}{" "}
+                      {relationship.relationship_name}
+                       
                     </Card.Text>
                   ))}
                 </Card.Body>
 
-                <Button variant="success w-50 mx-auto" onClick={handleShow}>
-                  Add Relationship
+                <Button variant="success w-25 mx-auto" onClick={handleShow}>
+                  Add/Edit
                 </Button>
                 <Modal
                   show={show}

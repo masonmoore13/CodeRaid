@@ -24,19 +24,19 @@ const ShowEvents = () => {
       <div className="showEvents d-flex flex-row flex-wrap justify-content-center">
         {event.map((event, index) => (
           <Card
-            className="m-5 shadow-lg"
+            className="m-5 shadow-lg text-center"
             border="dark"
             style={{ width: "27em" }}
             key={event.id}
           >
             <Card.Body>
-              <Card.Title style={{ fontSize: "30px" }}>
-                {event.event_name} <hr />
+              <Card.Title className="text-start">
+                <h4>{event.event_name}</h4> <hr />
               </Card.Title>
-              <Card.Text style={{ fontSize: "20px" }}>{event.date}</Card.Text>
-              <Card.Text style={{ fontSize: "20px" }}>{event.time} </Card.Text>
+              <Card.Text className="text-start">{event.date}</Card.Text>
+              <Card.Text className="text-start">{event.time} </Card.Text>
               <Link
-                className="btn btn-outline-dark btn-warning mr-2"
+                className="btn btn-outline-dark btn-warning mx-auto"
                 to={`/event/${event.id}/`}
               >
                 Event Details

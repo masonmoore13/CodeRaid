@@ -17,7 +17,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     Nested serializer
     Searches the ForeignKey according to the related name
     '''
-    relationships =RelationshipSerializer(many=True, read_only=True, source="user1")
+    relationships = RelationshipSerializer(many=True, read_only=True, source="user1")
     
     class Meta:
         model = UserProfile
