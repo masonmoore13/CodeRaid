@@ -17,7 +17,7 @@ import {
   getUserProfileById,
   getRelationshipByUserId,
 } from "../../../api/apiCalls";
-import { useParams, Link } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -410,15 +410,18 @@ const Userprofile = () => {
                   {relationship.map((relationship, index) => (
                     <Card.Text className="text-start">
                       {relationship.relationship_type + ": "}
-                      <Link
+                      <NavLink
                         className=""
                         to={``}
+                        style={(isActive) => ({
+                          color: isActive ? "green" : "blue",
+                        })}
                         onClick={() => {
                           window.location.href = `/dashboard/userprofile/${relationship.user2}/`;
                         }}
                       >
                         {relationship.relationship_name}
-                      </Link>
+                      </NavLink>
                     </Card.Text>
                   ))}
                 </Card.Body>
