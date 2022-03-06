@@ -38,6 +38,12 @@ class Relationship(models.Model):
         UserProfile, default=None, related_name="user1", on_delete=models.CASCADE)
     user2 = models.ForeignKey(
         UserProfile, default=None, related_name="user2", on_delete=models.CASCADE)
+    
+    # Extra property
+    @property
+    def relationship_name(self):
+        return self.user2.first_name + " "+ self.user2.middle_name + " " + self.user2.last_name
+    
 
     def __str__(self):
       return(self.relationship_type)  # want to return username

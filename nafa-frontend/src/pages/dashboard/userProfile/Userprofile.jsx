@@ -59,7 +59,7 @@ const Userprofile = () => {
         setUserProfileData(res.data);
       });
     }
-  }, [userProfile]);
+  }, [id, userProfile]);
 
   if (!userProfile) {
     userProfile = data;

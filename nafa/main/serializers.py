@@ -3,7 +3,22 @@ from main.models import *
 from .models import User
 
 
+class RelationshipSerializer(serializers.ModelSerializer):
+    
+    relationship_name = serializers.ReadOnlyField()
+    class Meta:
+        model = Relationship
+        fields = ('__all__')
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
+    
+    '''
+    Nested serializer
+    Searches the ForeignKey according to the related name
+    '''
+    relationships =RelationshipSerializer(many=True, read_only=True, source="user1")
+    
     class Meta:
         model = UserProfile
         fields = ('__all__')
@@ -17,10 +32,6 @@ class GallerySerializer(serializers.ModelSerializer):
         fields = ('__all__')
         
 
-class RelationshipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Relationship
-        fields = ('__all__')
 
 
 class EventSerializer(serializers.ModelSerializer):
