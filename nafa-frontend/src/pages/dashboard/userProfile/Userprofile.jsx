@@ -9,9 +9,10 @@ import {
   MdPhoneIphone,
   MdPublish,
 } from "react-icons/md";
-import { FaAddressCard } from "react-icons/fa";
+import { FaAddressCard, FaTrash } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
+import { IconContext } from "react-icons";
 import {
   updateUserProfileById,
   getUserProfileById,
@@ -440,17 +441,27 @@ const Userprofile = () => {
                   className="text-center"
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title className="modal-header ">
+                    <Modal.Title className="m-2 ">
                       Choose a member and select type of relationship
                     </Modal.Title>
                   </Modal.Header>
 
-                  <div className="container">
+                  <div className="container text-">
                     <div class="row">
                       <div class="col ">
-                        <h6 className="text-nowrap">
-                          Select Relationship Type
-                        </h6>
+                        <h6>Select A Member</h6>
+
+                        <form>
+                          <input
+                            class="form-control mr-sm-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                        </form>
+                      </div>
+                      <div class="col ">
+                        <h6 className="">Select Relationship Type</h6>
                         <form>
                           <select className="form-select">
                             <option>Friend</option>
@@ -462,25 +473,41 @@ const Userprofile = () => {
                           </select>
                         </form>
                       </div>
-                      <div class="col ">
-                        <h6>Select A Member</h6>
-
-                        <form>
-                          <select className="form-select">
-                            <option>Spouse</option>
-                          </select>
-                        </form>
-                      </div>
                     </div>
                   </div>
 
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button variant="btn btn-warning btn-outline-dark">
-                      Add Relationship
-                    </Button>
+                  <Modal.Footer className="justify-content-between">
+                    <div className="text-start ">
+                      {relationship.map((relationship, index) => (
+                        <h6>
+                          
+                          {relationship.relationship_type +
+                            ": " +
+                            relationship.relationship_name}
+                          <IconContext.Provider
+                            value={{ color: "red", size: "25px" }}
+                          >
+                            <Button
+                              className="button bg-white btn-outline-light"
+                              type="button"
+                            >
+                              <FaTrash />
+                            </Button>
+                          </IconContext.Provider>
+                        </h6>
+                      ))}
+                    </div>
+                    <div>
+                      <Button
+                        variant="secondary btn-outline-dark m-1"
+                        onClick={handleClose}
+                      >
+                        Close
+                      </Button>
+                      <Button variant="btn btn-warning btn-outline-dark">
+                        Add Relationship
+                      </Button>
+                    </div>
                   </Modal.Footer>
                 </Modal>
               </Card>
