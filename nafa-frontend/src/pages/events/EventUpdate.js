@@ -15,7 +15,7 @@ import {
 } from "../../components/imageModalResize/ImageModalResize";
 import { BsTrashFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
-import "./Event.css"
+import "./Event.css";
 
 const EventUpdate = () => {
   const { id } = useParams();
@@ -126,7 +126,7 @@ const EventUpdate = () => {
   }, []);
 
   return (
-    <form className="eventUpdate w-75 mx-auto shadow p-5 " >
+    <form className="container-md w-100 w-75 mx-auto shadow p-3">
       <h1 className="text-center mb-4"> Update Event</h1>
       Event Name
       <div class="col-md-6">

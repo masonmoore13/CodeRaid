@@ -52,8 +52,7 @@ const CreateEvent = () => {
 
   return (
     <form
-      className=" createEvent w-75 mx-auto shadow p-5 flex-row"
-      style={{ whiteSpace: "nowrap" }}
+      className="container-lg w-100 mx-auto shadow p-2 "
     >
       <h1 className="text-center mb-4" style={{ whiteSpace: "nowrap" }}>
         Add An Event
@@ -263,7 +262,7 @@ const CreateEvent = () => {
           />
         </div>
       </div>
-      <a href='/event' className="btn btn-warning " onClick={CreateEventInfo}>
+      <a href="/event" className="btn btn-warning " onClick={CreateEventInfo}>
         Add Event
       </a>
     </form>

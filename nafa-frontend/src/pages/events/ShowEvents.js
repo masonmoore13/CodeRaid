@@ -19,15 +19,12 @@ const ShowEvents = () => {
   }, []);
 
   return (
-    <Card
-      className="showEventsCardbox text-center mx-auto col-sm-12"
-      style={{ width: "60%" }}
-    >
-      <div className="header display-3">Events</div> <hr />
+    <Card className="container-md mx-auto">
+      <div className="header text-center display-3">Events</div> <hr />
       <div className="showEvents d-flex flex-row flex-wrap justify-content-center">
         {event.map((event, index) => (
           <Card
-            className="m-4 shadow-lg"
+            className="m-5 shadow-lg"
             border="dark"
             style={{ width: "27em" }}
             key={event.id}
@@ -49,7 +46,7 @@ const ShowEvents = () => {
         ))}
       </div>
       <hr />
-      Completed Events
+      <div className="container-lg text-center">Completed Events</div>
     </Card>
   );
 };
