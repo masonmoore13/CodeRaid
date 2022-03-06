@@ -414,7 +414,7 @@ const Userprofile = () => {
                         className=""
                         to={``}
                         style={(isActive) => ({
-                          color: isActive ? "green" : "blue",
+                          color: isActive ? "blue" : "blue",
                         })}
                         onClick={() => {
                           window.location.href = `/dashboard/userprofile/${relationship.user2}/`;
@@ -426,27 +426,61 @@ const Userprofile = () => {
                   ))}
                 </Card.Body>
 
-                <Button variant="success w-25 mx-auto" onClick={handleShow}>
+                <Button
+                  variant="btn btn-warning btn-outline-dark w-25 mx-auto"
+                  onClick={handleShow}
+                >
                   Add/Edit
                 </Button>
                 <Modal
                   show={show}
                   onHide={handleClose}
                   centered
-                  size="lg"
+                  size="xl"
                   className="text-center"
                 >
                   <Modal.Header closeButton>
                     <Modal.Title className="modal-header ">
-                      Choose a user and select type of relationship
+                      Choose a member and select type of relationship
                     </Modal.Title>
                   </Modal.Header>
-                  <ModalBody>Herro</ModalBody>
+
+                  <div className="container">
+                    <div class="row">
+                      <div class="col ">
+                        <h6 className="text-nowrap">
+                          Select Relationship Type
+                        </h6>
+                        <form>
+                          <select className="form-select">
+                            <option>Friend</option>
+                            <option>Spouse</option>
+                            <option>Parent</option>
+                            <option>Child</option>
+                            <option>Sibling</option>
+                            <option>Relative</option>
+                          </select>
+                        </form>
+                      </div>
+                      <div class="col ">
+                        <h6>Select A Member</h6>
+
+                        <form>
+                          <select className="form-select">
+                            <option>Spouse</option>
+                          </select>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="success">Add Relationship</Button>
+                    <Button variant="btn btn-warning btn-outline-dark">
+                      Add Relationship
+                    </Button>
                   </Modal.Footer>
                 </Modal>
               </Card>
