@@ -446,7 +446,7 @@ const Userprofile = () => {
                     </Modal.Title>
                   </Modal.Header>
 
-                  <div className="container text-">
+                  <div className="container m-3">
                     <div class="row">
                       <div class="col ">
                         <h6>Select A Member</h6>
@@ -480,7 +480,6 @@ const Userprofile = () => {
                     <div className="text-start ">
                       {relationship.map((relationship, index) => (
                         <h6>
-                          
                           {relationship.relationship_type +
                             ": " +
                             relationship.relationship_name}
