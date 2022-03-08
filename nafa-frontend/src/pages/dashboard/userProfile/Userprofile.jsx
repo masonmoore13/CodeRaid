@@ -283,7 +283,9 @@ const Userprofile = () => {
                   name="maiden_name"
                 />
               </div>
-              {showSpinner && <Spinner style={{zIndex: '10000'}}  animation="border" />}
+              {showSpinner && (
+                <Spinner style={{ zIndex: "10000" }} animation="border" />
+              )}
               <div className="userUpdateItem">
                 <label>Birthdate: </label>
                 <input
@@ -414,24 +416,24 @@ const Userprofile = () => {
                     <Card.Text className="text-start ms-3">
                       {relationship.relationship_type + ": "}
                       <button
-                        className="relationship-name ms-3"
+                        className="btn-sm btn-warning ms-1"
                         // to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
                         // style={(isActive) => ({
                         //   color: isActive ? "blue" : "blue",
                         // })}
-                        onClick={
-                          (e)=>{
-                            e.preventDefault();
-                            setShowSpinner(true)
-                        
-                            setTimeout(()=>{
-                              setShowSpinner(false)
-                              navigate(
-                                "/dashboard/userprofile/" + relationship.user2+ "/"
-                              );
-                            },500)
-                        }
-                      }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowSpinner(true);
+
+                          setTimeout(() => {
+                            setShowSpinner(false);
+                            navigate(
+                              "/dashboard/userprofile/" +
+                                relationship.user2 +
+                                "/"
+                            );
+                          }, 500);
+                        }}
                       >
                         <span>{relationship.relationship_name}</span>
                       </button>

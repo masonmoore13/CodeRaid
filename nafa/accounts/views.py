@@ -250,13 +250,11 @@ class UserView(APIView):
         return Response(response_dictonary)
 
 
-
 class UserProfileView(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['=user__id']  
-
+    search_fields = ['first_name', 'last_name']
 
 # logout view
 class Logout(APIView):

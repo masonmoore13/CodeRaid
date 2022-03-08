@@ -122,7 +122,8 @@ export const updateEventById = (id, eventObject) => {
 
 // Profile
 const userProfileUrl = address + "/accounts/profile/user";
-
+const searchUserByName =
+  address + "/accounts/profile/user/?search=";
 
 export const getUserProfile = () => {
   return axios.get(`${userProfileUrl}`);
