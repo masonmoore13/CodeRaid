@@ -18,15 +18,17 @@ import {
   getUserProfileById,
   getRelationshipByUserId,
 } from "../../../api/apiCalls";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
+
+
 const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
-
+  let navigate = useNavigate()
   const [preview, setPreview] = useState("");
 
   const [userProfileData, setUserProfileData] = useState({
@@ -413,12 +415,12 @@ const Userprofile = () => {
                       {relationship.relationship_type + ": "}
                       <NavLink
                         className=""
-                        to={``}
+                        to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
                         style={(isActive) => ({
                           color: isActive ? "blue" : "blue",
                         })}
                         onClick={() => {
-                          window.location.href = `/dashboard/userprofile/${relationship.user2}/`;
+                          navigate("/dashboard/userprofile/"+ relationship.user2+ "/");
                         }}
                       >
                         {relationship.relationship_name}

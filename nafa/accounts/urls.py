@@ -7,10 +7,10 @@ from rest_framework_simplejwt.views import (
 
 route = routers.DefaultRouter()
 
-route.register("userProfile", UserProfileView, basename='UserProfileView')
+route.register("user", UserProfileView, basename='UserProfileView')
 
 urlpatterns = [
-    path("", include(route.urls)),
+    path("profile/", include(route.urls)),
     path('register/', RegisterView.as_view(), name="register_user"),
     path('logout/', Logout.as_view(), name="logout_user"),
     path('user/',UserView.as_view(), name="user" ),  

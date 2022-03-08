@@ -10,24 +10,27 @@ import address from "../config";
 // }
 
 // Auth
-const SIGN_UP_URL = address + "/accounts/register/";
-
+const apiUrl = address + "/accounts/register/";
+const loginUrl = address + "/accounts/login/";
 export const signup = (user) => {
-  return axios.post(SIGN_UP_URL, user);
+  return axios.post(apiUrl, user);
 };
 
+export const login = (user) => {
+  return axios.post(loginUrl, user, {}, { auth: user });
+};
 
 // Gallery
-const GALLERY_URL = address + "/main/api/gallery/";
-const GALLERY_BY_EVENT_URL = address + "/main/api/gallery/?search=";
+const galleryUrl = address + "/main/api/gallery/";
+const GalleryByEventIdUrl = address + "/main/api/gallery/?search=";
 export const getGalleryByEventId = (id) => {
-  return axios.get(`${GALLERY_BY_EVENT_URL}${id}`);
+  return axios.get(`${GalleryByEventIdUrl}${id}`);
 };
 export const getGallery = () => {
-  return axios.get(`${GALLERY_URL}/`);
+  return axios.get(`${galleryUrl}/`);
 };
 // export const createGalleryImage = (galleryObject) => {
-//   return axios.post(GALLERY_URL, galleryObject);
+//   return axios.post(galleryUrl, galleryObject);
 // };
 export const createGalleryImage = (galleryObject) => {
   return new Promise(async (resolve, reject) => {
@@ -37,7 +40,7 @@ export const createGalleryImage = (galleryObject) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.post(GALLERY_URL, galleryObject, {
+      const res = await axios.post(galleryUrl, galleryObject, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },
@@ -50,10 +53,10 @@ export const createGalleryImage = (galleryObject) => {
   });
 };
 export const getGalleryById = (id) => {
-  return axios.get(`${GALLERY_URL}${id}/`);
+  return axios.get(`${galleryUrl}${id}/`);
 };
 // export const deleteGalleryById = (id) => {
-//   return axios.delete(`${GALLERY_URL}${id}/`);
+//   return axios.delete(`${galleryUrl}${id}/`);
 // };
 export const deleteGalleryById = (id) => {
   return new Promise(async (resolve, reject) => {
@@ -63,7 +66,7 @@ export const deleteGalleryById = (id) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.delete(`${GALLERY_URL}${id}/`, {
+      const res = await axios.delete(`${galleryUrl}${id}/`, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },
@@ -76,25 +79,25 @@ export const deleteGalleryById = (id) => {
   });
 };
 export const updateGalleryById = (id, galleryObject) => {
-  return axios.put(`${GALLERY_URL}${id}/`, galleryObject);
+  return axios.put(`${galleryUrl}${id}/`, galleryObject);
 };
 
 // Events
-const EVENT_URL = address + "/main/api/event/";
+const eventUrl = address + "/main/api/event/";
 export const getEvents = () => {
-  return axios.get(`${EVENT_URL}`);
+  return axios.get(`${eventUrl}`);
 };
 export const createEvent = (eventObject) => {
-  return axios.post(EVENT_URL, eventObject);
+  return axios.post(eventUrl, eventObject);
 };
 export const getEventById = (id) => {
-  return axios.get(`${EVENT_URL}${id}/`);
+  return axios.get(`${eventUrl}${id}/`);
 };
 export const deleteEventById = (id) => {
-  return axios.delete(`${EVENT_URL}${id}/`);
+  return axios.delete(`${eventUrl}${id}/`);
 };
 // export const updateEventById = (id, eventObject)=>{
-//     return axios.put(`${EVENT_URL}${id}/`,eventObject);
+//     return axios.put(`${eventUrl}${id}/`,eventObject);
 // }
 export const updateEventById = (id, eventObject) => {
   return new Promise(async (resolve, reject) => {
@@ -104,7 +107,7 @@ export const updateEventById = (id, eventObject) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.put(`${EVENT_URL}${id}/`, eventObject, {
+      const res = await axios.put(`${eventUrl}${id}/`, eventObject, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },
@@ -118,35 +121,42 @@ export const updateEventById = (id, eventObject) => {
 };
 
 // Profile
-const USER_PROFILE_URL = address + "/accounts/profile/user";
-
+const userProfileUrl = address + "/accounts/profile/user";
 
 
 export const getUserProfile = () => {
-  return axios.get(`${USER_PROFILE_URL}`);
+  return axios.get(`${userProfileUrl}`);
 };
 export const createUserProfile = (userProfileObject) => {
-  return axios.post(USER_PROFILE_URL, userProfileObject);
+  return axios.post(userProfileUrl, userProfileObject);
 };
+
 //This is the url Sital is using in profile
 export const getUserProfileById = (id) => {
-  return axios.get(`${USER_PROFILE_URL}/${id}/`);
+  return axios.get(`${userProfileUrl}/${id}/`);
 };
 
-
+export const deleteUserProfileId = (id) => {
+  return axios.delete(`${userProfileUrl}${id}/`);
+};
+export const updateUserProfileById = (userProfile, id) => {
+  return axios.patch(`${userProfileUrl}/${id}/`, userProfile, {
+    "Content-Type": "multipart/form-data",
+  });
+};
 
 // teams
-const TEAM_URL = address + "/main/api/Team/";
+const teamUrl = address + "/main/api/Team/";
 export const getTeams = () => {
-  return axios.get(`${TEAM_URL}`);
+  return axios.get(`${teamUrl}`);
 };
 
 // Relationship
-const RELATIONSHIP_URL = address + "/main/api/relationship/";
-
+const relationshipUrl = address + "/main/api/relationship/";
+const RelationshipByUserIdUrl = address + "/main/api/relationship/?search=";
 export const getRelationship = () => {
-  return axios.get(`${RELATIONSHIP_URL}`);
+  return axios.get(`${relationshipUrl}`);
 };
 export const getRelationshipByUserId = (id) => {
-  return axios.get(`${RELATIONSHIP_URL}${id}`);
+  return axios.get(`${RelationshipByUserIdUrl}${id}`);
 };
