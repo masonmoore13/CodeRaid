@@ -122,7 +122,7 @@ export const updateEventById = (id, eventObject) => {
 
 // Profile
 const userProfileUrl = address + "/accounts/profile/user";
-const searchUserByName =
+const searchUserByNameUrl =
   address + "/accounts/profile/user/?search=";
 
 export const getUserProfile = () => {
