@@ -3,12 +3,6 @@ from main.models import *
 from .models import User
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = ('__all__')
-
-    extra_kwargs = {'profile_picture': {'required': True}}
 
 
 class GallerySerializer(serializers.ModelSerializer):

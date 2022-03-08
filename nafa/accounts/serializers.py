@@ -9,6 +9,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .utils import *
 from rest_framework.exceptions import AuthenticationFailed
+from .models import *
+
 
 # register serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -101,3 +103,11 @@ class SetNewPasswordSerializer(serializers.Serializer):
         except Exception as e:
             raise AuthenticationFailed('The reset link is invalid', 401)
         return super().validate(attrs)
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('__all__')
+
+    extra_kwargs = {'profile_picture': {'required': True}}

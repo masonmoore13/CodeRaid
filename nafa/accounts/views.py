@@ -2,8 +2,8 @@ from operator import truediv
 from django.shortcuts import render
 from rest_framework.views import APIView
 
-from main.models import UserProfile
-from .serializers import RegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer
+from .models import UserProfile
+from .serializers import RegisterSerializer, UserProfileSerializer,ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.exceptions import AuthenticationFailed
@@ -24,8 +24,10 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import filters
+from rest_framework import viewsets
 
-from main.serializers import UserProfileSerializer
+
 # overriding obtain token to our custom need
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     default_error_messages = {
@@ -263,3 +265,10 @@ class Logout(APIView):
             "message": "successfully logged out"
         }
         return response
+
+
+class UserProfileView(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name', 'last_name', 'user__id']  # search by user
