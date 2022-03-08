@@ -78,7 +78,7 @@ const EventDetail = () => {
                   Close
                 </Button>
                 <Button
-             
+                  href="/event"
                   variant="dark"
                   onClick={() => deleteEvent(event.id)}
                 >
