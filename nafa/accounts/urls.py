@@ -4,7 +4,6 @@ from .views import  Logout,  MyTokenObtainPairView, VerifyEmail, SetNewPassword,
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
-from rest_framework import routers
 
 route = routers.DefaultRouter()
 

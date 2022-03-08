@@ -266,10 +266,3 @@ class Logout(APIView):
             "message": "successfully logged out"
         }
         return response
-
-
-class UserProfileView(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['first_name', 'last_name', 'user__id']  # search by user
