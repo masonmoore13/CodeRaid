@@ -8,11 +8,7 @@ import {
   deleteGalleryById,
   getGalleryByEventId,
 } from "../../api/apiCalls.js";
-import {
-  ImagerDisplay,
-  imagerShow,
-  ImagerImg,
-} from "../../components/imageModalResize/ImageModalResize";
+
 import { BsTrashFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import "./Event.css";
@@ -335,7 +331,7 @@ const EventUpdate = () => {
       <Link
         className="btn btn-outline-dark btn-warning mb-5 m-1"
         bg="warning"
-        to={``}
+        to={`/event/${id}`}
         onClick={() => {
           updateSingleEvent();
           CreateGalleryInfo();
@@ -345,9 +341,12 @@ const EventUpdate = () => {
       </Link>
       <div className="showGallery ">
         {gallery.map((gallery, index) => (
-          <div style={{ width: "10em" }} key={gallery.id}>
-            <ImagerDisplay z-index="2000" />
-            <ImagerImg width="200px" src={gallery.images} alt="event images" />
+          <div  key={gallery.id}>
+            <img
+              src={gallery.images}
+              alt="event images"
+              style={{ width: "10em" }}
+            />
             <IconContext.Provider value={{ color: "red", size: "50px" }}>
               <div>
                 <Button

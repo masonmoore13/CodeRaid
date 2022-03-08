@@ -87,14 +87,52 @@ const eventUrl = address + "/main/api/event/";
 export const getEvents = () => {
   return axios.get(`${eventUrl}`);
 };
+// export const createEvent = (eventObject) => {
+//   return axios.post(eventUrl, eventObject);
+// };
 export const createEvent = (eventObject) => {
-  return axios.post(eventUrl, eventObject);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.post(`${eventUrl}`, eventObject, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 export const getEventById = (id) => {
   return axios.get(`${eventUrl}${id}/`);
 };
+// export const deleteEventById = (id) => {
+//   return axios.delete(`${eventUrl}${id}/`);
+// };
 export const deleteEventById = (id) => {
-  return axios.delete(`${eventUrl}${id}/`);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.delete(`${eventUrl}${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 // export const updateEventById = (id, eventObject)=>{
 //     return axios.put(`${eventUrl}${id}/`,eventObject);
@@ -112,7 +150,6 @@ export const updateEventById = (id, eventObject) => {
           Authorization: "Bearer " + accessJWT,
         },
       });
-
       resolve(res);
     } catch (error) {
       reject(error);

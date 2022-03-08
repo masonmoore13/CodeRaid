@@ -7,10 +7,6 @@ import {
 } from "../../api/apiCalls";
 import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
 import "./Event.css";
-import {
-  ImagerDisplay,
-  ImagerImg,
-} from "../../components/imageModalResize/ImageModalResize";
 
 const EventDetail = () => {
   const [event, setEvent] = useState([]);
@@ -82,7 +78,7 @@ const EventDetail = () => {
                   Close
                 </Button>
                 <Button
-                  href="/event"
+             
                   variant="dark"
                   onClick={() => deleteEvent(event.id)}
                 >
@@ -136,7 +132,7 @@ const EventDetail = () => {
               </Card.Title>
               <h5> {event.contact_name}</h5>
               <h6> {event.contact_email}</h6>
-              <h6> {event.contact_number}</h6>  
+              <h6> {event.contact_number}</h6>
             </Card>
             <Card
               className="DetailsRightCol m-3 shadow-md "
@@ -147,14 +143,11 @@ const EventDetail = () => {
                 Event Pictures <hr />
                 <div className="showGallery d-flex flex-wrap m-3">
                   {gallery.map((gallery, index) => (
-                    <div style={{ width: "10em" }} key={gallery.id}>
-                      <ImagerDisplay z-index="2000" />
-
-                      <ImagerImg
-                        width="175px"
-                        min
+                    <div key={gallery.id}>
+                      <img
                         src={gallery.images}
                         alt="event images"
+                        style={{ width: "6em" }}
                       />
                     </div>
                   ))}
