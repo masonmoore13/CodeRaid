@@ -1,131 +1,171 @@
-.userTitleContainer{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-
+.userTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
-
-.userContainer{
-    display: flex;
+.blur{
+    opacity: 0.5;
 }
 
-.userShow{
-    flex: 1;
-    padding: 20px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+.userContainer {
+  display: flex;
 }
 
-.userUpdate{
-    flex: 2;
-    padding: 20px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    margin-left: 20px;
+.userShow {
+  flex: 1;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
 }
 
-.userShowTop{
-    display: flex;
-    align-items: center;
+.userUpdate {
+  flex: 2;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  margin-left: 20px;
 }
 
-.userShowImg{
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+.userShowTop {
+  display: flex;
+  align-items: center;
 }
 
-.userShowTopTitle{
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
+.userShowImg {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.userShowUsername{
-    font-weight: 600;
+.userShowTopTitle {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
 }
 
-.userShowCurrentWork{
-    font-weight: 300;
+.userShowUsername {
+  font-weight: 600;
 }
 
-.userShowTitle{
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(46, 45, 45);
+.userShowCurrentWork {
+  font-weight: 300;
 }
 
-.userShowInfo{
-    display: flex;
-    align-items: center;
-    margin: 20px 0px;
-    color: #444;
+.userShowTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(46, 45, 45);
 }
 
-.userShowIcon{
-    font-size: 22px !important;
+.userShowInfo {
+  display: flex;
+  align-items: center;
+  margin: 20px 0px;
+  color: #444;
 }
 
-.userShowUserInfoTitle{
-    margin-left: 10px;
+.userShowIcon {
+  font-size: 22px !important;
 }
 
-
-.userUpdateForm{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px; 
+.userShowUserInfoTitle {
+  margin-left: 10px;
 }
 
-
-.userUpdateItem{
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+.userUpdateForm {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.userUpdateItem>label{
-    margin-bottom: 5px;
-    font-style: 14px;
+.userUpdateItem {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
-.userUpdateInput{
-    border: none;
-    width: 300px;
-    border-bottom: 1px solid grey;
-    height: 30px;
-    background-color:transparent;
+.userUpdateItem > label {
+  margin-bottom: 5px;
+  font-style: 14px;
 }
 
-.userUpdateImg{
-    width: 100px;
-    height: 100px;
-    border: radius 10px;
-    object-fit: cover;
-    margin-right: 20px;
+.userUpdateInput {
+  border: none;
+  width: 300px;
+  border-bottom: 1px solid grey;
+  height: 30px;
+  background-color: transparent;
 }
 
-
-.userUpdateTitle{
-    font-style: 24px;
-    font-weight: 600;
+.userUpdateImg {
+  width: 100px;
+  height: 100px;
+  border: radius 10px;
+  object-fit: cover;
+  margin-right: 20px;
 }
 
-.userUpdateUpload{
-    display:flex;
-    align-items: center;
+.userUpdateTitle {
+  font-style: 24px;
+  font-weight: 600;
 }
 
-.userUpdateIcon{
+.userUpdateUpload {
+  display: flex;
+  align-items: center;
+}
+
+.userUpdateIcon {
+  cursor: pointer;
+}
+
+.userUpdateRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.relationship-name {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #53382f;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.relationship-name>span{
     cursor:pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
 }
 
-.userUpdateRight{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 
-}
+.relationship-name>span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+.relationship-name:hover span {
+    padding-right: 25px;
+  }
+
+ .relationship-name:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+

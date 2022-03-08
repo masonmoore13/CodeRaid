@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
-import { Button, Form, Card, Modal, ModalBody } from "react-bootstrap";
+import { Button, Form, Card, Modal } from "react-bootstrap";
 import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
@@ -9,6 +9,8 @@ import {
   MdPhoneIphone,
   MdPublish,
 } from "react-icons/md";
+
+import Spinner from 'react-bootstrap/Spinner'
 import { FaAddressCard, FaTrash } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
@@ -18,18 +20,21 @@ import {
   getUserProfileById,
   getRelationshipByUserId,
 } from "../../../api/apiCalls";
-import { useParams, NavLink, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 toast.configure();
 
-
-
 const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const [preview, setPreview] = useState("");
+  const [relationship, setRelationship] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false)
+
+
+
 
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
@@ -59,6 +64,7 @@ const Userprofile = () => {
     if (id) {
       getUserProfileById(id).then((res) => {
         setUserProfileData(res.data);
+        setRelationship(res.data.relationships);
       });
     }
   }, [id, userProfile]);
@@ -148,13 +154,7 @@ const Userprofile = () => {
     // });
   };
 
-  // Relationship fetch
-  const [relationship, setRelationship] = useState([]);
-  useEffect(() => {
-    getRelationshipByUserId(id).then((response) => {
-      setRelationship(response.data);
-    });
-  }, []);
+  //Relationship fetch
 
   // Relationship Modal
   const [show, setShow] = useState(false);
@@ -162,7 +162,7 @@ const Userprofile = () => {
   const handleShow = () => setShow(true);
 
   return (
-    <div className="user">
+    <div className={`user ${showSpinner ? "blur" : ""}`}>
       <div className="userTitleContainer">
         <h1 className="userTitle">Edit</h1>
         <Button variant="success" className="userAddButton">
@@ -283,7 +283,7 @@ const Userprofile = () => {
                   name="maiden_name"
                 />
               </div>
-
+              {showSpinner && <Spinner style={{zIndex: '10000'}}  animation="border" />}
               <div className="userUpdateItem">
                 <label>Birthdate: </label>
                 <input
@@ -411,20 +411,30 @@ const Userprofile = () => {
                   </Card.Title>
                   <hr />
                   {relationship.map((relationship, index) => (
-                    <Card.Text className="text-start">
+                    <Card.Text className="text-start ms-3">
                       {relationship.relationship_type + ": "}
-                      <NavLink
-                        className=""
-                        to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
-                        style={(isActive) => ({
-                          color: isActive ? "blue" : "blue",
-                        })}
-                        onClick={() => {
-                          navigate("/dashboard/userprofile/"+ relationship.user2+ "/");
-                        }}
+                      <button
+                        className="relationship-name ms-3"
+                        // to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
+                        // style={(isActive) => ({
+                        //   color: isActive ? "blue" : "blue",
+                        // })}
+                        onClick={
+                          (e)=>{
+                            e.preventDefault();
+                            setShowSpinner(true)
+                        
+                            setTimeout(()=>{
+                              setShowSpinner(false)
+                              navigate(
+                                "/dashboard/userprofile/" + relationship.user2+ "/"
+                              );
+                            },500)
+                        }
+                      }
                       >
-                        {relationship.relationship_name}
-                      </NavLink>
+                        <span>{relationship.relationship_name}</span>
+                      </button>
                     </Card.Text>
                   ))}
                 </Card.Body>
