@@ -8,12 +8,6 @@ from .permissions import UserPermission
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication 
 from django.core.mail import send_mail
 
-
-# search by user
-
-
-
-
 class RelationshipView(viewsets.ModelViewSet):
     queryset = Relationship.objects.all()
     serializer_class = RelationshipSerializer
