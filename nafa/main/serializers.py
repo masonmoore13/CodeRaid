@@ -11,20 +11,6 @@ class RelationshipSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    
-    '''
-    Nested serializer
-    Searches the ForeignKey according to the related name
-    '''
-    relationships = RelationshipSerializer(many=True, read_only=True, source="user1")
-    
-    class Meta:
-        model = UserProfile
-        fields = ('__all__')
-
-    extra_kwargs = {'profile_picture': {'required': True}}
-
 
 class GallerySerializer(serializers.ModelSerializer):
     class Meta:

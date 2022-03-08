@@ -1,11 +1,16 @@
-from django.urls import path
-from .views import  Logout,  MyTokenObtainPairView, VerifyEmail, SetNewPassword,RequestPasswordResetEmail, RegisterView, UserView, PasswordTokenCheck
+from django.urls import path,include
+from rest_framework import routers
+from .views import  Logout,  MyTokenObtainPairView, VerifyEmail, SetNewPassword,RequestPasswordResetEmail, RegisterView, UserView, PasswordTokenCheck,UserProfileView
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
 
+route = routers.DefaultRouter()
+
+route.register("userProfile", UserProfileView, basename='UserProfileView')
 
 urlpatterns = [
+    path("", include(route.urls)),
     path('register/', RegisterView.as_view(), name="register_user"),
     path('logout/', Logout.as_view(), name="logout_user"),
     path('user/',UserView.as_view(), name="user" ),  
@@ -15,5 +20,5 @@ urlpatterns = [
     path('reset-password/<uidb64>//<token>//', PasswordTokenCheck.as_view(), name="reset_password_confirm"),
     path('set-new-password/', SetNewPassword.as_view(), name="set-new-password"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify')
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify')
 ]

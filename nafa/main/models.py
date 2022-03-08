@@ -1,35 +1,10 @@
 from django.db import models
 from datetime import date
-from accounts.models import User
-from .states import CONTIGUOUS_STATES
+from accounts.models import User, UserProfile
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(
-        User, null=True, on_delete=models.CASCADE, related_name="useraccount")
 
-    first_name = models.CharField(max_length=150, blank=True, null=True)
-    middle_name = models.CharField(max_length=150, blank=True, null=True)
-    last_name = models.CharField(max_length=150, blank=True, null=True)
-    maiden_name = models.CharField(max_length=150, blank=True, null=True)
-    grad_year = models.IntegerField(blank=True, null=True)
-    birth_date = models.CharField(max_length=150, blank=True, null=True)
-    phone_no = models.CharField(max_length=10, blank=True, null=True)
-    address_line_1 = models.CharField(max_length=150, blank=True, null=True)
-    city = models.CharField(max_length=150, blank=True,
-                            null=True, default=None)
-    state = models.CharField(
-        max_length=25, choices=CONTIGUOUS_STATES, default='LA')
-    current_work = models.CharField(max_length=150, blank=True, null=True)
-    has_contributions = models.BooleanField(default=False)
-    have_paid_dues = models.BooleanField(default=False)
-    achievements = models.TextField(max_length=2500, blank=True, null=True)
-    bio = models.TextField(max_length=2500, blank=True, null=True)
-    profile_picture = models.ImageField(
-        upload_to='media', null=True, blank=True)
-
-    def __str__(self):
-        return(self.first_name + " " + self.last_name)  # want to return username
+ # want to return username
 
 class Relationship(models.Model):
     relationship_type = models.CharField(

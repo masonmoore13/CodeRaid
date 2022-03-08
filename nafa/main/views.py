@@ -9,18 +9,10 @@ from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from django.core.mail import send_mail
 
 
-class UserProfileView(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['=user__id']  # search by user
+# search by user
 
 
-class UserProfileByIdView(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['id'] 
+
 
 class RelationshipView(viewsets.ModelViewSet):
     queryset = Relationship.objects.all()

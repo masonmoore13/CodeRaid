@@ -1,15 +1,13 @@
 from operator import truediv
 from django.shortcuts import render
 from rest_framework.views import APIView
-
+from rest_framework import viewsets
 from main.models import UserProfile
-from .serializers import RegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer
+from .serializers import RegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer,UserProfileSerializer
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.exceptions import AuthenticationFailed
 from .models import User
-import jwt
-import datetime
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.authentication import get_authorization_header
@@ -24,9 +22,17 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication, JWTAuthentication
+from rest_framework import filters
 
-from main.serializers import UserProfileSerializer
+
+JwtAuthenticator = JWTAuthentication()
+
+usernameGetter = JWTTokenUserAuthentication()
+
+
 # overriding obtain token to our custom need
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -51,41 +57,43 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 # generic registration with email
-# class RegisterView(generics.GenericAPIView):
+class RegisterViewVerify(generics.GenericAPIView):
 
-#     serializer_class = UserSerializer
+    serializer_class = UserSerializer
 
-#     def post(self, request):
-#         user=request.data
-#         serializer = self.serializer_class(data=user)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
+    def post(self, request):
+        user=request.data
+        
+        serializer = self.serializer_class(data=user)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-#         user_data = serializer.data
-#         userObj = User.objects.get(username=user_data['username'])
+        user_data = serializer.data
+        userObj = User.objects.get(username=user_data['username'])
+        userObj.is_active = False
+        userObj.save()
+        # generate refresh token for the user to activate
+        token = MyTokenObtainPairSerializer.get_token(userObj).access_token
 
-#         # generate refresh token for the user to activate
-#         token = RefreshToken.for_user(userObj).access_token
+        # get current site and attach token to it
+        current_site = get_current_site(request).domain
+        relativeLink = reverse('verify_email')
 
-#         # get current site and attach token to it
-#         current_site = get_current_site(request).domain
-#         relativeLink = reverse('verify_email')
-
-#         # need to update this after deployment to our desired web address
-#         absurl = 'http://localhost:8000'+ relativeLink + "?token=" + str(token)
-
-#         # email the activation lijnk
-#         email_body = "Hi " + userObj.username + " use the link below to verify\n" + absurl
-#         # data to send email
-#         data ={
-#             'domain':absurl,
-#             'email_subject': "Verify Your Email",
-#             "email_body": email_body,
-#             "to_email": userObj.email
-#         }
-#         # email the activation link
-#         Util.send_email(data)
-#         return Response(user_data, status=status.HTTP_201_CREATED)
+        # need to update this after deployment to our desired web address
+        absurl = 'http://localhost:8000'+ relativeLink + "?token=" + str(token)
+        
+        # email the activation lijnk
+        email_body = "Hi " + userObj.username + " use the link below to verify\n" + absurl
+        # data to send email
+        data ={
+            'domain':absurl,
+            'email_subject': "Verify Your Email",
+            "email_body": email_body,
+            "to_email": userObj.email
+        }
+        # email the activation link
+        Util.send_email(data)
+        return Response(user_data, status=status.HTTP_201_CREATED)
 
 
 # registration api view
@@ -103,23 +111,28 @@ class VerifyEmail(generics.GenericAPIView):
     def get(self, request):
         # get the token sent to the mail
         token = request.GET.get('token')
-
+        print(token)
         # decode the token and verify
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
-            user = User.objects.get(id=payload['user_id'])
-
-            # check if the user is verified
-            if not user.is_verified:
-                user.is_verified = True
-                user.save()
-            return Response({"email": "Successfully Activated"}, status=status.HTTP_200_OK)
+        # try:
+        vToken = JwtAuthenticator.get_validated_token(token)
+        if(token is not None):
+            
+            userObj = usernameGetter.get_user(vToken).id
+            user = User.objects.get(id=userObj)
+                # check if the user is verified
+            if not user.is_active:
+                    user.is_active = True
+                    user.save()
+                    return Response({"email": "Successfully Activated"}, status=status.HTTP_200_OK)
+                
+        else:
+            return Response({"error": "Token expired or invalid"}, status=status.HTTP_400_BAD_REQUEST)
         # error handling for token expired
-        except jwt.ExpiredSignature as e:
-            return Response({"error": "Activation Link Expired"}, status=status.HTTP_400_BAD_REQUEST)
-        # error handling for token decode error
-        except jwt.DecodeError as e:
-            return Response({"error": "Decode Error"}, status=status.HTTP_400_BAD_REQUEST)
+        # except jwt.ExpiredSignature as e:
+        #     return Response({"error": "Activation Link Expired"}, status=status.HTTP_400_BAD_REQUEST)
+        # # error handling for token decode error
+        # except jwt.DecodeError as e:
+        #     return Response({"error": "Decode Error"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # endpoint to reset password using email
@@ -127,7 +140,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
     serializer_class = ResetPasswordEmailRequestSerializer
 
     def post(self, request):
-        data = {'request': request, 'data': request.data}
+        data = {'request': request, 'data':request.data}
         serializer = self.serializer_class(data=data)
 
         email = request.data['email']
@@ -143,25 +156,24 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             # send email with the token to reset the password
             # get current site and attach token to it
             current_site = get_current_site(request).domain
-            relativeLink = reverse('reset_password_confirm', kwargs={
-                                   'uidb64': uidb64, 'token': token})
+            relativeLink = reverse('reset_password_confirm', kwargs={'uidb64': uidb64, 'token':token})
 
             # need to update this after deployment to our desired web address
-            absurl = 'http://localhost:8000' + relativeLink
-
+            absurl = 'http://localhost:8000'+ relativeLink
+            
             # email the activation lijnk
             email_body = "Hi use the link below to reset your password\n" + absurl
             # data to send email
-            data = {
-                'domain': absurl,
+            data ={
+                'domain':absurl,
                 'email_subject': "Reset Your Password",
                 "email_body": email_body,
                 "to_email": userObj.email
             }
             # email the activation link
             Util.send_email(data)
-
-        return Response({"success": "We've sent a link to reset your password"}, status=status.HTTP_200_OK)
+    
+        return Response({"success": "We've sent a link to reset your password", "token": token, "uidb64": uidb64}, status=status.HTTP_200_OK)
 
 
 # password token check
@@ -171,16 +183,17 @@ class PasswordTokenCheck(generics.GenericAPIView):
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(id=id)
-
+            
             if not PasswordResetTokenGenerator().check_token(user, token):
                 return Response({"error": "Token isn't valid. Request new one"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+            return Response({"success":True, 'message': 'Credentials Valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
 
-            return Response({"success": True, 'message': 'Credentials Valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
 
         except DjangoUnicodeDecodeError as e:
             return Response({"error": "Token isn't valid. Request new one"}, status=status.HTTP_401_UNAUTHORIZED)
 
-# view for password change
+
 
 
 class SetNewPassword(generics.GenericAPIView):
@@ -237,25 +250,12 @@ class UserView(APIView):
         return Response(response_dictonary)
 
 
-# user view to see if the token is still active
-# class UserView(APIView):
-#     def get(self, request):
-#         token = request.COOKIES.get('jwt')
 
-#         if not token:
-#             raise AuthenticationFailed('unauthenticated')
-
-#         try:
-#             payload = jwt.decode(token, 'secret', algorithm=['HS256'])
-
-#         except jwt.ExpiredSignatureError:
-#             raise AuthenticationFailed("not authenticated")
-
-#         # filter the user with payload id i.e. check for token
-#         user = User.objects.filter(id=payload['id']).first()
-#         serializer = UserSerializer(user)
-
-#         return Response(serializer.data)
+class UserProfileView(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['=user__id']  
 
 
 # logout view

@@ -14,10 +14,8 @@ route.register("Scholarship", ScholarshipView, basename='ScholarshipView')
 route.register("Contribution", ContributionView, basename='ContributionView') 
 route.register("Role", RoleView, basename='RoleView') 
 route.register("Contact", ContactView, basename='ContactView') ,
-route.register("userProfile", UserProfileView, basename='UserProfileView')
+
 route.register("relationship", RelationshipView, basename='RelationshipView')
-route.register("UserProfileByIdView", UserProfileByIdView,
-               basename='UserProfileByIdView')
 
 
 urlpatterns = [

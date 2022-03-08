@@ -3,8 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from .models import User, UserProfile
 from .forms import *
+
+
 
 
 # admin customization for the User model
@@ -28,3 +30,7 @@ class UserAdmin(BaseUserAdmin):
   search_fields = ('email', 'first_name', 'last_name')
   ordering = ('email', )
 admin.site.register(User, UserAdmin)
+
+admin.site.register(UserProfile)
+class UserProfileModel(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name')

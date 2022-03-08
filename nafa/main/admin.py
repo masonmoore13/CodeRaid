@@ -1,9 +1,6 @@
 from django.contrib import admin
 from main.models import *
 
-admin.site.register(UserProfile)
-class UserProfileModel(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name')
 
 admin.site.register(Gallery)
 class GalleryModel(admin.ModelAdmin):

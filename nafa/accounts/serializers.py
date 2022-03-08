@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, UserProfile
 from django.core import exceptions
 import django.contrib.auth.password_validation as validators
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -9,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .utils import *
 from rest_framework.exceptions import AuthenticationFailed
+from main.serializers import RelationshipSerializer
 
 # register serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -101,3 +102,17 @@ class SetNewPasswordSerializer(serializers.Serializer):
         except Exception as e:
             raise AuthenticationFailed('The reset link is invalid', 401)
         return super().validate(attrs)
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    
+    '''
+    Nested serializer
+    Searches the ForeignKey according to the related name
+    '''
+    relationships = RelationshipSerializer(many=True, read_only=True, source="user1")
+    
+    class Meta:
+        model = UserProfile
+        fields = ('__all__')
+
+    extra_kwargs = {'profile_picture': {'required': True}}
