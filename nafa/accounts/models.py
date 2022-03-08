@@ -71,20 +71,16 @@ class User(AbstractUser):
     def __str__(self):
         return "{}".format(self.email)
 
-
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name="useraccount")
-    
+    user = models.OneToOneField(
+        User, null=True, on_delete=models.CASCADE, related_name="useraccount")
+
     first_name = models.CharField(max_length=150, blank=True, null=True)
     middle_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     maiden_name = models.CharField(max_length=150, blank=True, null=True)
     grad_year = models.IntegerField(blank=True, null=True)
     birth_date = models.CharField(max_length=150, blank=True, null=True)
-
-    # Create relationship table(married, relatives), link user to user via relationship table?
-    #spouse_name = models.CharField(max_length=60, blank=True, null=True)
-    #spouse_grad_year = models.CharField(max_length=60, blank=True, null=True)
     phone_no = models.CharField(max_length=10, blank=True, null=True)
     address_line_1 = models.CharField(max_length=150, blank=True, null=True)
     city = models.CharField(max_length=150, blank=True,
@@ -95,9 +91,9 @@ class UserProfile(models.Model):
     has_contributions = models.BooleanField(default=False)
     have_paid_dues = models.BooleanField(default=False)
     achievements = models.TextField(max_length=2500, blank=True, null=True)
-    bio = models.TextField(max_length=2500,blank=True, null=True)
+    bio = models.TextField(max_length=2500, blank=True, null=True)
     profile_picture = models.ImageField(
         upload_to='media', null=True, blank=True)
 
     def __str__(self):
-        return(self.first_name)  # want to return username
+        return(self.first_name + " " + self.last_name) 

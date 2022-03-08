@@ -1,6 +1,8 @@
 from django.urls import path, include
 from main.views import *
 from rest_framework import routers
+from django.conf.urls.static import static
+from django.conf import settings
 
 route = routers.DefaultRouter()
 route.register("gallery", GalleryView, basename='galleryView')
@@ -13,6 +15,10 @@ route.register("Contribution", ContributionView, basename='ContributionView')
 route.register("Role", RoleView, basename='RoleView') 
 route.register("Contact", ContactView, basename='ContactView') ,
 
+route.register("relationship", RelationshipView, basename='RelationshipView')
+
+
 urlpatterns = [
     path('api/', include(route.urls)), 
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

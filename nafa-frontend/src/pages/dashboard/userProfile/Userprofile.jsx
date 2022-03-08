@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Card, Modal } from "react-bootstrap";
 import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
@@ -9,27 +9,33 @@ import {
   MdPhoneIphone,
   MdPublish,
 } from "react-icons/md";
-import { FaAddressCard } from "react-icons/fa";
+
+import Spinner from 'react-bootstrap/Spinner'
+import { FaAddressCard, FaTrash } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { IconContext } from "react-icons";
 import {
   updateUserProfileById,
   getUserProfileById,
+  getRelationshipByUserId,
 } from "../../../api/apiCalls";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import { getUserProfile } from '../../home/userActions'
-import address from "../../../config";
 
 toast.configure();
 
 const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
+  let navigate = useNavigate();
+  const [preview, setPreview] = useState("");
+  const [relationship, setRelationship] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false)
 
-  const navigate = useNavigate();
-  const[imageChanged, setImageChanged] = useState(false);
+
+
+
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
     middle_name: "",
@@ -48,33 +54,20 @@ const Userprofile = () => {
     profile_picture: null,
   });
 
-  const dispatch= useDispatch()
-
   let { id } = useParams();
 
   useEffect(() => {
     if (!id) {
-      
-      setUserProfileData(userProfile);
-
-      if(userProfileData.profile_picture !== null){
-        setUserProfileData(prevData => {
-          return {
-            ...prevData,
-            profile_picture: address+prevData.profile_picture
-          }
-        })
-      }
-     
+      id = userProfile.id;
     }
 
     if (id) {
       getUserProfileById(id).then((res) => {
         setUserProfileData(res.data);
-        
+        setRelationship(res.data.relationships);
       });
     }
-  }, [id, userProfile,userProfileData.profile_picture]);
+  }, [id, userProfile]);
 
   if (!userProfile) {
     userProfile = data;
@@ -91,34 +84,38 @@ const Userprofile = () => {
     e.preventDefault();
     let userId;
     if (!id) {
-      console.log(userProfile.id);
       userId = userProfile.id;
     } else {
       userId = id;
     }
-    
-    let formField = new FormData();
-    
-    for(var key in userProfileData){
-      if(userProfileData[key] != null ){
-        console.log(imageChanged);
-        if(key === "profile_picture" && imageChanged=== false) {continue;}
 
-        formField.append(key, userProfileData[key])
+    let formField = new FormData();
+    for (var key in userProfileData) {
+      if (userProfileData[key] != null) {
+        if (
+          key === "profile_picture" &&
+          !(userProfileData[key] instanceof File)
+        ) {
+          console.log(userProfileData[key]);
+          console.log("skipped");
+          continue;
+        }
+
+        formField.append(key, userProfileData[key]);
       }
     }
 
     updateUserProfileById(formField, userId)
       .then((res) => {
-        console.log(res);
         // notify();
-    
-        if (!id) {
-          dispatch(getUserProfile())
-          navigate("/dashboard/home");
-        } else {
-          navigate(`/dashboard/userprofile/${id}/`);
-        }
+        console.log(res);
+        window.location.reload();
+        notify();
+        // if (!id) {
+        //   navigate("/dashboard/home");
+        // } else {
+        //   navigate(`/dashboard/userprofile/${id}/`);
+        // }
 
         //window.reload();
       })
@@ -126,20 +123,21 @@ const Userprofile = () => {
   };
 
   const onInputChange = (event) => {
-    const { value, name } = event.target;
+    const { value, name, files } = event.target;
 
-    console.log(name);
+    console.log(files + " " + name);
 
-    // if (event.target.files !== null) {
-    //   console.log(event.target.files[0])
-    //   setUserProfileData((previousForm) => {
-    //     return {
-    //       ...previousForm,
-    //       profile_picture: event.target.files[0],
-    //     };
-    //   });
-    //   //value = event.target.files[0]
-    // }
+    if (files) {
+      setUserProfileData((prevState) => {
+        return {
+          ...prevState,
+          profile_picture: files[0],
+        };
+      });
+      const objectUrl = URL.createObjectURL(files[0]);
+      setPreview(objectUrl);
+      return;
+    }
 
     setUserProfileData((prevState) => {
       return {
@@ -156,12 +154,17 @@ const Userprofile = () => {
     // });
   };
 
-  //Toast on profile update
+  //Relationship fetch
+
+  // Relationship Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
-    <div className="user">
+    <div className={`user ${showSpinner ? "blur" : ""}`}>
       <div className="userTitleContainer">
-        <h1 className="userTitle">Edit User</h1>
+        <h1 className="userTitle">Edit</h1>
         <Button variant="success" className="userAddButton">
           Create
         </Button>
@@ -172,14 +175,17 @@ const Userprofile = () => {
           <div className="userShowTop">
             <img
               src={
-                userProfileData.profile_picture? userProfileData.profile_picture : userprofile
+                userProfileData.profile_picture
+                  ? userProfileData.profile_picture
+                  : userprofile
               }
-              alt=""
+              alt="Profile pic"
               className="userShowImg"
             />
             <div className="userShowTopTitle">
               <span className="userShowUsername">
-                {userProfileData.first_name?userProfileData.first_name:""} {userProfileData.middle_name}
+                {userProfileData.first_name ? userProfileData.first_name : ""}{" "}
+                {userProfileData.middle_name}
                 {userProfileData.last_name}
               </span>
               <span className="userShowCurrentWork">
@@ -192,9 +198,7 @@ const Userprofile = () => {
 
             <div className="userShowInfo">
               <MdPermIdentity className="userShowIcon" />
-              <span className="userShowUserInfoTitle">
-                {userProfileData.username}
-              </span>
+              <span className="userShowUserInfoTitle">{user.username}</span>
             </div>
 
             <div className="userShowInfo">
@@ -279,7 +283,9 @@ const Userprofile = () => {
                   name="maiden_name"
                 />
               </div>
-
+              {showSpinner && (
+                <Spinner style={{ zIndex: "10000" }} animation="border" />
+              )}
               <div className="userUpdateItem">
                 <label>Birthdate: </label>
                 <input
@@ -346,7 +352,6 @@ const Userprofile = () => {
                 />
               </div>
 
-
               <div className="userUpdateItem">
                 <label>Current Work: </label>
                 <input
@@ -372,15 +377,23 @@ const Userprofile = () => {
 
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
-                <img
-                  className="userUpdateImg"
-                  src={
-                    userProfileData.profile_picture
-                      ? userProfileData.profile_picture
-                      : userprofile
-                  }
-                  alt=""
-                />
+                {preview.length ? (
+                  <img
+                    className="userUpdateImg"
+                    src={preview}
+                    alt="Profile pic"
+                  />
+                ) : (
+                  <img
+                    className="userUpdateImg"
+                    src={
+                      userProfileData.profile_picture
+                        ? userProfileData.profile_picture
+                        : userprofile
+                    }
+                    alt="Profile pic"
+                  />
+                )}
 
                 <label htmlFor="file">
                   <MdPublish size={20} className="userUpdateIcon" />
@@ -389,16 +402,129 @@ const Userprofile = () => {
                   type="file"
                   placeholder=""
                   className="form-control"
-                  onChange={(e) => setUserProfileData((prevData)=>{
-                    setImageChanged(true)
-                    console.log(imageChanged);
-                    return{
-                      ...prevData,
-                      profile_picture: e.target.files[0]
-                    }
-                  })}
+                  onChange={onInputChange}
                 />
               </div>
+
+              <Card className="relationshipsCard w-100 text-center">
+                <Card.Body>
+                  <Card.Title className="header mx-auto">
+                    Friends & Family
+                  </Card.Title>
+                  <hr />
+                  {relationship.map((relationship, index) => (
+                    <Card.Text className="text-start ms-3">
+                      {relationship.relationship_type + ": "}
+                      <button
+                        className="btn-sm btn-warning ms-1"
+                        // to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
+                        // style={(isActive) => ({
+                        //   color: isActive ? "blue" : "blue",
+                        // })}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowSpinner(true);
+
+                          setTimeout(() => {
+                            setShowSpinner(false);
+                            navigate(
+                              "/dashboard/userprofile/" +
+                                relationship.user2 +
+                                "/"
+                            );
+                          }, 500);
+                        }}
+                      >
+                        <span>{relationship.relationship_name}</span>
+                      </button>
+                    </Card.Text>
+                  ))}
+                </Card.Body>
+
+                <Button
+                  variant="btn btn-warning btn-outline-dark w-25 mx-auto"
+                  onClick={handleShow}
+                >
+                  Add/Edit
+                </Button>
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  centered
+                  size="xl"
+                  className="text-center"
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title className="m-2 ">
+                      Choose a member and select type of relationship
+                    </Modal.Title>
+                  </Modal.Header>
+
+                  <div className="container m-3">
+                    <div class="row">
+                      <div class="col ">
+                        <h6>Select A Member</h6>
+
+                        <form>
+                          <input
+                            class="form-control mr-sm-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                          />
+                        </form>
+                      </div>
+                      <div class="col ">
+                        <h6 className="">Select Relationship Type</h6>
+                        <form>
+                          <select className="form-select">
+                            <option>Friend</option>
+                            <option>Spouse</option>
+                            <option>Parent</option>
+                            <option>Child</option>
+                            <option>Sibling</option>
+                            <option>Relative</option>
+                          </select>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Modal.Footer className="justify-content-between">
+                    <div className="text-start ">
+                      {relationship.map((relationship, index) => (
+                        <h6>
+                          {relationship.relationship_type +
+                            ": " +
+                            relationship.relationship_name}
+                          <IconContext.Provider
+                            value={{ color: "red", size: "25px" }}
+                          >
+                            <Button
+                              className="button bg-white btn-outline-light"
+                              type="button"
+                            >
+                              <FaTrash />
+                            </Button>
+                          </IconContext.Provider>
+                        </h6>
+                      ))}
+                    </div>
+                    <div>
+                      <Button
+                        variant="secondary btn-outline-dark m-1"
+                        onClick={handleClose}
+                      >
+                        Close
+                      </Button>
+                      <Button variant="btn btn-warning btn-outline-dark">
+                        Add Relationship
+                      </Button>
+                    </div>
+                  </Modal.Footer>
+                </Modal>
+              </Card>
+
               <Button
                 variant="warning"
                 className="userUpdateButton"

@@ -9,14 +9,23 @@ from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
 from django.core.mail import send_mail
 
 
+# search by user
 
+
+
+
+class RelationshipView(viewsets.ModelViewSet):
+    queryset = Relationship.objects.all()
+    serializer_class = RelationshipSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['=user__id']  # search by user
 
 
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['event__id'] #search foreign key id
+    search_fields = ['=event__id'] #search foreign key id
 
     # permissions
     permission_classes = [UserPermission]
@@ -26,8 +35,6 @@ class EventView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
 
     permission_classes = [UserPermission]
-
-
 
 class CampaignView(viewsets.ModelViewSet):
     queryset = Campaign.objects.all()

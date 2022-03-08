@@ -3,12 +3,22 @@ from main.models import *
 from .models import User
 
 
+class RelationshipSerializer(serializers.ModelSerializer):
+    
+    relationship_name = serializers.ReadOnlyField()
+    class Meta:
+        model = Relationship
+        fields = ('__all__')
+
 
 
 class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('__all__')
+        
+
+
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:

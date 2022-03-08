@@ -2,7 +2,6 @@
   text-align: center;
   padding-top: 2em;
   padding-bottom: 2em;
-  font-weight: bolder;
 }
 
 .flex-container {
@@ -25,4 +24,39 @@
   margin-left: auto;
   margin-right: auto;
   width: 800;
+  margin-bottom: 10px;
+}
+
+.fbPage{
+  width: 500px;
+}
+
+@media screen and (max-width: 600px){
+
+  .card{
+    width:100%;
+    margin-bottom: 10px;
+  }
+
+  .flex-container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-images {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .fbPage{
+    width:100%;
+    overflow-x: scroll;
+    margin-bottom: 10px;
+  }
+
+  .fbPage:after{
+    
+  }
 }

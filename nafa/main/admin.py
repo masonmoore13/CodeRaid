@@ -1,9 +1,14 @@
 from django.contrib import admin
 from main.models import *
 
+
 admin.site.register(Gallery)
 class GalleryModel(admin.ModelAdmin):
     list_display = ('id', 'image')
+
+admin.site.register(Relationship)
+class RelationshipModel(admin.ModelAdmin):
+    list_display = ('relationship_type', 'user__last_name')
 
 admin.site.register(Event)
 class EventModel(admin.ModelAdmin):

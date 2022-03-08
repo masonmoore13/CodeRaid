@@ -1,68 +1,7 @@
-.createEvent {
-  min-height: 90.5vh;
-}
-
-.eventUpdate {
-  min-height: 90.5vh;
-}
-.showEventsHeader {
-  background-color: rgb(243, 239, 239);
-  min-height: 50px;
-  padding: 5px;
-  padding-bottom: 5px;
-  font-size: 40pt;
-}
-.showEvents {
-  display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
-}
-.showEventsCardbox {
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 84vh;
-  width: 60%;
-}
-
-.completedEvents {
-  text-align: center;
-}
-
-.eventDetail {
-  text-align: center;
-  font-size: 20pt;
-}
-
-.eventDetailCardBox {
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 90vh;
-  width: 60%;
-}
-
-.DetailCardBox {
-  width: 60%;
-}
-
-.directionsButton {
-  position: relative;
-  left: 25%;
-}
 .eventName {
   width: 85%;
-}
-.DetailsRightCol {
-  font-size: 15pt;
-}
-.eventDetailBanner {
-  width: 60%;
-  max-height: 400px;
 }
 
 .description{
   text-indent: 25px;
-}
-
-.btn-warning{
-  color: black !important;
 }

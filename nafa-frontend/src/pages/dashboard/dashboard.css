@@ -10,4 +10,6 @@
 
 .mainpage-col{
     height: calc(100vh - 110px);
+    min-height: 100vh; 
+
 }
