@@ -125,8 +125,6 @@ class VerifyEmail(generics.GenericAPIView):
         if(token is not None):
             
             userObj = usernameGetter.get_user(vToken).id
-            print("dddddddddddddd")
-            print(userObj)
             user = User.objects.get(id=userObj)
                 # check if the user is verified
             if not user.is_active:
@@ -182,7 +180,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             # email the activation link
             Util.send_email(data)
     
-        return Response({"success": "We've sent a link to reset your password"}, status=status.HTTP_200_OK)
+        return Response({"success": "We've sent a link to reset your password", "token": token, "uidb64": uidb64}, status=status.HTTP_200_OK)
 
 
 # password token check
