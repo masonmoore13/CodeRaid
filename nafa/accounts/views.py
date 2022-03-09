@@ -57,7 +57,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 # generic registration with email
-class RegisterViewVerify(generics.GenericAPIView):
+class RegisterVerifyView (generics.GenericAPIView):
 
     serializer_class = UserSerializer
 
