@@ -44,7 +44,7 @@ function NavBar() {
               // style={{ maxHeight: "150px" }}
               // navbarScroll
             >
-              <NavDropdown title="Events" id="navbarScrollingDropdown">
+              <NavDropdown title="Events" id="navbarScrollingDropdown" menuVariant="dark">
                 <LinkContainer to="/event">
                   <NavDropdown.Item>All Events</NavDropdown.Item>
                 </LinkContainer>

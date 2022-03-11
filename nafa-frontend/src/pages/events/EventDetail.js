@@ -46,14 +46,14 @@ const EventDetail = () => {
   };
 
   return (
-    <div className="container-md w-100 text-center ">
+    <div className="w-100 text-center ">
       <img
-        className="container rounded"
+        className="banner-image"
         src={event.banner_image}
         alt="..."
       ></img>
 
-      <Card className="container-md mx-auto mx-auto">
+      <Card className="event-container container-md mx-auto mx-auto">
         <div className="titleContainer d-flex flex-lg-wrap justify-content-center">
           <div className="eventName display-3">{event.event_name}</div>
           <div className="deleteModal modal-fullscreen-sm-down">

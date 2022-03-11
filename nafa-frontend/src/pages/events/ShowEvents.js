@@ -19,7 +19,7 @@ const ShowEvents = () => {
   }, []);
 
   return (
-    <Card className="container-md mx-auto">
+    <Card className="events-container container-md mx-auto">
       <div className="header text-center display-3">Events</div> <hr />
       <div className="showEvents d-flex flex-row flex-wrap justify-content-center">
         {event.map((event, index) => (
