@@ -80,7 +80,7 @@ class RegisterVerifyView (generics.GenericAPIView):
         relativeLink = reverse('verify_email')
 
         # need to update this after deployment to our desired web address
-        absurl = 'http://localhost:8000'+ relativeLink + "?token=" + str(token)
+        absurl = current_site+ relativeLink + "?token=" + str(token)
         
         # email the activation lijnk
         email_body = "Hi " + userObj.username + " use the link below to verify\n" + absurl
