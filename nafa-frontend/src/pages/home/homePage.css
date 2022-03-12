@@ -31,7 +31,7 @@
   width: 500px;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 1000px), screen and (max-height: 700px){
 
   .card{
     width:100%;
@@ -51,9 +51,11 @@
   }
 
   .fbPage{
-    width:100%;
+    max-width: 100%;
     overflow-x: scroll;
     margin-bottom: 10px;
+    text-align: center;
+    margin: 0 auto;
   }
 
   .fbPage:after{

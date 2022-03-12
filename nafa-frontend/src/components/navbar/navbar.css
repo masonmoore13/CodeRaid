@@ -33,7 +33,7 @@
 	transition: cubic-bezier(0.755, 0.05, 0.855, 0.06);
 }
 
-@media screen and  (max-width: 600px){
+@media screen and  (max-width: 1000px), screen and (max-height: 700px){
 
 	.auth-button{
 		width: 100%;

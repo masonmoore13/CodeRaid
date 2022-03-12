@@ -42,11 +42,13 @@ export default function Home() {
         <iframe
           src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FNeville-Alumni-and-Friends-Association-310455590523&tabs=timeline&width=550&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
           height="600"
-          width="550"
           title="facebookPage"
           className="fbPage"
-        ></iframe>
+        />
+
       </div>
+
+      <br />
 
       {/* gallery title */}
       <h4 style={{ paddingLeft: "3em" }}>Gallery</h4>
