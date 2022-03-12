@@ -60,6 +60,10 @@ function NavBar() {
               <LinkContainer to="/about">
                 <Nav.Link>About</Nav.Link>
               </LinkContainer>
+
+              <LinkContainer to="/gallery">
+                <Nav.Link>Gallery</Nav.Link>
+              </LinkContainer>
             </Nav>
 
             {!isAuth ? (
@@ -79,8 +83,12 @@ function NavBar() {
                   {user ? user.username : ""}
                 </NavDropdown.Item>
 
-                <NavDropdown.Item><Link to="/dashboard/userprofile">Profile</Link></NavDropdown.Item>
-                <NavDropdown.Item><Link to="/dashboard/home">Dashboard</Link></NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link to="/dashboard/userprofile">Profile</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link to="/dashboard/home">Dashboard</Link>
+                </NavDropdown.Item>
                 <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
               </NavDropdown>
             )}

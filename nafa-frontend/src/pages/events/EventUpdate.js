@@ -342,7 +342,10 @@ const EventUpdate = () => {
       <div className="row w-50 d-flex flex-row">
         {gallery.map((gallery, index) => (
           <div className=" col-4 d-flex flex-column" key={gallery.id}>
-            <ModalImage small={gallery.images} large={gallery.images} />
+            <ModalImage
+              small={gallery.event_image}
+              large={gallery.event_image}
+            />
             <IconContext.Provider value={{ color: "red", size: "35px" }}>
               <Button
                 className="button bg-transparent btn-outline-light"

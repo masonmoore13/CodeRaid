@@ -14,7 +14,6 @@ class RelationshipView(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['=user__id']  # search by user
 
-
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
@@ -40,6 +39,8 @@ class CampaignView(viewsets.ModelViewSet):
 class TeamView(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['category']  # search by team category
 
     # permissions
     permission_classes = [UserPermission]

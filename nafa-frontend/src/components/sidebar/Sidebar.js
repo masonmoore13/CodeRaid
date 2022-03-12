@@ -2,6 +2,7 @@ import React from "react";
 import "./sidebar.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdLineStyle } from "react-icons/md";
+import { GrGallery } from "react-icons/gr"
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -42,6 +43,10 @@ const Sidebar = () => {
             <Link to="/dashboard/teams/" className="sidebarListItem">
               <MdLineStyle className="sidebarIcons" />
               Teams
+            </Link>
+            <Link to="/dashboard/teams/" className="sidebarListItem">
+              <GrGallery className="sidebarIcons" />
+              Gallery
             </Link>
           </ul>
         </div>

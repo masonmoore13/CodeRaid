@@ -135,8 +135,8 @@ const EventDetail = () => {
                     <ModalImage
                       className="d-flex flex-column"
                       showRotate="true"
-                      small={gallery.images}
-                      large={gallery.images}
+                      small={gallery.event_image}
+                      large={gallery.event_image}
                     />
                   </div>
                 ))}

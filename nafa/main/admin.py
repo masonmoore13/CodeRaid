@@ -1,7 +1,6 @@
 from django.contrib import admin
 from main.models import *
 
-
 admin.site.register(Gallery)
 class GalleryModel(admin.ModelAdmin):
     list_display = ('id', 'image')

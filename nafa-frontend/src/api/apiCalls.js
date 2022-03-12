@@ -21,7 +21,7 @@ export const login = (user) => {
 };
 
 // Gallery
-const galleryUrl = address + "/main/api/gallery/";
+const galleryUrl = address + "/main/api/gallery";
 const GalleryByEventIdUrl = address + "/main/api/gallery/?search=";
 export const getGalleryByEventId = (id) => {
   return axios.get(`${GalleryByEventIdUrl}${id}`);
@@ -185,8 +185,12 @@ export const updateUserProfileById = (userProfile, id) => {
 
 // teams
 const teamUrl = address + "/main/api/Team/";
+const teamByCategoryUrl = address + "/main/api/Team/?search=";
 export const getTeams = () => {
   return axios.get(`${teamUrl}`);
+};
+export const getTeamByCategory = (id) => {
+  return axios.get(`${teamByCategoryUrl}${id}`);
 };
 
 // Relationship

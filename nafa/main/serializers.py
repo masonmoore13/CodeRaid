@@ -3,8 +3,7 @@ from main.models import *
 from .models import User
 
 
-class RelationshipSerializer(serializers.ModelSerializer):
-    
+class RelationshipSerializer(serializers.ModelSerializer):  
     relationship_name = serializers.ReadOnlyField()
     class Meta:
         model = Relationship

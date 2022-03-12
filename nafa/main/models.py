@@ -55,11 +55,17 @@ class Event(models.Model):
 
 
 class Gallery(models.Model):
-    images = models.FileField(upload_to='media/Event Media',)
-    event = models.ForeignKey(Event, default=None, on_delete=models.CASCADE)
+    event_image = models.FileField(upload_to='media/Event Media', null=True, blank=True)
+    event = models.ForeignKey(
+        Event, default=None, on_delete=models.CASCADE, null=True, blank=True)
+
+    home_gallery_image = models.FileField(
+        upload_to='media/Home Gallery', default="", null=True, blank=True)
 
     def __int__(self):
         return (self.id, self.event)
+
+
 
 
 class Campaign(models.Model):
@@ -82,7 +88,7 @@ class Team(models.Model):
         User, related_name='members_of_team', blank=True)
     coaches = models.ManyToManyField(
         User, related_name='coaches', blank=True)
-    team_name = models.CharField(max_length=150, null=True, blank=True)
+    team_name = models.CharField(max_length=150, null=True, blank=True, default='')
     # football, soccer, tennis
     category = models.CharField(max_length=150, null=True, blank=True, default='')
     sub_category = models.CharField(
@@ -91,7 +97,7 @@ class Team(models.Model):
     description = models.TextField(max_length=2500, null=True, blank=True)
 
     def __str__(self):
-        return(str(self.type_of_team.year) + " " + self.type_of_team.category_name)
+        return(self.category)
 
 
 class Scholarship(models.Model):

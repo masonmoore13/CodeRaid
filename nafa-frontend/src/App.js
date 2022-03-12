@@ -25,6 +25,7 @@ import Userlist from "./pages/dashboard/user/Userlist";
 import Userprofile from "./pages/dashboard/userProfile/Userprofile";
 
 import Teams from "./pages/dashboard/teams/Teams";
+import Gallery from "./pages/gallery/Gallery";
 
 function App() {
   // will be changed later just for demo
@@ -44,6 +45,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about/" element={<About />} />
               <Route path="/contact/" element={<Contact />} />
+              <Route exact path="/gallery" element={<Gallery />} />
               <Route
                 path="/signup/"
                 element={<UserSignup actions={actions} />}
