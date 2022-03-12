@@ -19,8 +19,8 @@ function Login() {
   const { isLoading, error } = useSelector((state) => state.login);
 
   // username and password state
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("JohnDoe");
+  const [password, setPassword] = useState("Recaptcha12@");
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   const handleRecapthca = (value) => {

@@ -1,9 +1,10 @@
 from operator import truediv
+from os import access
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from main.models import UserProfile
-from .serializers import RegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer,UserProfileSerializer
+from .serializers import RegisterSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, UserSerializer, UserProfileSerializer
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.exceptions import AuthenticationFailed
@@ -34,22 +35,51 @@ usernameGetter = JWTTokenUserAuthentication()
 # overriding obtain token to our custom need
 
 
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
     default_error_messages = {
         'no_active_account': ('Username or password doesnot match')
     }
 
     @classmethod
     def get_token(cls, user):
-
         token = super().get_token(user)
-
         # Add custom claims
         token['username'] = user.username
         # ...
+        print(user.is_verified)
 
         return token
+
+
+class Login(APIView):
+
+    def post(self, request):
+        username = request.data["username"]
+       
+        password = request.data["password"]
+        
+        print("ddd",username, password)
+        
+        try:
+            user = User.objects.get(username=username)
+            if not user.check_password(password):
+                return Response({'error': 'Password doesnot match'}, status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+             return Response({'error': 'Username or password does not match'})
+       
+        if user:
+            if user.is_active == False:
+                return Response({'error': 'Please verify your email'}, status=status.HTTP_401_UNAUTHORIZED)
+
+            refresh = MyTokenObtainPairSerializer.get_token(user)
+
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+
+           
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -57,20 +87,19 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 
 # generic registration with email
-class RegisterViewVerify(generics.GenericAPIView):
+class RegisterVerifyView(generics.GenericAPIView):
 
     serializer_class = UserSerializer
 
     def post(self, request):
-        user=request.data
-        
+        user = request.data
+
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
         user_data = serializer.data
         userObj = User.objects.get(username=user_data['username'])
-        userObj.is_active = False
         userObj.save()
         # generate refresh token for the user to activate
         token = MyTokenObtainPairSerializer.get_token(userObj).access_token
@@ -80,13 +109,15 @@ class RegisterViewVerify(generics.GenericAPIView):
         relativeLink = reverse('verify_email')
 
         # need to update this after deployment to our desired web address
-        absurl = 'http://localhost:8000'+ relativeLink + "?token=" + str(token)
-        
+        absurl = 'http://localhost:8000' + \
+            relativeLink + "?token=" + str(token)
+
         # email the activation lijnk
-        email_body = "Hi " + userObj.username + " use the link below to verify\n" + absurl
+        email_body = "Hi " + userObj.username + \
+            " use the link below to verify\n" + absurl
         # data to send email
-        data ={
-            'domain':absurl,
+        data = {
+            'domain': absurl,
             'email_subject': "Verify Your Email",
             "email_body": email_body,
             "to_email": userObj.email
@@ -96,14 +127,14 @@ class RegisterViewVerify(generics.GenericAPIView):
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
-# registration api view
-class RegisterView(APIView):
-    # post view
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+# # registration api view
+# class RegisterView(APIView):
+#     # post view
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
 
 
 #  view to verify the user email address
@@ -116,15 +147,15 @@ class VerifyEmail(generics.GenericAPIView):
         # try:
         vToken = JwtAuthenticator.get_validated_token(token)
         if(token is not None):
-            
+
             userObj = usernameGetter.get_user(vToken).id
             user = User.objects.get(id=userObj)
-                # check if the user is verified
-            if not user.is_active:
-                    user.is_active = True
-                    user.save()
-                    return Response({"email": "Successfully Activated"}, status=status.HTTP_200_OK)
-                
+            # check if the user is verified
+            if not user.is_verified:
+                user.is_verified = True
+                user.save()
+                return Response({"email": "Successfully Activated"}, status=status.HTTP_200_OK)
+
         else:
             return Response({"error": "Token expired or invalid"}, status=status.HTTP_400_BAD_REQUEST)
         # error handling for token expired
@@ -140,7 +171,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
     serializer_class = ResetPasswordEmailRequestSerializer
 
     def post(self, request):
-        data = {'request': request, 'data':request.data}
+        data = {'request': request, 'data': request.data}
         serializer = self.serializer_class(data=data)
 
         email = request.data['email']
@@ -156,23 +187,24 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             # send email with the token to reset the password
             # get current site and attach token to it
             current_site = get_current_site(request).domain
-            relativeLink = reverse('reset_password_confirm', kwargs={'uidb64': uidb64, 'token':token})
+            relativeLink = reverse('reset_password_confirm', kwargs={
+                                   'uidb64': uidb64, 'token': token})
 
             # need to update this after deployment to our desired web address
-            absurl = 'http://localhost:8000'+ relativeLink
-            
+            absurl = 'http://localhost:8000' + relativeLink
+
             # email the activation lijnk
             email_body = "Hi use the link below to reset your password\n" + absurl
             # data to send email
-            data ={
-                'domain':absurl,
+            data = {
+                'domain': absurl,
                 'email_subject': "Reset Your Password",
                 "email_body": email_body,
                 "to_email": userObj.email
             }
             # email the activation link
             Util.send_email(data)
-    
+
         return Response({"success": "We've sent a link to reset your password", "token": token, "uidb64": uidb64}, status=status.HTTP_200_OK)
 
 
@@ -183,17 +215,14 @@ class PasswordTokenCheck(generics.GenericAPIView):
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(id=id)
-            
+
             if not PasswordResetTokenGenerator().check_token(user, token):
                 return Response({"error": "Token isn't valid. Request new one"}, status=status.HTTP_401_UNAUTHORIZED)
-        
-            return Response({"success":True, 'message': 'Credentials Valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
 
+            return Response({"success": True, 'message': 'Credentials Valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
 
         except DjangoUnicodeDecodeError as e:
             return Response({"error": "Token isn't valid. Request new one"}, status=status.HTTP_401_UNAUTHORIZED)
-
-
 
 
 class SetNewPassword(generics.GenericAPIView):
@@ -257,6 +286,8 @@ class UserProfileView(viewsets.ModelViewSet):
     search_fields = ['first_name', 'last_name']
 
 # logout view
+
+
 class Logout(APIView):
     def post(self, request):
         response = Response()
