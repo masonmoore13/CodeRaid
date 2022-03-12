@@ -29,11 +29,18 @@ function UserSignup({ props, actions = defaultProp }) {
   const navigate = useNavigate();
 
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
-  
-  
-  
+
+  const passVerification = {
+    isLengthy: false,
+    hasUpper: false,
+    hasLower: false,
+    hasNumber: false,
+  };
+
+  const [passwordError, setPasswordError] = useState(passVerification);
+
   const handleRecapthca = (value) => {
-    if(errors){
+    if (errors) {
     }
     setRecaptchaVerified(true);
   };
@@ -41,9 +48,6 @@ function UserSignup({ props, actions = defaultProp }) {
   const handleErrorRecaptcha = () => {
     setRecaptchaVerified(false);
   };
-  
-   
-
 
   const onInputChange = (event) => {
     const { value, name } = event.target;
@@ -61,6 +65,21 @@ function UserSignup({ props, actions = defaultProp }) {
         [name]: undefined,
       };
     });
+
+    if (name === "password") {
+      const isLengthy = value.length >= 8;
+      const hasUpper = /[A-Z]/.test(value);
+      const hasLower = /[a-z]/.test(value);
+      const hasNumber = /[0-9]/.test(value);
+
+      setPasswordError({
+        ...passwordError,
+        isLengthy,
+        hasUpper,
+        hasLower,
+        hasNumber,
+      });
+    }
   };
 
   const onClickSignup = () => {
@@ -131,7 +150,7 @@ function UserSignup({ props, actions = defaultProp }) {
               />
 
               <Input
-                label="Repeat your Password"
+                label="Confirm your Password"
                 type="password"
                 name="passwordRepeat"
                 placeholder="Repeat your password"
@@ -139,22 +158,57 @@ function UserSignup({ props, actions = defaultProp }) {
                 hasError={passwordRepeatError && true}
                 error={passwordRepeatError}
               />
+              <ul className="mb-4 mt-4">
+                <li
+                  className={
+                    passwordError.isLengthy ? "text-success" : "text-danger"
+                  }
+                >
+                  Min 8 characters:{" "}
+                </li>
+                <li
+                  className={
+                    passwordError.hasUpper ? "text-success" : "text-danger"
+                  }
+                >
+                  At least one Upper Case{" "}
+                </li>
+                <li
+                  className={
+                    passwordError.hasLower ? "text-success" : "text-danger"
+                  }
+                >
+                  At least one Lower Case
+                </li>
+                <li
+                  className={
+                    passwordError.hasNumber ? "text-success" : "text-danger"
+                  }
+                >
+                  At least One number
+                </li>
+              </ul>
               <RecaptchaComponent
                 handleRecapthca={handleRecapthca}
                 handleErrorRecaptcha={handleErrorRecaptcha}
               />
-			  
+
               <div className="signup-option">
-              
                 <ButtonWithProgress
                   onClick={onClickSignup}
                   disabled={
-                    pendingApiCall || passwordRepeatError ? true : false||!recaptchaVerified
+                    Object.values(passwordError).includes(false) ||
+                    pendingApiCall ||
+                    passwordRepeatError
+                      ? true
+                      : false || !recaptchaVerified
                   }
                   pendingApiCall={pendingApiCall}
                   text="Sign up"
                 ></ButtonWithProgress>
-                <span>Have an Account? <Link to="/login">Login?</Link></span>
+                <span>
+                  Have an Account? <Link to="/login">Login?</Link>
+                </span>
               </div>
             </Form>
           </Col>
