@@ -31,7 +31,7 @@
   color: goldenrod;
 }
 
-@media screen and  (max-width: 1000px), screen and (max-height: 700px) {
+/* @media screen and  (max-width: 1000px), screen and (max-height: 700px) {
 
   .text{
     position:absolute;
@@ -42,4 +42,4 @@
     position:absolute;
     right:0;
   }
-}
+} */

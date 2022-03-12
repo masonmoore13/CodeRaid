@@ -1,16 +1,16 @@
+/* .home-content{
+  margin-left: 10%;
+} */
+
 .home-title {
   text-align: center;
   padding-top: 2em;
   padding-bottom: 2em;
 }
 
-.flex-container {
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .card {
-  width: 25%;
+  width: 100%;
+  height: 100%;
   background-color: rgb(255, 255, 255) !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -23,15 +23,21 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 800;
+  width: 100%;
   margin-bottom: 10px;
 }
 
 .fbPage{
-  width: 500px;
+  min-width: 100%;
+  overflow-x: scroll;
+  margin-bottom: 10px;
+  text-align: center;
+  margin: 0 auto;
+  min-height: 100%;
+  justify-content: center;
 }
 
-@media screen and (max-width: 1000px), screen and (max-height: 700px){
+/* @media screen and (max-width: 1000px), screen and (max-height: 700px){
 
   .card{
     width:100%;
@@ -61,4 +67,4 @@
   .fbPage:after{
     
   }
-}
+} */
