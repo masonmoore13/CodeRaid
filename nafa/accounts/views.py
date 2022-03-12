@@ -78,7 +78,7 @@ class RegisterVerifyView (generics.GenericAPIView):
 
         # get current site and attach token to it
         current_site = get_current_site(request).domain
-        relativeLink = reverse('verify_email')
+        relativeLink = reverse('accounts:verify_email')
 
         # need to update this after deployment to our desired web address
         absurl = current_site+ relativeLink + "?token=" + str(token)
