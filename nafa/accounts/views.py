@@ -1,5 +1,6 @@
+from contextlib import redirect_stderr
 from operator import truediv
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from main.models import UserProfile
