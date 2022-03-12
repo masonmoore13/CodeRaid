@@ -8,12 +8,6 @@ from .permissions import UserPermission
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication 
 from django.core.mail import send_mail
 
-
-# search by user
-
-
-
-
 class RelationshipView(viewsets.ModelViewSet):
     queryset = Relationship.objects.all()
     serializer_class = RelationshipSerializer
@@ -41,13 +35,6 @@ class CampaignView(viewsets.ModelViewSet):
     serializer_class = CampaignSerializer
 
     # permissions 
-    permission_classes = [UserPermission]
-
-class CategoryOfTeamView(viewsets.ModelViewSet):
-    queryset = CategoryOfTeam.objects.all()
-    serializer_class = CategoryOfTeamSerializer
-
-    # permissions
     permission_classes = [UserPermission]
 
 class TeamView(viewsets.ModelViewSet):

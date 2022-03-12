@@ -46,7 +46,6 @@ const EventDetail = () => {
     navigate.push("/");
   };
 
-
   return (
     <div className="text-center ">
       <Card className="event-container container-md mx-auto">
@@ -92,11 +91,7 @@ const EventDetail = () => {
 
         <CardGroup className="detailsBodyCard">
           <Col className="shadow-sm col-lg-8  text-start ">
-            <Card
-              className="detailsLeftCol mx-auto shadow-sm  "
-              border=""
-              style={{ width: "93%" }}
-            >
+            <Card className="detailsLeftCol mx-auto shadow-sm w-100 " border="">
               <p className="description m-2">{event.description}</p>
               <p className=" m-2"> {event.date}</p>
               <p className=" m-2"> {event.time}</p>
@@ -104,15 +99,12 @@ const EventDetail = () => {
           </Col>
 
           <Col className="DetailsRightCol m-2 col-lg-3 shadow-sm ">
-            <Card
-              className="venueCard m-3 shadow-sm text-start"
-              style={{ width: "95%" }}
-            >
+            <Card className="venueCard m-3 shadow-sm text-start w-100">
               <Card.Title className="text-center">
                 Venue
                 <hr />
               </Card.Title>
-              <h5 className=" mx-1"> {event.address_line}</h5>
+              <h6 className=" mx-1"> {event.address_line}</h6>
               <h6 className=" mx-1"> {event.city}</h6>
               <h6 className=" mx-1"> {event.state}</h6>
               <h6 className=" mx-1"> {event.zip_code}</h6>
@@ -123,36 +115,32 @@ const EventDetail = () => {
                 Get Directions
               </a>
             </Card>
-            <Card
-              className="contactDetails m-3 shadow-sm "
-              border=""
-              style={{ width: "95%" }}
-            >
+            <Card className="contactDetails m-3 shadow-sm w-100 ">
               <Card.Title>
                 Contact Details <hr />
               </Card.Title>
-              <h5 className="text-start">{event.contact_name}</h5>
-              <h6 className="text-start"> {event.contact_email}</h6>
-              <h6 className="text-start"> {event.contact_number}</h6>
+              <h6 className="text-start mx-1">{event.contact_name}</h6>
+              <h6 className="text-start mx-1"> {event.contact_email}</h6>
+              <h6 className="text-start mx-1"> {event.contact_number}</h6>
             </Card>
-            <Card
-              className="DetailsRightCol m-3 shadow-sm "
-              border=""
-              style={{ width: "95%" }}
-            >
+
+            <Card className="row m-2 shadow-sm w-100 ">
               <Card.Title>
                 Event Pictures <hr />
-                <div className="showGallery d-flex flex-wrap m-3">
-                  {gallery.map((gallery, index) => (
-                    <div AppImagekey={gallery.id}>
-                      <ModalImage
-                        small={gallery.images}
-                        large={gallery.images}
-                      />
-                    </div>
-                  ))}
-                </div>
               </Card.Title>
+              <div className="row d-flex flex-row">
+                {" "}
+                {gallery.map((gallery, index) => (
+                  <div className="col-6 d-flex flex-row" key={gallery.id}>
+                    <ModalImage
+                      className="d-flex flex-column"
+                      showRotate="true"
+                      small={gallery.images}
+                      large={gallery.images}
+                    />
+                  </div>
+                ))}
+              </div>
             </Card>
           </Col>
         </CardGroup>

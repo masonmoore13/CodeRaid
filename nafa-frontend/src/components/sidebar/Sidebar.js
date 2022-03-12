@@ -11,8 +11,8 @@ const Sidebar = () => {
         <div className="sideBarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
-            <Link to= "/dashboard/home" className="sidebarListItem">
-              <MdLineStyle className="sidebarIcons"/>
+            <Link to="/dashboard/home" className="sidebarListItem">
+              <MdLineStyle className="sidebarIcons" />
               Home
             </Link>
             <Link to="/dashboard/userprofile/" className="sidebarListItem">
@@ -21,7 +21,7 @@ const Sidebar = () => {
             </Link>
 
             <Link to="#" className="sidebarListItem">
-              <MdLineStyle className="sidebarIcons"/>
+              <MdLineStyle className="sidebarIcons" />
               Contributions
             </Link>
           </ul>
@@ -30,28 +30,27 @@ const Sidebar = () => {
         <div className="sideBarMenu">
           <h3 className="sidebarTitle">Quick Menu</h3>
           <ul className="sidebarList">
-            <Link  to="/dashboard/userlist/" className="sidebarListItem">
-              <MdLineStyle className="sidebarIcons"/>
+            <Link to="/dashboard/userlist/" className="sidebarListItem">
+              <MdLineStyle className="sidebarIcons" />
               Users
             </Link>
-            <Link  to="#" className="sidebarListItem">
+            <Link to="#" className="sidebarListItem">
               <AiOutlineUser className="sidebarIcons" />
               Members
             </Link>
 
-            <Link  to="#" className="sidebarListItem">
-              <MdLineStyle className="sidebarIcons"/>
+            <Link to="/dashboard/teams/" className="sidebarListItem">
+              <MdLineStyle className="sidebarIcons" />
               Teams
             </Link>
           </ul>
         </div>
 
-
         <div className="sideBarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
-            <Link  to="#" className="sidebarListItem">
-              <MdLineStyle className="sidebarIcons"/>
+            <Link to="#" className="sidebarListItem">
+              <MdLineStyle className="sidebarIcons" />
               Mail
             </Link>
             <Link to="#" className="sidebarListItem">
@@ -59,7 +58,7 @@ const Sidebar = () => {
               Feedback
             </Link>
             <Link to="#" className="sidebarListItem">
-              <MdLineStyle className="sidebarIcons"/>
+              <MdLineStyle className="sidebarIcons" />
               Messages
             </Link>
           </ul>

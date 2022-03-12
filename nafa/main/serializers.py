@@ -10,16 +10,11 @@ class RelationshipSerializer(serializers.ModelSerializer):
         model = Relationship
         fields = ('__all__')
 
-
-
 class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('__all__')
-        
-
-
-
+    
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -28,11 +23,6 @@ class EventSerializer(serializers.ModelSerializer):
 class CampaignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
-        fields = ('__all__')
-
-class CategoryOfTeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryOfTeam
         fields = ('__all__')
 
 class TeamSerializer(serializers.ModelSerializer):
