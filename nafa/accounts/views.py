@@ -66,7 +66,7 @@ class Login(APIView):
             if not user.check_password(password):
                 return Response({'error': 'Password doesnot match'}, status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
-             return Response({'error': 'Username or password does not match'})
+             return Response({'error': 'Username or password does not match'}, status=status.HTTP_404_NOT_FOUND)
        
         if user:
             if user.is_active == False:
