@@ -96,4 +96,4 @@ class UserProfile(models.Model):
         upload_to='media', null=True, blank=True)
 
     def __str__(self):
-        return(self.first_name + " " + self.last_name) 
+        return(str(self.first_name) + " " + str(self.last_name))  
