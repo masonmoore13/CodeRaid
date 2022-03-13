@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
-import { Button, Form, Card, Modal } from "react-bootstrap";
+import { Button, Form, Card, Modal} from "react-bootstrap";
 import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
@@ -9,8 +9,9 @@ import {
   MdPhoneIphone,
   MdPublish,
 } from "react-icons/md";
+import axios from "axios";
 
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from "react-bootstrap/Spinner";
 import { FaAddressCard, FaTrash } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
@@ -18,11 +19,13 @@ import { IconContext } from "react-icons";
 import {
   updateUserProfileById,
   getUserProfileById,
-  getRelationshipByUserId,
+  createRelationship,
+  getUserByName,
 } from "../../../api/apiCalls";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Typeahead } from "react-bootstrap-typeahead";
 
 toast.configure();
 
@@ -30,11 +33,7 @@ const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
   let navigate = useNavigate();
   const [preview, setPreview] = useState("");
-  const [relationship, setRelationship] = useState([]);
-  const [showSpinner, setShowSpinner] = useState(false)
-
-
-
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
@@ -55,24 +54,6 @@ const Userprofile = () => {
   });
 
   let { id } = useParams();
-
-  useEffect(() => {
-    if (!id) {
-      id = userProfile.id;
-    }
-
-    if (id) {
-      getUserProfileById(id).then((res) => {
-        setUserProfileData(res.data);
-        setRelationship(res.data.relationships);
-      });
-    }
-  }, [id, userProfile]);
-
-  if (!userProfile) {
-    userProfile = data;
-    user = userD;
-  }
 
   const notify = () => {
     toast.warn("Your profile has been updated!", {
@@ -154,12 +135,61 @@ const Userprofile = () => {
     // });
   };
 
-  //Relationship fetch
+  if (!userProfile) {
+    userProfile = data;
+    user = userD;
+  }
 
   // Relationship Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // Relationship fetch
+  const [relationship, setRelationship] = useState([]);
+  const [relationship_type, setRelationshipType] = useState("Friend");
+  const [user2, setUser2] = useState("");
+
+  useEffect(() => {
+    if (!id) {
+      id = userProfile.id;
+    }
+    if (id) {
+      getUserProfileById(id).then((res) => {
+        setUserProfileData(res.data);
+        setRelationship(res.data.relationships);
+      });
+    }
+  }, [id, userProfile]);
+
+  //Create Relationship
+  const createRelationshipInfo = async () => {
+    let formField = new FormData();
+
+    formField.append("user", userProfile.id);
+    formField.append("relationship_type", relationship_type);
+    formField.append("user2", user2);
+    createRelationship(formField).then((response) => {
+      console.log(response.data);
+      navigate.push("/");
+    });
+  };
+
+  const [users, setUsers] = useState([]);
+  const [query, setQuery] = useState();
+  const options = "";
+
+  useEffect(() => {
+    getUserByName(query)
+      .then((response) => {
+        console.log(response.data);
+        setUsers(response.data);
+        options = (response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, [query]);
 
   return (
     <div className={`user ${showSpinner ? "blur" : ""}`}>
@@ -465,20 +495,27 @@ const Userprofile = () => {
                       <div class="col ">
                         <h6>Select A Member</h6>
 
-                        <form>
-                          <input
-                            class="form-control mr-sm-2"
-                            type="search"
-                            placeholder="Search"
-                            aria-label="Search"
+                        <div className="row w-75 display-6 mx-auto">
+                          <Typeahead
+                            id="basic-example"
+                            onChange={setUsers}
+                            options={options}
+                            placeholder="Choose a state..."
+
                           />
-                        </form>
+                        </div>
                       </div>
                       <div class="col ">
                         <h6 className="">Select Relationship Type</h6>
                         <form>
-                          <select className="form-select">
-                            <option>Friend</option>
+                          <select
+                            className="form-select"
+                            value={relationship_type}
+                            onChange={(e) =>
+                              setRelationshipType(e.target.value)
+                            }
+                          >
+                            <option selected>Friend</option>
                             <option>Spouse</option>
                             <option>Parent</option>
                             <option>Child</option>
@@ -517,7 +554,13 @@ const Userprofile = () => {
                       >
                         Close
                       </Button>
-                      <Button variant="btn btn-warning btn-outline-dark">
+                      <Button
+                        variant="btn btn-warning btn-outline-dark"
+                        onClick={() => {
+                          createRelationshipInfo();
+                          /*reload or go back to profile*/
+                        }}
+                      >
                         Add Relationship
                       </Button>
                     </div>

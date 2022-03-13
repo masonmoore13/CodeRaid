@@ -33,9 +33,6 @@ export const getGallery = () => {
 export const getHomeGallery = () => {
   return axios.get(`${homeGalleryUrl}/`);
 };
-// export const createGalleryImage = (galleryObject) => {
-//   return axios.post(galleryUrl, galleryObject);
-// };
 export const createGalleryImage = (galleryObject) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -79,9 +76,6 @@ export const createHomeGalleryImage = (galleryObject) => {
 export const getGalleryById = (id) => {
   return axios.get(`${galleryUrl}${id}/`);
 };
-// export const deleteGalleryById = (id) => {
-//   return axios.delete(`${galleryUrl}${id}/`);
-// };
 export const deleteGalleryById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -122,18 +116,12 @@ export const deleteHomeGalleryById = (id) => {
     }
   });
 };
-export const updateGalleryById = (id, galleryObject) => {
-  return axios.put(`${galleryUrl}${id}/`, galleryObject);
-};
 
 // Events
 const eventUrl = address + "/main/api/event/";
 export const getEvents = () => {
   return axios.get(`${eventUrl}`);
 };
-// export const createEvent = (eventObject) => {
-//   return axios.post(eventUrl, eventObject);
-// };
 export const createEvent = (eventObject) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -156,9 +144,6 @@ export const createEvent = (eventObject) => {
 export const getEventById = (id) => {
   return axios.get(`${eventUrl}${id}/`);
 };
-// export const deleteEventById = (id) => {
-//   return axios.delete(`${eventUrl}${id}/`);
-// };
 export const deleteEventById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -178,9 +163,6 @@ export const deleteEventById = (id) => {
     }
   });
 };
-// export const updateEventById = (id, eventObject)=>{
-//     return axios.put(`${eventUrl}${id}/`,eventObject);
-// }
 export const updateEventById = (id, eventObject) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -203,21 +185,19 @@ export const updateEventById = (id, eventObject) => {
 
 // Profile
 const userProfileUrl = address + "/accounts/profile/user";
-const searchUserByNameUrl =
-  address + "/accounts/profile/user/?search=";
-
+const searchUserProfileUrl = address + "/accounts/profile/user/?search=";
+export const getUserByName = (name) => {
+  return axios.get(`${searchUserProfileUrl}${name}`);
+};
 export const getUserProfile = () => {
   return axios.get(`${userProfileUrl}`);
 };
 export const createUserProfile = (userProfileObject) => {
   return axios.post(userProfileUrl, userProfileObject);
 };
-
-//This is the url Sital is using in profile
 export const getUserProfileById = (id) => {
   return axios.get(`${userProfileUrl}/${id}/`);
 };
-
 export const deleteUserProfileId = (id) => {
   return axios.delete(`${userProfileUrl}${id}/`);
 };
@@ -245,4 +225,23 @@ export const getRelationship = () => {
 };
 export const getRelationshipByUserId = (id) => {
   return axios.get(`${RelationshipByUserIdUrl}${id}`);
+};
+export const createRelationship = (relationshipObject) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.post(relationshipUrl, relationshipObject, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };

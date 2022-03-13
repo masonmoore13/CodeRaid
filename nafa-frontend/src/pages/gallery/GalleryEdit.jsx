@@ -83,7 +83,7 @@ const GalleryEdit = () => {
       <div className="row d-flex flex-row text-center">
         {gallery.map((gallery, index) => (
           <div
-            className="col d-flex rounded flex-column mx-auto"
+            className="col-3 d-flex rounded flex-column "
             key={gallery.home_gallery_image}
           >
             <ModalImage
