@@ -43,7 +43,8 @@ const GalleryEdit = () => {
   return (
     <div>
       <Button
-        variant="btn btn-warning border-0 w-25 mx-auto"
+        variant="btn btn-warning text-center mx-auto"
+        style={{ width: "10%" }}
         onClick={handleShow}
       >
         Add/Edit
@@ -52,32 +53,32 @@ const GalleryEdit = () => {
         show={show}
         onHide={handleClose}
         centered
-        size="xl"
+        size="sn"
         className="text-center"
       >
         <Modal.Header closeButton>
-          <Modal.Title className="m-2 ">
-            Add image
+          <Modal.Title className="m-2 text-center mx-auto">
+            Add images
             <input
               type="file"
               placeholder=""
-              multiple
               to={`/dashboard/galleryEdit`}
               className="form-control"
               onChange={(e) => setImages(e.target.files[0])}
             />
           </Modal.Title>
-          <Link
-            className="btn btn-outline-dark btn-warning mb-5 m-1"
-            bg="warning"
-            to={`/dashboard/galleryEdit`}
-            onClick={() => {
-              CreateGalleryInfo(); handleClose(); window.reload();
-            }}
-          >
-            Add Image
-          </Link>
         </Modal.Header>
+        <Link
+          className="btn  btn-warning m-1 w-25 mx-auto"
+          to={`/dashboard/galleryEdit`}
+          onClick={() => {
+            CreateGalleryInfo();
+            handleClose();
+            window.reload();
+          }}
+        >
+          Add Image
+        </Link>
       </Modal>
       <div className="row d-flex flex-row text-center">
         {gallery.map((gallery, index) => (

@@ -331,7 +331,7 @@ const EventUpdate = () => {
       <Link
         className="btn btn-outline-dark btn-warning mb-5 m-1"
         bg="warning"
-        to={``}
+        to={`/event/${id}`}
         onClick={() => {
           updateSingleEvent();
           CreateGalleryInfo();
@@ -351,7 +351,7 @@ const EventUpdate = () => {
                 className="button bg-transparent border-0"
                 type="button"
                 onClick={() => (
-                  deleteGalleryById(gallery.id)
+                  (deleteGalleryById(gallery.id), window.location.reload())
                 )}
               >
                 <FaTrash />
