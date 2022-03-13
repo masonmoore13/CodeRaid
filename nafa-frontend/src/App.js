@@ -26,6 +26,7 @@ import Userprofile from "./pages/dashboard/userProfile/Userprofile";
 
 import Teams from "./pages/dashboard/teams/Teams";
 import Gallery from "./pages/gallery/Gallery";
+import GalleryEdit from "./pages/gallery/GalleryEdit";
 
 function App() {
   // will be changed later just for demo
@@ -45,7 +46,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about/" element={<About />} />
               <Route path="/contact/" element={<Contact />} />
-              <Route exact path="/gallery" element={<Gallery />} />
+              <Route path="/gallery" element={<Gallery />} />
+
               <Route
                 path="/signup/"
                 element={<UserSignup actions={actions} />}
@@ -60,6 +62,7 @@ function App() {
               <Route path="/teams" element={<Teams />} />
 
               <Route path="/dashboard" exact element={<Dashboard />}>
+                <Route path="galleryEdit" exact element={<GalleryEdit />} />
                 <Route path="teams" exact element={<Teams />} />
                 <Route path="home" exact element={<DashboardHome />} />
                 <Route path="userlist" exact element={<Userlist />} />

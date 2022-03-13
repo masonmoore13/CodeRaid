@@ -442,7 +442,7 @@ const Userprofile = () => {
                 </Card.Body>
 
                 <Button
-                  variant="btn btn-warning btn-outline-dark w-25 mx-auto"
+                  variant="btn btn-warning border-0 w-25 mx-auto"
                   onClick={handleShow}
                 >
                   Add/Edit
@@ -501,7 +501,7 @@ const Userprofile = () => {
                             value={{ color: "red", size: "25px" }}
                           >
                             <Button
-                              className="button bg-white btn-outline-light"
+                              className="button bg-white border-0"
                               type="button"
                             >
                               <FaTrash />

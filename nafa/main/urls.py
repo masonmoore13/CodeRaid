@@ -14,7 +14,7 @@ route.register("contribution", ContributionView, basename='ContributionView')
 route.register("role", RoleView, basename='RoleView') 
 route.register("contact", ContactView, basename='ContactView') ,
 route.register("relationship", RelationshipView, basename='RelationshipView')
-
+route.register("homeGallery", HomeGalleryView, basename='HomeGalleryView')
 
 urlpatterns = [
     path('api/', include(route.urls)), 

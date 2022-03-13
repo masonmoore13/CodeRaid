@@ -22,6 +22,17 @@ class GalleryView(viewsets.ModelViewSet):
 
     # permissions
     permission_classes = [UserPermission]
+    
+# Home page gallery, exludes any image that is null or empty. 
+class HomeGalleryView(viewsets.ModelViewSet):
+    queryset = Gallery.objects.exclude(
+        home_gallery_image__isnull=True).exclude(home_gallery_image__exact='')
+    serializer_class = HomeGallerySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['home_gallery_image']  
+
+    # permissions
+    permission_classes = [UserPermission]
 
 class EventView(viewsets.ModelViewSet):
     queryset = Event.objects.all()

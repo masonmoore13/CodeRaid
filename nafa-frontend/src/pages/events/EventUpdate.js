@@ -81,7 +81,7 @@ const EventUpdate = () => {
 
   //Gallery stuff
 
-  const [images, setImages] = useState(false);
+  const [event_image, setImages] = useState(false);
   const [event, setEventId] = useState(id);
 
   let navigate = useNavigate();
@@ -89,8 +89,8 @@ const EventUpdate = () => {
   const CreateGalleryInfo = async () => {
     let formField = new FormData();
 
-    if (images !== null) {
-      formField.append("images", images);
+    if (event_image !== null) {
+      formField.append("event_image", event_image);
     }
 
     formField.append("event", event);
@@ -331,7 +331,7 @@ const EventUpdate = () => {
       <Link
         className="btn btn-outline-dark btn-warning mb-5 m-1"
         bg="warning"
-        to={`/event/${id}`}
+        to={``}
         onClick={() => {
           updateSingleEvent();
           CreateGalleryInfo();
@@ -348,10 +348,10 @@ const EventUpdate = () => {
             />
             <IconContext.Provider value={{ color: "red", size: "35px" }}>
               <Button
-                className="button bg-transparent btn-outline-light"
+                className="button bg-transparent border-0"
                 type="button"
                 onClick={() => (
-                  deleteGalleryById(gallery.id), window.location.reload()
+                  deleteGalleryById(gallery.id)
                 )}
               >
                 <FaTrash />

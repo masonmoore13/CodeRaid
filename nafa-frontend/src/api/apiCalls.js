@@ -22,12 +22,16 @@ export const login = (user) => {
 
 // Gallery
 const galleryUrl = address + "/main/api/gallery";
+const homeGalleryUrl = address + "/main/api/homeGallery";
 const GalleryByEventIdUrl = address + "/main/api/gallery/?search=";
 export const getGalleryByEventId = (id) => {
   return axios.get(`${GalleryByEventIdUrl}${id}`);
 };
 export const getGallery = () => {
   return axios.get(`${galleryUrl}/`);
+};
+export const getHomeGallery = () => {
+  return axios.get(`${homeGalleryUrl}/`);
 };
 // export const createGalleryImage = (galleryObject) => {
 //   return axios.post(galleryUrl, galleryObject);
@@ -40,7 +44,27 @@ export const createGalleryImage = (galleryObject) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.post(galleryUrl, galleryObject, {
+      const res = await axios.post((galleryUrl + "/"), galleryObject, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export const createHomeGalleryImage = (galleryObject) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.post((homeGalleryUrl + "/"), galleryObject, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },
@@ -66,7 +90,27 @@ export const deleteGalleryById = (id) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.delete(`${galleryUrl}${id}/`, {
+      const res = await axios.delete(`${galleryUrl}/${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export const deleteHomeGalleryById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.delete(`${homeGalleryUrl}/${id}/`, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },

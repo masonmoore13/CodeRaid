@@ -13,7 +13,13 @@ class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('__all__')
-    
+
+
+class HomeGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gallery
+        fields = ('home_gallery_image', 'id')
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
