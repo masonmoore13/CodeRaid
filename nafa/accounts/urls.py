@@ -4,7 +4,7 @@ from .views import  Logout,  MyTokenObtainPairView, VerifyEmail,Login, SetNewPas
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
-
+app_name = "accounts"
 route = routers.DefaultRouter()
 
 route.register("user", UserProfileView, basename='UserProfileView')

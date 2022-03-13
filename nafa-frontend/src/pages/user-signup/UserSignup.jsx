@@ -94,7 +94,7 @@ function UserSignup({ props, actions = defaultProp }) {
       .postSignup(user)
       .then((response) => {
         setPendingApiCall(false);
-        navigate("/login");
+        navigate("/login",{ state: {showToast:true} } );
       })
       .catch((apiError) => {
         if (apiError.response.data) {
