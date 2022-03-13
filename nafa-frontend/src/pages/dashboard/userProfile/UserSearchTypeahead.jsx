@@ -78,9 +78,9 @@ export default function AsyncPaginationExample() {
   return (
     <AsyncTypeahead
       isLoading={isLoading}
-      labelKey={"first_name"}
+      labelKey={(option) => `${option.first_name} ${option.last_name}`}
       maxResults={PER_PAGE - 1}
-      minLength={2}
+      minLength={1}
       onInputChange={handleInputChange}
       onPaginate={handlePagination}
       onSearch={handleSearch}

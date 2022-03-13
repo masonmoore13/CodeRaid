@@ -9,8 +9,6 @@ import {
   MdPhoneIphone,
   MdPublish,
 } from "react-icons/md";
-import axios from "axios";
-
 import Spinner from "react-bootstrap/Spinner";
 import { FaAddressCard, FaTrash } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
@@ -25,7 +23,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Typeahead } from "react-bootstrap-typeahead";
+import AsyncPaginationExample from "./UserSearchTypeahead";
 
 toast.configure();
 
@@ -495,14 +493,9 @@ const Userprofile = () => {
                       <div class="col ">
                         <h6>Select A Member</h6>
 
-                        <div className="row w-75 display-6 mx-auto">
-                          <Typeahead
-                            id="basic-example"
-                            onChange={setUsers}
-                            options={options}
-                            placeholder="Choose a state..."
-
-                          />
+                        <div className="row display-6 mx-auto">
+                          
+                          <AsyncPaginationExample />
                         </div>
                       </div>
                       <div class="col ">
