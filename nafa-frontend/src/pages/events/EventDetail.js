@@ -5,7 +5,7 @@ import {
   deleteEventById,
   getGalleryByEventId,
 } from "../../api/apiCalls";
-import { Card, CardGroup, Col, Modal, Button } from "react-bootstrap";
+import { Card, CardGroup, Col, Modal, Button, Row } from "react-bootstrap";
 import "./Event.css";
 
 const EventDetail = () => {
@@ -53,48 +53,48 @@ const EventDetail = () => {
         alt="..."
       ></img>
 
-      <Card className="event-container container-md mx-auto mx-auto">
-        <div className="titleContainer d-flex flex-lg-wrap justify-content-center">
-          <div className="eventName display-3">{event.event_name}</div>
-          <div className="deleteModal modal-fullscreen-sm-down">
-            <Button
-              className="btn btn-outline-dark btn-warning m-1"
-              href={`/event/${event.id}/update`}
-            >
-              Update
-            </Button>
+      <Card className="event-container container-md mx-auto">
+        <Row className="title-row d-flex flex-lg-row flex-column align-items-center justify-content-center">
+            <Col className="eventName display-3 col-lg-8 mx-auto">{event.event_name}</Col>
+            <Col className="buttonModal col-lg-3 modal-fullscreen-sm-down mx-auto">
+              <Button
+                className="btn btn-outline-dark btn-warning m-1"
+                href={`/event/${event.id}/update`}
+              >
+                Update
+              </Button>
 
-            <Button variant="dark" onClick={handleShow}>
-              Delete
-            </Button>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>
-                  Are you sure you want to delete this event?
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-                <Button
-                  href="/event"
-                  variant="dark"
-                  onClick={() => deleteEvent(event.id)}
-                >
-                  Confirm Delete
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </div>
-        </div>
+              <Button variant="dark" onClick={handleShow}>
+                Delete
+              </Button>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    Are you sure you want to delete this event?
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button
+                    href="/event"
+                    variant="dark"
+                    onClick={() => deleteEvent(event.id)}
+                  >
+                    Confirm Delete
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </Col>
+        </Row>
 
-        <CardGroup className="detailsBodyCard">
-          <Col className="shadow-sm col-lg-8  text-start ">
+        <Row className="detailsBodyCard">
+          <Col className="DetailsLeftCol shadow-sm col-lg-8 mx-auto text-start ">
             <Card
-              className="detailsLeftCol mx-auto shadow-sm  "
+              className="description-card mx-auto shadow-sm"
               border=""
-              style={{ width: "96%" }}
+              style={{ width: "96%", height: "96%" }}
             >
               <p className="description m-2">{event.description}</p>
               <p className=" m-2"> {event.date}</p>
@@ -102,9 +102,9 @@ const EventDetail = () => {
             </Card>
           </Col>
 
-          <Col className="DetailsRightCol m-2 col-lg-3 shadow-sm ">
+          <Col className="DetailsRightCol mx-auto col-lg-3 shadow-sm ">
             <Card
-              className="venueCard m-3 shadow-sm text-start"
+              className="venueCard shadow-sm text-start"
               style={{ width: "93%" }}
             >
               <Card.Title className="text-center">
@@ -123,7 +123,7 @@ const EventDetail = () => {
               </a>
             </Card>
             <Card
-              className="contactDetails m-3 shadow-sm "
+              className="contactDetails shadow-sm "
               border=""
               style={{ width: "93%" }}
             >
@@ -135,7 +135,7 @@ const EventDetail = () => {
               <h6> {event.contact_number}</h6>
             </Card>
             <Card
-              className="DetailsRightCol m-3 shadow-md "
+              className="DetailsRightCol shadow-md "
               border=""
               style={{ width: "93%" }}
             >
@@ -155,7 +155,7 @@ const EventDetail = () => {
               </Card.Title>
             </Card>
           </Col>
-        </CardGroup>
+        </Row>
       </Card>
     </div>
   );

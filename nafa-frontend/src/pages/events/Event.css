@@ -1,23 +1,14 @@
-.eventName {
-  width: 85%;
-}
-
 .description{
   text-indent: 25px;
 }
 
-/* @media screen and  (max-width: 1000px), screen and (max-height: 700px){
+.DetailsRightCol{
+  height: 96%;
+}
 
-  .event-container{
-    height: 100%;
-  }
+@media screen and (max-width: 1000px){
 
 	.banner-image{
     width: 100% !important;
   }
-
-  .titleContainer{
-    flex-direction: column;
-    align-items: center;
-  }
-} */
+}

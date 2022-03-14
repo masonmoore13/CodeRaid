@@ -8,7 +8,7 @@
   padding-bottom: 2em;
 }
 
-.card {
+.home-card {
   width: 100%;
   height: 100%;
   background-color: rgb(255, 255, 255) !important;
@@ -28,7 +28,7 @@
 }
 
 .fbPage{
-  min-width: 100%;
+  min-width: 0px;
   overflow-x: scroll;
   margin-bottom: 10px;
   text-align: center;
@@ -37,34 +37,9 @@
   justify-content: center;
 }
 
-/* @media screen and (max-width: 1000px), screen and (max-height: 700px){
+@media screen and (min-width: 1000px){
 
-  .card{
-    width:100%;
-    margin-bottom: 10px;
+  .home-images{
+    width: 75%;
   }
-
-  .flex-container{
-    display: flex;
-    flex-direction: column;
-  }
-
-  .home-images {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-  }
-
-  .fbPage{
-    max-width: 100%;
-    overflow-x: scroll;
-    margin-bottom: 10px;
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  .fbPage:after{
-    
-  }
-} */
+}
