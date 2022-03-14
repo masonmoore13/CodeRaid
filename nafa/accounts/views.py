@@ -78,7 +78,7 @@ class RegisterVerifyView (generics.GenericAPIView):
 
         # get current site and attach token to it
         current_site = get_current_site(request).domain
-        relativeLink = reverse('accounts:verify_email')
+        relativeLink = reverse('verify_email')
 
         # need to update this after deployment to our desired web address
         absurl = current_site+ relativeLink + "?token=" + str(token)
@@ -154,47 +154,6 @@ class VerifyEmail(generics.GenericAPIView):
         #     return Response({"error": "Decode Error"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# endpoint to reset password using email
-class RequestPasswordResetEmail(generics.GenericAPIView):
-    serializer_class = ResetPasswordEmailRequestSerializer
-
-    def post(self, request):
-        data = {'request': request, 'data':request.data}
-        serializer = self.serializer_class(data=data)
-
-        email = request.data['email']
-        # check if the user with that email exists
-        if User.objects.filter(email=email).exists():
-            userObj = User.objects.get(email=email)
-
-            # encoding for comm across networks
-            uidb64 = urlsafe_base64_encode(smart_bytes(userObj.id))
-            # make a token to reset the password
-            token = PasswordResetTokenGenerator().make_token(userObj)
-
-            # send email with the token to reset the password
-            # get current site and attach token to it
-            current_site = get_current_site(request).domain
-            relativeLink = reverse('reset_password_confirm', kwargs={'uidb64': uidb64, 'token':token})
-
-            # need to update this after deployment to our desired web address
-            absurl = 'http://localhost:8000'+ relativeLink
-            
-            # email the activation lijnk
-            email_body = "Hi use the link below to reset your password\n" + absurl
-            # data to send email
-            data ={
-                'domain':absurl,
-                'email_subject': "Reset Your Password",
-                "email_body": email_body,
-                "to_email": userObj.email
-            }
-            # email the activation link
-            Util.send_email(data)
-    
-        return Response({"success": "We've sent a link to reset your password", "token": token, "uidb64": uidb64}, status=status.HTTP_200_OK)
-
-
 # password token check
 # this is the view affter the user clicks the reset link in email
 class PasswordTokenCheck(generics.GenericAPIView):
@@ -211,6 +170,51 @@ class PasswordTokenCheck(generics.GenericAPIView):
 
         except DjangoUnicodeDecodeError as e:
             return Response({"error": "Token isn't valid. Request new one"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+# endpoint to reset password using email
+class RequestPasswordResetEmail(generics.GenericAPIView):
+    serializer_class = ResetPasswordEmailRequestSerializer
+
+    def post(self, request):
+        data = {'request': request, 'data':request.data}
+        serializer = self.serializer_class(data=data)
+
+        email = request.data['email']
+        # check if the user with that email exists
+        if User.objects.filter(email=email).exists():
+            userObj = User.objects.get(email=email)
+
+            # encoding for comm across networks
+            uidb64 = urlsafe_base64_encode(smart_bytes(userObj.id))
+            # make a token to reset the password
+            tokenP = PasswordResetTokenGenerator().make_token(userObj)
+
+            # send email with the token to reset the password
+            # get current site and attach token to it
+            current_site = get_current_site(request).domain
+            relativeLink = reverse('reset-password-confirm', kwargs={'uidb64': uidb64, 'token':tokenP})
+
+            # need to update this after deployment to our desired web address
+            absurl = 'http://'+current_site+ relativeLink
+            
+            # email the activation lijnk
+            email_body = "Hi use the link below to reset your password\n" + absurl
+            # data to send email
+            data ={
+                'domain':absurl,
+                'email_subject': "Reset Your Password",
+                "email_body": email_body,
+                "to_email": userObj.email
+            }
+            # email the activation lin
+            Util.send_email(data)
+    
+            return Response({"success": "We've sent a link to reset your password if you have an account with this email", "token": tokenP, "uidb64": uidb64}, status=status.HTTP_200_OK)
+
+        return Response({"success": "We've sent a link to reset your password if you have an account with this email"})
+
+
 
 
 

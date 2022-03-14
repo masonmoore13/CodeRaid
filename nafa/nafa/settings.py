@@ -65,7 +65,6 @@ INSTALLED_APPS = [
 ]
 
 
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,6 +97,8 @@ TEMPLATES = [
     },
 ]
 
+
+SITE_ID = 2
 # permissions
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [

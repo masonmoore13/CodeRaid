@@ -4,7 +4,6 @@ from .views import  Logout,  MyTokenObtainPairView, VerifyEmail,Login, SetNewPas
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
-app_name = "accounts"
 route = routers.DefaultRouter()
 
 route.register("user", UserProfileView, basename='UserProfileView')
@@ -18,7 +17,7 @@ urlpatterns = [
     path('verify-email/', VerifyEmail.as_view(), name="verify_email"),
     path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('request-reset-password/', RequestPasswordResetEmail.as_view(), name="reset_password_email"),
-    path('reset-password/<uidb64>//<token>//', PasswordTokenCheck.as_view(), name="reset_password_confirm"),
+    path('reset-password/<uidb64>/<token>/', PasswordTokenCheck.as_view(), name="reset-password-confirm"),
     path('set-new-password/', SetNewPassword.as_view(), name="set-new-password"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify')
