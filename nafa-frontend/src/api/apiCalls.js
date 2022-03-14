@@ -159,8 +159,7 @@ export const updateEventById = (id, eventObject) => {
 
 // Profile
 const userProfileUrl = address + "/accounts/profile/user";
-const searchUserByNameUrl =
-  address + "/accounts/profile/user/?search=";
+const searchUserByNameUrl = address + "/accounts/profile/user/?search=";
 
 export const getUserProfile = () => {
   return axios.get(`${userProfileUrl}`);
@@ -197,4 +196,21 @@ export const getRelationship = () => {
 };
 export const getRelationshipByUserId = (id) => {
   return axios.get(`${RelationshipByUserIdUrl}${id}`);
+};
+
+/**
+ * Reset Password Links
+ */
+
+const REQUEST_RESET_PASSWORD_URL =
+  address + "/accounts/request-reset-password/";
+
+const SET_NEW_PASSWORD_URL = address + "/accounts/set-new-password/";
+
+export const resetPasswordRequest = (email) => {
+  const requestObject = {
+    email: email,
+    redirect_url : address
+  }
+  return axios.post(REQUEST_RESET_PASSWORD_URL,requestObject);
 };

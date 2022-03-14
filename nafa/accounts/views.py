@@ -205,7 +205,8 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
         data = {'request': request, 'data': request.data}
         serializer = self.serializer_class(data=data)
 
-        email = request.data['email']
+        email = request.data.get("email","")
+        print(email)
         # check if the user with that email exists
         if User.objects.filter(email=email).exists():
             userObj = User.objects.get(email=email)
@@ -241,7 +242,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             # email the activation lin
             Util.send_email(data)
 
-        return Response({"success": "We've sent a link to reset your password our system has an account with this email"}, status=status.HTTP_200_OK)
+        return Response({"success": "We've sent a link to reset your password to your email if our system has an account with this email"}, status=status.HTTP_200_OK)
 
 
 class SetNewPassword(generics.GenericAPIView):

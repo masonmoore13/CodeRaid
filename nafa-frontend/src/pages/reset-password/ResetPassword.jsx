@@ -6,15 +6,14 @@ import { Link } from "react-router-dom";
 import Input from "../../components/input/Input";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 import RecaptchaComponent from "../../components/recaptcha/RecaptchaComponent";
+import { resetPasswordRequest } from "../../api/apiCalls";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [pendingApiCall, setPendingApiCall] = useState(false);
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
-  const [message, setMessage] = useState(
-    "Please check email for the password link"
-  );
+  const [message, setMessage] = useState("");
 
   const handleRecapthca = (value) => {
     setRecaptchaVerified(true);
@@ -24,62 +23,74 @@ const ResetPassword = () => {
     setRecaptchaVerified(false);
   };
 
-  const handleOnChange = () => {};
+  const handleOnChange = (e) => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
 
-  const onClickResetPassword = () => {};
+  const onClickResetPassword = (e) => {
+    e.preventDefault();
+    resetPasswordRequest(email)
+      .then((response) => {
+        setMessage(response.data.success)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="reset-password-container d-flex flex-column">
-      <Row>
+      {message && message.length && <Row>
         <div
           className="col-md-12 col-md-offset-4 d-flex justify-content-center mt-5"
           align="center"
         >
           <Alert variant="success">{message}</Alert>
         </div>
-      </Row>
-        <div className="jumbotron">
-          <Container>
-            <Row>
-              <Col>
-                <h1 className="text-center">Reset Password</h1>
-                <hr />
-                <Form autoComplete="off">
-                  <Input
-                    label="Email Address"
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={handleOnChange}
-                    placeholder="Enter Email"
-                    required
+      </Row>}
+      <div className="jumbotron">
+        <Container>
+          <Row>
+            <Col>
+              <h1 className="text-center">Reset Password</h1>
+              <hr />
+              <Form autoComplete="off">
+                <Input
+                  label="Email Address"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleOnChange}
+                  placeholder="Enter Email"
+                  required
+                />
+                <RecaptchaComponent
+                  handleRecapthca={handleRecapthca}
+                  handleErrorRecaptcha={handleErrorRecaptcha}
+                />
+                <div className="mt-3 mb-2 d-flex justify-content-center">
+                  <ButtonWithProgress
+                    onClick={onClickResetPassword}
+                    text="Reset Password"
+                    disabled={!recaptchaVerified}
                   />
-                  <RecaptchaComponent
-                    handleRecapthca={handleRecapthca}
-                    handleErrorRecaptcha={handleErrorRecaptcha}
-                  />
-                  <div className="mt-3 mb-2 d-flex justify-content-center">
-                    <ButtonWithProgress
-                      onClick={onClickResetPassword}
-                      text="Reset Password"
-                      disabled={!recaptchaVerified}
-                    />
-                  </div>
-                </Form>
-                <hr />
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <div className="options">
-                  <Link to="/login">Login?</Link>
                 </div>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+              </Form>
+              <hr />
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <div className="options">
+                <Link to="/login">Login?</Link>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
+    </div>
   );
 };
 
