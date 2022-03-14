@@ -226,6 +226,7 @@ export const getRelationship = () => {
 export const getRelationshipByUserId = (id) => {
   return axios.get(`${RelationshipByUserIdUrl}${id}`);
 };
+
 export const createRelationship = (relationshipObject) => {
   return new Promise(async (resolve, reject) => {
     try {

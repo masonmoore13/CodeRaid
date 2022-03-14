@@ -24,6 +24,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AsyncPaginationExample from "./UserSearchTypeahead";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
 
 toast.configure();
 
@@ -173,21 +174,21 @@ const Userprofile = () => {
     });
   };
 
-  const [users, setUsers] = useState([]);
-  const [query, setQuery] = useState();
-  const options = "";
+  // const [users, setUsers] = useState([]);
+  // const [query, setQuery] = useState();
+  // const options = "";
 
-  useEffect(() => {
-    getUserByName(query)
-      .then((response) => {
-        console.log(response.data);
-        setUsers(response.data);
-        options = (response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  }, [query]);
+  // useEffect(() => {
+  //   getUserByName(query)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setUsers(response.data);
+  //       options = (response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.message);
+  //     });
+  // }, [query]);
 
   return (
     <div className={`user ${showSpinner ? "blur" : ""}`}>
@@ -445,10 +446,6 @@ const Userprofile = () => {
                       {relationship.relationship_type + ": "}
                       <button
                         className="btn-sm btn-warning ms-1"
-                        // to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
-                        // style={(isActive) => ({
-                        //   color: isActive ? "blue" : "blue",
-                        // })}
                         onClick={(e) => {
                           e.preventDefault();
                           setShowSpinner(true);
@@ -494,7 +491,6 @@ const Userprofile = () => {
                         <h6>Select A Member</h6>
 
                         <div className="row display-6 mx-auto">
-                          
                           <AsyncPaginationExample />
                         </div>
                       </div>
