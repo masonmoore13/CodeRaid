@@ -94,7 +94,7 @@ const EventDetail = () => {
             <Card
               className="description-card mx-auto shadow-sm"
               border=""
-              style={{ width: "96%", height: "96%" }}
+              style={{ width: "96%", height: "97%" }}
             >
               <p className="description m-2">{event.description}</p>
               <p className=" m-2"> {event.date}</p>
@@ -102,9 +102,9 @@ const EventDetail = () => {
             </Card>
           </Col>
 
-          <Col className="DetailsRightCol mx-auto col-lg-3 shadow-sm ">
+          <Col className="DetailsRightCol mx-auto col-lg-3 shadow-sm">
             <Card
-              className="venueCard shadow-sm text-start"
+              className="venueCard shadow-sm text-start mb-3"
               style={{ width: "93%" }}
             >
               <Card.Title className="text-center">
@@ -123,7 +123,7 @@ const EventDetail = () => {
               </a>
             </Card>
             <Card
-              className="contactDetails shadow-sm "
+              className="contactDetails shadow-sm mb-3"
               border=""
               style={{ width: "93%" }}
             >
@@ -135,7 +135,7 @@ const EventDetail = () => {
               <h6> {event.contact_number}</h6>
             </Card>
             <Card
-              className="DetailsRightCol shadow-md "
+              className="DetailsRightCol shadow-md mb-3"
               border=""
               style={{ width: "93%" }}
             >

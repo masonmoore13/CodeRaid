@@ -2,10 +2,6 @@
   text-indent: 25px;
 }
 
-.DetailsRightCol{
-  height: 96%;
-}
-
 @media screen and (max-width: 1000px){
 
 	.banner-image{
