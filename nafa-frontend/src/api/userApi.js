@@ -1,5 +1,5 @@
 import axios from "axios";
-import address from "../config";
+import {address} from "../config";
 
 const loginUrl = address + "/accounts/login/";
 const userProfileUrl = address + "/accounts/user/";

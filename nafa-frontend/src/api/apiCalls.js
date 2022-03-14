@@ -1,5 +1,5 @@
 import axios from "axios";
-import address from "../config";
+import {address,frontEndAddress} from "../config";
 
 // let address
 
@@ -210,7 +210,7 @@ const SET_NEW_PASSWORD_URL = address + "/accounts/set-new-password/";
 export const resetPasswordRequest = (email) => {
   const requestObject = {
     email: email,
-    redirect_url : address
+    redirect_url : frontEndAddress + "/update-password/"
   }
   return axios.post(REQUEST_RESET_PASSWORD_URL,requestObject);
 };
