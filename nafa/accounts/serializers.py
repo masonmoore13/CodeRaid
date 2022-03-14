@@ -20,29 +20,31 @@ from django.urls import reverse
 # register serializer
 
 
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        max_length=68, min_length=6, write_only=True)
+# class RegisterSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(
+#         max_length=68, min_length=6, write_only=True)
 
-    class Meta:
-        model = User
-        fields = ["email", "username", "password"]
+#     class Meta:
+#         model = User
+#         fields = ["email", "username", "password"]
 
-    def validate(self, attrs):
-        email = attrs.get('email', '')
-        username = attrs.get('username', '')
+#     def validate(self, attrs):
+#         email = attrs.get('email', '')
+#         username = attrs.get('username', '')
 
-        if not username.isalnum():
-            raise serializers.ValidationError(
-                "The username should only contain alphanumeric characters.")
+#         if not username.isalnum():
+#             raise serializers.ValidationError(
+#                 "The username should only contain alphanumeric characters.")
 
-        return attrs
+#         return attrs
 
 
 # password reset serializer
 class ResetPasswordEmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
+    redirect_url = serializers.CharField(max_length=500, required=False)
+    
     class Meta:
         fields = ['email']
 
@@ -50,6 +52,7 @@ class ResetPasswordEmailRequestSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    redirect_url = serializers.CharField(max_length=500, required=False) 
     class Meta:
         model = User
         fields = ['email', 'username', 'password']
