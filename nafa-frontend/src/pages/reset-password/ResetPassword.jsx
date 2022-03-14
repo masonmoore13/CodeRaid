@@ -14,7 +14,7 @@ const ResetPassword = () => {
   const [pendingApiCall, setPendingApiCall] = useState(false);
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
   const [message, setMessage] = useState("");
-  const [showSuccessAlert, setShowSuccsessAlert] = useState(false)
+  const [showSuccessAlert, setShowSuccsessAlert] = useState(false);
 
   const handleRecapthca = (value) => {
     setRecaptchaVerified(true);
@@ -29,34 +29,41 @@ const ResetPassword = () => {
     setEmail(e.target.value);
   };
 
-  if(setShowSuccsessAlert){
-    setTimeout(()=>{
-      setShowSuccsessAlert(false)
-    },5000)
+  if (setShowSuccsessAlert) {
+    setTimeout(() => {
+      setShowSuccsessAlert(false);
+    }, 5000);
   }
 
   const onClickResetPassword = (e) => {
     e.preventDefault();
+    // api call is pending
+    setPendingApiCall(true);
     resetPasswordRequest(email)
       .then((response) => {
-        setMessage(response.data.success)
-        setShowSuccsessAlert(true)
+        // api call succeeded
+        setPendingApiCall(false);
+        setMessage(response.data.success);
+        setShowSuccsessAlert(true);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.response.data.error);
+        setPendingApiCall(false);
       });
   };
 
   return (
     <div className="reset-password-container d-flex flex-column">
-      {message && message.length && showSuccessAlert && <Row>
-        <div
-          className="col-md-12 col-md-offset-4 d-flex justify-content-center mt-5"
-          align="center"
-        >
-          <Alert variant="success">{message}</Alert>
-        </div>
-      </Row>}
+      {message && message.length && showSuccessAlert && (
+        <Row>
+          <div
+            className="col-md-12 col-md-offset-4 d-flex justify-content-center mt-5"
+            align="center"
+          >
+            <Alert variant="success">{message}</Alert>
+          </div>
+        </Row>
+      )}
       <div className="jumbotron">
         <Container>
           <Row>
@@ -81,7 +88,12 @@ const ResetPassword = () => {
                   <ButtonWithProgress
                     onClick={onClickResetPassword}
                     text="Reset Password"
-                    disabled={!recaptchaVerified}
+                    disabled={
+                      pendingApiCall ||
+                      !recaptchaVerified
+                    }
+                    pe
+                    pendingApiCall={pendingApiCall}
                   />
                 </div>
               </Form>

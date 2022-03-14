@@ -94,7 +94,7 @@ function UserSignup({ props, actions = defaultProp }) {
       .postSignup(user)
       .then((response) => {
         setPendingApiCall(false);
-        navigate("/login",{ state: {showToast:true} } );
+        navigate("/login",{ state: {message:"Registration Successful. Please Check Email to verify your account"} } );
       })
       .catch((apiError) => {
         if (apiError.response.data) {

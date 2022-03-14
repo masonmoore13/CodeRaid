@@ -46,13 +46,13 @@ class ResetPasswordEmailRequestSerializer(serializers.Serializer):
     redirect_url = serializers.CharField(max_length=500, required=False)
     
     class Meta:
-        fields = ['email']
+        fields = ['email', 'redirect_url']
 
 
 
 
 class UserSerializer(serializers.ModelSerializer):
-    redirect_url = serializers.CharField(max_length=500, required=False) 
+    # redirect_url = serializers.CharField(max_length=500, required=False) 
     class Meta:
         model = User
         fields = ['email', 'username', 'password']

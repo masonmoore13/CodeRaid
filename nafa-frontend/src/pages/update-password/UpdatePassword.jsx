@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { updatePassword } from "../../api/apiCalls";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 
 import Input from "../../components/input/Input";
@@ -15,8 +16,11 @@ const UpdatePassword = () => {
 
   const [pendingApiCall, setPendingApiCall] = useState(false);
   const [errors, setErrors] = useState({});
+  let searchParams = useSearchParams();
 
-
+  let uidb64 = searchParams.get("uidb64");
+  let token = searchParams.get("token");
+  let navigate = useNavigate()
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
   const passVerification = {
@@ -37,7 +41,6 @@ const UpdatePassword = () => {
   const handleErrorRecaptcha = () => {
     setRecaptchaVerified(false);
   };
-
 
   const onInputChange = (event) => {
     const { value, name } = event.target;
@@ -72,10 +75,35 @@ const UpdatePassword = () => {
     }
   };
 
+  const onClickResetPassword = (e) => {
+    e.preventDefault();
+    // api call pending
+    setPendingApiCall(true);
 
-  const onClickResetPassword = (e)=>{
-      e.preventDefault();
-  }
+    const updatePasswordObject = {
+      password,
+      uidb64,
+      token,
+    };
+
+    // make api call
+    updatePassword(updatePasswordObject)
+      .then((response) => {
+        console.log(response);
+
+        // navigate to login page with the proper message
+        navigate("/login",{ state: {message:"Registration Successful. Please Check Email to verify your account"} } );
+
+      })
+      .catch((errors) => {
+          setErrors(errors.response.data)
+
+          // api call has finished
+          setPendingApiCall(false)
+      });
+
+    // catch the error
+  };
 
   let passwordRepeatError;
   const { password, passwordRepeat } = form;
@@ -160,7 +188,7 @@ const UpdatePassword = () => {
                   text="Update Password"
                 ></ButtonWithProgress>
                 <span>
-                <Link to="/login">Login?</Link>
+                  <Link to="/login">Login?</Link>
                 </span>
               </div>
             </Form>

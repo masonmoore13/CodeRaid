@@ -25,8 +25,8 @@ function Login() {
 
   let showToast = false;
 
-  if (location.state && location.state.showToast) {
-    showToast = location.state.showToast;
+  if (location.state && location.state.message && location.state.message.length> 0) {
+    showToast = location.state.message;
   }
 
   const handleRecapthca = (value) => {
@@ -86,7 +86,7 @@ function Login() {
 
   return (
     <div>
-      {showToast && <Row>
+      {showToast && showToast.length>0 && <Row>
         <div
           className="col-md-12 col-md-offset-4 d-flex justify-content-center"
         >

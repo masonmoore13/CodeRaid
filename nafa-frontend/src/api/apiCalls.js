@@ -214,3 +214,9 @@ export const resetPasswordRequest = (email) => {
   }
   return axios.post(REQUEST_RESET_PASSWORD_URL,requestObject);
 };
+
+export const updatePassword = (updatePasswordObject)=>{
+  
+  return axios.patch(SET_NEW_PASSWORD_URL,updatePasswordObject);
+
+}
