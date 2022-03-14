@@ -88,8 +88,7 @@ function Login() {
     <div>
       {showToast && <Row>
         <div
-          className="col-md-4 col-md-offset-4"
-          align="center"
+          className="col-md-12 col-md-offset-4 d-flex justify-content-center"
         >
           <Alert variant="success">Registration Successful. Please Check Email to verify your account</Alert>
         </div>
@@ -151,7 +150,7 @@ function Login() {
           <Row>
             <Col>
               <div className="options">
-              <Link to="/reset-password">Forgot Password?</Link>
+                <Link to="/reset-password">Forgot Password?</Link>
                 <Link to="/signup">SignUp?</Link>
               </div>
             </Col>
