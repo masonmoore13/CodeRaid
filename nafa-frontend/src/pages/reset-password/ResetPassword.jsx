@@ -13,7 +13,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="login-container">
+    <div className="reset-password-container">
       <div className="jumbotron">
         <Container>
           <Row>

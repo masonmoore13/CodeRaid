@@ -151,7 +151,7 @@ function Login() {
           <Row>
             <Col>
               <div className="options">
-                <a href="#!">Forgot password?</a>
+              <Link to="/reset-password">Forgot Password?</Link>
                 <Link to="/signup">SignUp?</Link>
               </div>
             </Col>
