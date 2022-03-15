@@ -2,6 +2,8 @@
 from operator import truediv
 import re
 from django.http import HttpResponsePermanentRedirect
+from contextlib import redirect_stderr
+from operator import truediv
 from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from rest_framework import viewsets
