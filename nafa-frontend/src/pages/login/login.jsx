@@ -29,6 +29,13 @@ function Login() {
     showToast = location.state.message;
   }
 
+  const queryString = "?"+window.location.href.split("?")[1]
+  const searchParams = new URLSearchParams(queryString);
+
+  if(searchParams.get("email_verified") && searchParams.get('email_verified') === "True"){
+    showToast = "Email Verification Successful. Please Login"
+  }
+
   const handleRecapthca = (value) => {
     setRecaptchaVerified(true);
   };
@@ -90,7 +97,7 @@ function Login() {
         <div
           className="col-md-12 col-md-offset-4 d-flex justify-content-center"
         >
-          <Alert variant="success">Registration Successful. Please Check Email to verify your account</Alert>
+          <Alert variant="success">{showToast}</Alert>
         </div>
       </Row>}
       <div className="login-container">

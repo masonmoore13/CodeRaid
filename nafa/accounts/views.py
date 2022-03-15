@@ -90,7 +90,7 @@ class RegisterVerifyView (generics.GenericAPIView):
         
         ## appropriate redirect url sent
         # need to update this after deployment to our desired web address
-        absurl = current_site + relativeLink + "?token=" + str(token) +"?redirect_url="+redirect_url
+        absurl = current_site + relativeLink + "?token=" + str(token) +"&redirect_url="+redirect_url
 
         # email the activation lijnk
         email_body = "Hi " + userObj.username + \

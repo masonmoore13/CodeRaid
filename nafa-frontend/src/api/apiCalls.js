@@ -13,7 +13,11 @@ import {address,frontEndAddress} from "../config";
 const apiUrl = address + "/accounts/register/";
 const loginUrl = address + "/accounts/login/";
 export const signup = (user) => {
-  return axios.post(apiUrl, user);
+  const userObj = {
+    ...user,
+    redirect_url : frontEndAddress +"/login/"
+  }
+  return axios.post(apiUrl, userObj);
 };
 
 export const login = (user) => {

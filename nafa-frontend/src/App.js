@@ -11,7 +11,7 @@ import About from "./pages/about/aboutPage";
 import Contact from "./pages/contact/contactPage";
 import UserSignup from "./pages/user-signup/UserSignup";
 import * as apiCalls from "./api/apiCalls";
-import Login from "./pages/login/Login";
+import Login from "./pages/login/login";
 
 import CreateEvent from "./pages/events/CreateEvent";
 import ShowEvents from "./pages/events/ShowEvents";
