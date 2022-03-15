@@ -9,9 +9,9 @@ class Relationship(models.Model):
     relationship_type = models.CharField(
         max_length=400, null=False, default="Friend")
     user = models.ForeignKey(
-        UserProfile, default=None, null=True, related_name="user1", on_delete=models.CASCADE)
+        UserProfile, default=None, null=False, related_name="user1", on_delete=models.CASCADE)
     user2 = models.ForeignKey(
-        UserProfile, default=None, null=True, related_name="user2", on_delete=models.CASCADE)
+        UserProfile, default=None, null=False, related_name="user2", on_delete=models.CASCADE)
     bool = models.BooleanField(default=False)
     # Extra property
     @property

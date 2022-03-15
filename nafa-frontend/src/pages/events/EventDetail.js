@@ -133,7 +133,7 @@ const EventDetail = () => {
                 {gallery.map((gallery, index) => (
                   <div className="col-6 d-flex flex-row" key={gallery.id}>
                     <ModalImage
-                      className="d-flex flex-column"
+                      className="d-flex flex-column rounded"
                       showRotate="true"
                       small={gallery.event_image}
                       large={gallery.event_image}
