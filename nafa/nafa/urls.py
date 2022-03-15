@@ -72,6 +72,6 @@ def populateEvents():
         )
         eventObj.save()
 
-populateUser()
+# populateUser()
 
-populateEvents()
+# populateEvents()
