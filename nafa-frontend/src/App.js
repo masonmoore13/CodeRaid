@@ -27,6 +27,8 @@ import Userprofile from "./pages/dashboard/userProfile/Userprofile";
 import Teams from "./pages/dashboard/teams/Teams";
 import Gallery from "./pages/gallery/Gallery";
 import GalleryEdit from "./pages/gallery/GalleryEdit";
+import ResetPassword from "./pages/reset-password/ResetPassword";
+import UpdatePassword from "./pages/update-password/UpdatePassword";
 
 function App() {
   // will be changed later just for demo
@@ -53,7 +55,8 @@ function App() {
                 element={<UserSignup actions={actions} />}
               />
               <Route path="/login/" element={<Login actions={actions} />} />
-
+              <Route exact path="/reset-password/" element={<ResetPassword />} />
+              <Route exact path="/update-password/" element={<UpdatePassword />} />
               <Route exact path="/event/" element={<ShowEvents />} />
               <Route path="/event/createEvent/" element={<CreateEvent />} />
               <Route path="/event/:id/" element={<EventDetail />} />

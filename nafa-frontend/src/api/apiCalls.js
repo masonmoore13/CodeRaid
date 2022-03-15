@@ -1,5 +1,5 @@
 import axios from "axios";
-import address from "../config";
+import {address,frontEndAddress} from "../config";
 
 // let address
 
@@ -13,7 +13,11 @@ import address from "../config";
 const apiUrl = address + "/accounts/register/";
 const loginUrl = address + "/accounts/login/";
 export const signup = (user) => {
-  return axios.post(apiUrl, user);
+  const userObj = {
+    ...user,
+    redirect_url : frontEndAddress +"/login/"
+  }
+  return axios.post(apiUrl, userObj);
 };
 
 export const login = (user) => {
@@ -265,3 +269,25 @@ export const deleteRelationshipById = (id) => {
     }
   });
 };
+/**
+ * Reset Password Links
+ */
+
+const REQUEST_RESET_PASSWORD_URL =
+  address + "/accounts/request-reset-password/";
+
+const SET_NEW_PASSWORD_URL = address + "/accounts/set-new-password/";
+
+export const resetPasswordRequest = (email) => {
+  const requestObject = {
+    email: email,
+    redirect_url : frontEndAddress + "/update-password/"
+  }
+  return axios.post(REQUEST_RESET_PASSWORD_URL,requestObject);
+};
+
+export const updatePassword = (updatePasswordObject)=>{
+  
+  return axios.patch(SET_NEW_PASSWORD_URL,updatePasswordObject);
+
+}
