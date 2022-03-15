@@ -639,8 +639,13 @@ const Userprofile = () => {
                         variant="btn btn-warning btn-outline-dark"
                         onClick={() => {
 <<<<<<< HEAD
+<<<<<<< HEAD
                          notify();
                          createRelationshipInfo();
+=======
+                          createRelationshipInfo();
+                          /*reload or go back to profile*/
+>>>>>>> parent of 387cca8 (fixed vulnerabilities)
 =======
                           createRelationshipInfo();
                           /*reload or go back to profile*/
