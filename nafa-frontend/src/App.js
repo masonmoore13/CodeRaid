@@ -25,8 +25,10 @@ import Userlist from "./pages/dashboard/user/Userlist";
 import Userprofile from "./pages/dashboard/userProfile/Userprofile";
 
 import Teams from "./pages/dashboard/teams/Teams";
+
 import Gallery from "./pages/gallery/Gallery";
 import GalleryEdit from "./pages/gallery/GalleryEdit";
+
 import ResetPassword from "./pages/reset-password/ResetPassword";
 import UpdatePassword from "./pages/update-password/UpdatePassword";
 

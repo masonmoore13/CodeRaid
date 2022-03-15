@@ -11,8 +11,8 @@ from django.core.mail import send_mail
 class RelationshipView(viewsets.ModelViewSet):
     queryset = Relationship.objects.all()
     serializer_class = RelationshipSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['=user__id']  # search by user
+    
+   
 
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
