@@ -29,11 +29,7 @@ const ResetPassword = () => {
     setEmail(e.target.value);
   };
 
-  if (setShowSuccsessAlert) {
-    setTimeout(() => {
-      setShowSuccsessAlert(false);
-    }, 5000);
-  }
+
 
   const onClickResetPassword = (e) => {
     e.preventDefault();

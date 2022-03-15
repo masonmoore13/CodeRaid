@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Row, Col } from "react-bootstrap";
+import { GiConsoleController } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams,useLocation } from "react-router-dom";
 import { updatePassword } from "../../api/apiCalls";
 import ButtonWithProgress from "../../components/buttonWithProgress/ButtonWithProgress";
 
@@ -16,13 +17,20 @@ const UpdatePassword = () => {
 
   const [pendingApiCall, setPendingApiCall] = useState(false);
   const [errors, setErrors] = useState({});
-  let searchParams = useSearchParams();
+  
+ 
 
-  let uidb64 = searchParams.get("uidb64");
-  let token = searchParams.get("token");
+  const queryString = "?"+window.location.href.split("?")[1]
+  const searchParams = new URLSearchParams(queryString);
+
+  
   let navigate = useNavigate()
   const [recaptchaVerified, setRecaptchaVerified] = useState(false);
 
+  let uidb64 = searchParams.get("uidb64") 
+  let token = searchParams.get("token")
+
+  console.log(uidb64 + " "+ token)
   const passVerification = {
     isLengthy: false,
     hasUpper: false,
@@ -92,7 +100,7 @@ const UpdatePassword = () => {
         console.log(response);
 
         // navigate to login page with the proper message
-        navigate("/login",{ state: {message:"Registration Successful. Please Check Email to verify your account"} } );
+        navigate("/login",{ state: {message:"Password reset successful."} } );
 
       })
       .catch((errors) => {
