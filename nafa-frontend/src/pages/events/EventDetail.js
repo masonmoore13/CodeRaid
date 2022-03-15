@@ -50,7 +50,7 @@ const EventDetail = () => {
     <div className="text-center ">
       <Card className="event-container container-md mx-auto">
         <img
-          className="container"
+          className="container banner-image"
           src={event.banner_image}
           alt="..."
         ></img>
@@ -131,12 +131,9 @@ const EventDetail = () => {
               <div className="row d-flex flex-row">
                 {" "}
                 {gallery.map((gallery, index) => (
-                  <div
-                    className="col-6 d-flex flex-row rounded"
-                    key={gallery.id}
-                  >
+                  <div className="col-6 d-flex flex-row" key={gallery.id}>
                     <ModalImage
-                      className="d-flex flex-column rounded"
+                      className="d-flex flex-column"
                       showRotate="true"
                       small={gallery.event_image}
                       large={gallery.event_image}
