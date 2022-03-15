@@ -8,7 +8,7 @@ from .states import CONTIGUOUS_STATES
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
-# custon user manager
+# custon user manager 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
 
