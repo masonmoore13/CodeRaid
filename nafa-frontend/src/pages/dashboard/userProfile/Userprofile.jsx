@@ -56,10 +56,19 @@ const Userprofile = () => {
 
   let { id } = useParams();
 
+  // The toast displays and page refresh after 1 second
   const notify = () => {
     toast.warn("Your profile has been updated!", {
       position: toast.POSITION.TOP_CENTER,
-    });
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });setTimeout(function () {
+      window.location.reload();
+    }, 1300);
   };
 
   const handleOnClick = (e) => {
@@ -216,13 +225,11 @@ const Userprofile = () => {
     }
 
     setIsLoading(true);
-
     const page = cachedQuery.page + 1;
 
     makeAndHandleRequest(query, page).then((resp) => {
       const options = cachedQuery.options.concat(resp.options);
       CACHE[query] = { ...cachedQuery, options, page };
-
       setIsLoading(false);
       setOptions(options);
     });
@@ -631,7 +638,7 @@ const Userprofile = () => {
                         variant="btn btn-warning btn-outline-dark"
                         onClick={() => {
                          notify();
-                          
+                         createRelationshipInfo();
                         }}
                       >
                         Add Relationship

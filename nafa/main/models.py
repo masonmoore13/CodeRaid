@@ -2,26 +2,21 @@ from django.db import models
 from datetime import date
 from accounts.models import User, UserProfile
 
-
-# want to return username
-
 class Relationship(models.Model):
     relationship_type = models.CharField(
         max_length=400, null=False, default="Friend")
     user = models.ForeignKey(
-        UserProfile, default=None, null=True, related_name="user1", on_delete=models.CASCADE)
+        UserProfile, default=None, null=False, related_name="user1", on_delete=models.CASCADE)
     user2 = models.ForeignKey(
-        UserProfile, default=None, null=True, related_name="user2", on_delete=models.CASCADE)
+        UserProfile, default=None, null=False, related_name="user2", on_delete=models.CASCADE)
     bool = models.BooleanField(default=False)
     # Extra property
     @property
     def relationship_name(self):
         return str(self.user2.first_name) + " "+ str(self.user2.middle_name) + " " + str(self.user2.last_name)
     
-
     def __str__(self):
         return(self.relationship_type)  # want to return username
-
 
 class Event(models.Model):
     event_name = models.CharField(max_length=150)
