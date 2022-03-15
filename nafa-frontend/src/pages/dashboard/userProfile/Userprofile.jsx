@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
 import { Button, Form, Card, Modal} from "react-bootstrap";
@@ -18,13 +18,15 @@ import {
   updateUserProfileById,
   getUserProfileById,
   createRelationship,
-  getUserByName,
+  deleteRelationshipById,
 } from "../../../api/apiCalls";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AsyncPaginationExample from "./UserSearchTypeahead";
+
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+
 
 toast.configure();
 
@@ -174,21 +176,76 @@ const Userprofile = () => {
     });
   };
 
-  // const [users, setUsers] = useState([]);
-  // const [query, setQuery] = useState();
-  // const options = "";
+ //TypeAhead component
+ const CACHE = {};
+ const PER_PAGE = 50;
+ const SEARCH_URI = "http://127.0.0.1:8000/accounts/profile/user/?search=";
 
-  // useEffect(() => {
-  //   getUserByName(query)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setUsers(response.data);
-  //       options = (response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //     });
-  // }, [query]);
+ function makeAndHandleRequest(query, page = 1) {
+   return fetch(`${SEARCH_URI}${query}`)
+     .then((resp) => resp.json())
+     .then((user) => {
+       const options = user.map((user) => ({
+         first_name: user.first_name,
+         last_name: user.last_name,
+         id: user.id,
+       }));
+       return { options };
+     });
+ }
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const handleInputChange = (q) => {
+    setQuery(q);
+  };
+
+  const handlePagination = (e, shownResults) => {
+    const cachedQuery = CACHE[query];
+
+    // Don't make another request if:
+    // - the cached results exceed the shown results
+    // - we've already fetched all possible results
+    if (
+      cachedQuery.options.length > shownResults ||
+      cachedQuery.options.length === cachedQuery.total_count
+    ) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    const page = cachedQuery.page + 1;
+
+    makeAndHandleRequest(query, page).then((resp) => {
+      const options = cachedQuery.options.concat(resp.options);
+      CACHE[query] = { ...cachedQuery, options, page };
+
+      setIsLoading(false);
+      setOptions(options);
+    });
+  };
+
+  // `handleInputChange` updates state and triggers a re-render, so
+  // use `useCallback` to prevent the debounced search handler from
+  // being cancelled.
+  const handleSearch = useCallback((q) => {
+    if (CACHE[q]) {
+      setOptions(CACHE[q].options);
+      return;
+    }
+
+    setIsLoading(true);
+    makeAndHandleRequest(q).then((resp) => {
+      CACHE[q] = { ...resp, page: 1 };
+
+      setIsLoading(false);
+      setOptions(resp.options);
+    });
+  }, []);
+
 
   return (
     <div className={`user ${showSpinner ? "blur" : ""}`}>
@@ -491,7 +548,31 @@ const Userprofile = () => {
                         <h6>Select A Member</h6>
 
                         <div className="row display-6 mx-auto">
-                          <AsyncPaginationExample />
+                          <AsyncTypeahead
+                            isLoading={isLoading}
+                            labelKey={(option) =>
+                              `${option.first_name} ${option.last_name}`
+                            }
+                            maxResults={PER_PAGE - 1}
+                            minLength={1}
+                            onInputChange={handleInputChange}
+                            onPaginate={handlePagination}
+                            onSearch={handleSearch}
+                            options={options}
+                            paginate
+                            placeholder="Search for a user..."
+                            renderMenuItemChildren={(option) => (
+                              setUser2(option.id),
+                              (
+                                <div key={option.id}>
+                                  <span>
+                                    {option.first_name} {option.last_name}
+                                  </span>
+                                </div>
+                              )
+                            )}
+                            useCache={false}
+                          />
                         </div>
                       </div>
                       <div class="col ">
@@ -529,6 +610,10 @@ const Userprofile = () => {
                             <Button
                               className="button bg-white border-0"
                               type="button"
+                              onClick={() => (
+                                deleteRelationshipById(relationship.id)
+                              )}
+                             
                             >
                               <FaTrash />
                             </Button>

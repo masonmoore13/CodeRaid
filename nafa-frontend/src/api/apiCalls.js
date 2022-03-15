@@ -246,3 +246,22 @@ export const createRelationship = (relationshipObject) => {
     }
   });
 };
+export const deleteRelationshipById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.delete(`${relationshipUrl}${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
