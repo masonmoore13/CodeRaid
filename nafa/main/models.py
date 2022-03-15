@@ -13,7 +13,7 @@ class Relationship(models.Model):
         UserProfile, default=None, null=True, related_name="user1", on_delete=models.CASCADE)
     user2 = models.ForeignKey(
         UserProfile, default=None, null=True, related_name="user2", on_delete=models.CASCADE)
-    
+    bool = models.BooleanField(default=False)
     # Extra property
     @property
     def relationship_name(self):

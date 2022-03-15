@@ -224,6 +224,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             relativeLink = reverse(
                 'reset-password-confirm', kwargs={'uidb64': uidb64, 'token': tokenP})
 
+
             # redirect url coming from frontend
 
             redirect_url = request.data.get('redirect_url', '')
