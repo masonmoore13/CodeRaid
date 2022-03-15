@@ -611,7 +611,7 @@ const Userprofile = () => {
                               className="button bg-white border-0"
                               type="button"
                               onClick={() => (
-                                deleteRelationshipById(relationship.id)
+                                deleteRelationshipById(relationship.id), window.location.reload()
                               )}
                              
                             >
