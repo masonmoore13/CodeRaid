@@ -246,7 +246,6 @@ const Userprofile = () => {
     });
   }, []);
 
-
   return (
     <div className={`user ${showSpinner ? "blur" : ""}`}>
       <div className="userTitleContainer">
@@ -631,8 +630,8 @@ const Userprofile = () => {
                       <Button
                         variant="btn btn-warning btn-outline-dark"
                         onClick={() => {
-                          createRelationshipInfo();
-                          /*reload or go back to profile*/
+                         notify();
+                          
                         }}
                       >
                         Add Relationship
