@@ -8,8 +8,13 @@
   padding-bottom: 2em;
 }
 
+.home-card-row{
+  width: 75%;
+  justify-content: center;
+}
+
 .home-card {
-  width: 100%;
+  width: 75%;
   height: 100%;
   background-color: rgb(255, 255, 255) !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

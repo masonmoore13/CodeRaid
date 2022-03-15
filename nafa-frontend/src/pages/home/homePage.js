@@ -12,11 +12,11 @@ export default function Home() {
         Welcome to Neville Alumni and Friends Association!
       </h1>
 
-      <Row className="w-100 justify-content-between mx-auto">
+      <Row className="home-card-row mx-auto">
 
         <Col>
           {/* news and update card */}
-          <div className="home-card card">
+          <div className="home-card card mx-auto">
             <div className="card-header">
               <h4>News and Updates</h4>
             </div>
@@ -31,7 +31,7 @@ export default function Home() {
 
         <Col>
           {/* events card */}
-          <div className="home-card card">
+          <div className="home-card card mx-auto">
             <div className="card-header">
               <h4>Events</h4>
             </div>
@@ -44,7 +44,7 @@ export default function Home() {
           </div>
         </Col>
 
-        <Col className="d-flex">
+        <Col className="d-flex mx-auto">
           <iframe
             src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FNeville-Alumni-and-Friends-Association-310455590523&tabs=timeline&width=550&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
             height="600"
