@@ -253,6 +253,7 @@ const Userprofile = () => {
     });
   }, []);
 
+
   return (
     <div className={`user ${showSpinner ? "blur" : ""}`}>
       <div className="userTitleContainer">
@@ -637,8 +638,13 @@ const Userprofile = () => {
                       <Button
                         variant="btn btn-warning btn-outline-dark"
                         onClick={() => {
+<<<<<<< HEAD
                          notify();
                          createRelationshipInfo();
+=======
+                          createRelationshipInfo();
+                          /*reload or go back to profile*/
+>>>>>>> parent of 387cca8 (fixed vulnerabilities)
                         }}
                       >
                         Add Relationship
