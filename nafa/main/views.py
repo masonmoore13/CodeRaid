@@ -8,24 +8,28 @@ from .permissions import UserPermission
 from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication 
 from django.core.mail import send_mail
 
-
-# search by user
-
-
-
-
 class RelationshipView(viewsets.ModelViewSet):
     queryset = Relationship.objects.all()
     serializer_class = RelationshipSerializer
     
    
 
-
 class GalleryView(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['=event__id'] #search foreign key id
+
+    # permissions
+    permission_classes = [UserPermission]
+    
+# Home page gallery, exludes any image that is null or empty. 
+class HomeGalleryView(viewsets.ModelViewSet):
+    queryset = Gallery.objects.exclude(
+        home_gallery_image__isnull=True).exclude(home_gallery_image__exact='')
+    serializer_class = HomeGallerySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['home_gallery_image']  
 
     # permissions
     permission_classes = [UserPermission]
@@ -43,16 +47,11 @@ class CampaignView(viewsets.ModelViewSet):
     # permissions 
     permission_classes = [UserPermission]
 
-class CategoryOfTeamView(viewsets.ModelViewSet):
-    queryset = CategoryOfTeam.objects.all()
-    serializer_class = CategoryOfTeamSerializer
-
-    # permissions
-    permission_classes = [UserPermission]
-
 class TeamView(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['category']  # search by team category
 
     # permissions
     permission_classes = [UserPermission]

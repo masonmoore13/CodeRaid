@@ -1,7 +1,6 @@
 from django.contrib import admin
 from main.models import *
 
-
 admin.site.register(Gallery)
 class GalleryModel(admin.ModelAdmin):
     list_display = ('id', 'image')
@@ -15,11 +14,7 @@ class EventModel(admin.ModelAdmin):
 admin.site.register(Campaign)
 class CampaignModel(admin.ModelAdmin):
     list_display = ('id', 'campaign_name')
-
-admin.site.register(CategoryOfTeam)
-class CategoryOfTeamModel(admin.ModelAdmin):
-    list_display = ('category_name')
-    
+  
 admin.site.register(Team)
 class TeamModel(admin.ModelAdmin):
     list_display = ('type_of_team')

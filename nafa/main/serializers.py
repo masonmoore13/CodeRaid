@@ -3,22 +3,22 @@ from main.models import *
 from .models import User
 
 
-class RelationshipSerializer(serializers.ModelSerializer):
-    
+class RelationshipSerializer(serializers.ModelSerializer):  
     relationship_name = serializers.ReadOnlyField()
     class Meta:
         model = Relationship
         fields = ('__all__')
 
-
-
 class GallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ('__all__')
-        
 
 
+class HomeGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Gallery
+        fields = ('home_gallery_image', 'id')
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,11 +28,6 @@ class EventSerializer(serializers.ModelSerializer):
 class CampaignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campaign
-        fields = ('__all__')
-
-class CategoryOfTeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryOfTeam
         fields = ('__all__')
 
 class TeamSerializer(serializers.ModelSerializer):

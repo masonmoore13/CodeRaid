@@ -8,8 +8,8 @@ import {
   deleteGalleryById,
   getGalleryByEventId,
 } from "../../api/apiCalls.js";
-
-import { BsTrashFill } from "react-icons/bs";
+import ModalImage from "react-modal-image";
+import { FaTrash } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import "./Event.css";
 
@@ -81,7 +81,7 @@ const EventUpdate = () => {
 
   //Gallery stuff
 
-  const [images, setImages] = useState(false);
+  const [event_image, setImages] = useState(false);
   const [event, setEventId] = useState(id);
 
   let navigate = useNavigate();
@@ -89,8 +89,8 @@ const EventUpdate = () => {
   const CreateGalleryInfo = async () => {
     let formField = new FormData();
 
-    if (images !== null) {
-      formField.append("images", images);
+    if (event_image !== null) {
+      formField.append("event_image", event_image);
     }
 
     formField.append("event", event);
@@ -339,26 +339,23 @@ const EventUpdate = () => {
       >
         Update Event
       </Link>
-      <div className="showGallery ">
+      <div className="row w-50 d-flex flex-row">
         {gallery.map((gallery, index) => (
-          <div  key={gallery.id}>
-            <img
-              src={gallery.images}
-              alt="event images"
-              style={{ width: "10em" }}
+          <div className=" col-4 d-flex flex-column" key={gallery.id}>
+            <ModalImage
+              small={gallery.event_image}
+              large={gallery.event_image}
             />
-            <IconContext.Provider value={{ color: "red", size: "50px" }}>
-              <div>
-                <Button
-                  className="button  bg-white btn-outline-light"
-                  type="button"
-                  onClick={() => (
-                    deleteGalleryById(gallery.id), window.location.reload()
-                  )}
-                >
-                  <BsTrashFill />
-                </Button>
-              </div>
+            <IconContext.Provider value={{ color: "red", size: "35px" }}>
+              <Button
+                className="button bg-transparent border-0"
+                type="button"
+                onClick={() => (
+                  (deleteGalleryById(gallery.id), window.location.reload())
+                )}
+              >
+                <FaTrash />
+              </Button>
             </IconContext.Provider>
           </div>
         ))}

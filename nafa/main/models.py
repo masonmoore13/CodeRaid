@@ -3,16 +3,15 @@ from datetime import date
 from accounts.models import User, UserProfile
 
 
-
- # want to return username
+# want to return username
 
 class Relationship(models.Model):
     relationship_type = models.CharField(
         max_length=400, null=False, default="Friend")
     user = models.ForeignKey(
-        UserProfile, default=None, null=True, related_name="user1", on_delete=models.CASCADE)
+        UserProfile, default=None, null=False, related_name="user1", on_delete=models.CASCADE)
     user2 = models.ForeignKey(
-        UserProfile, default=None, null=True, related_name="user2", on_delete=models.CASCADE)
+        UserProfile, default=None, null=False, related_name="user2", on_delete=models.CASCADE)
     bool = models.BooleanField(default=False)
     # Extra property
     @property
@@ -21,7 +20,8 @@ class Relationship(models.Model):
     
 
     def __str__(self):
-      return(self.relationship_type)  # want to return username
+        return(self.relationship_type)  # want to return username
+
 
 class Event(models.Model):
     event_name = models.CharField(max_length=150)
@@ -54,12 +54,19 @@ class Event(models.Model):
         else:
             return "/media/EventBannerDefault.jpg"
 
+
 class Gallery(models.Model):
-    images = models.FileField(upload_to='media/Event Media',)
-    event = models.ForeignKey(Event, default=None, on_delete=models.CASCADE)
+    event_image = models.FileField(upload_to='media/Event Media', null=True, blank=True)
+    event = models.ForeignKey(
+        Event, default=None, on_delete=models.CASCADE, null=True, blank=True)
+
+    home_gallery_image = models.FileField(
+        upload_to='media/Home Gallery', default="", null=True, blank=True)
 
     def __int__(self):
         return (self.id, self.event)
+
+
 
 
 class Campaign(models.Model):
@@ -77,31 +84,21 @@ class Campaign(models.Model):
     def __str__(self):
         return(self.campaign_name)
 
-
-class CategoryOfTeam(models.Model):
-    category_name = models.CharField(max_length=150)
-    year = models.IntegerField(null=False, default=2000)
-    description = models.TextField(max_length=2500)
-
-    def __str__(self):
-        return(self.category_name)
-
-# Basketball, cheerleading, etc.
-
-
 class Team(models.Model):
-
-    # Connects to members but not all members of old teams are site members
     members_of_team = models.ManyToManyField(
-        User, related_name='members_of_team')
-    coaches = models.ManyToManyField(User, related_name='coaches', blank=True)
-    type_of_team = models.ForeignKey(
-        CategoryOfTeam, on_delete=models.CASCADE, null=False, default="")
-    description = models.TextField(max_length=2500)
-    media = models.ImageField(upload_to='media/Team Media', blank=True)
+        User, related_name='members_of_team', blank=True)
+    coaches = models.ManyToManyField(
+        User, related_name='coaches', blank=True)
+    team_name = models.CharField(max_length=150, null=True, blank=True, default='')
+    # football, soccer, tennis
+    category = models.CharField(max_length=150, null=True, blank=True, default='')
+    sub_category = models.CharField(
+        max_length=150, null=True, blank=True)  # varsity,
+    year = models.CharField(max_length=150, null=True, blank=True)
+    description = models.TextField(max_length=2500, null=True, blank=True)
 
     def __str__(self):
-        return(str(self.type_of_team.year) + " " + self.type_of_team.category_name)
+        return(self.category)
 
 
 class Scholarship(models.Model):

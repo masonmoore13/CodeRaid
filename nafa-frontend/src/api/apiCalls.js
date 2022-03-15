@@ -25,7 +25,8 @@ export const login = (user) => {
 };
 
 // Gallery
-const galleryUrl = address + "/main/api/gallery/";
+const galleryUrl = address + "/main/api/gallery";
+const homeGalleryUrl = address + "/main/api/homeGallery";
 const GalleryByEventIdUrl = address + "/main/api/gallery/?search=";
 export const getGalleryByEventId = (id) => {
   return axios.get(`${GalleryByEventIdUrl}${id}`);
@@ -33,9 +34,9 @@ export const getGalleryByEventId = (id) => {
 export const getGallery = () => {
   return axios.get(`${galleryUrl}/`);
 };
-// export const createGalleryImage = (galleryObject) => {
-//   return axios.post(galleryUrl, galleryObject);
-// };
+export const getHomeGallery = () => {
+  return axios.get(`${homeGalleryUrl}/`);
+};
 export const createGalleryImage = (galleryObject) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -44,7 +45,27 @@ export const createGalleryImage = (galleryObject) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.post(galleryUrl, galleryObject, {
+      const res = await axios.post((galleryUrl + "/"), galleryObject, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export const createHomeGalleryImage = (galleryObject) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.post((homeGalleryUrl + "/"), galleryObject, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },
@@ -59,9 +80,6 @@ export const createGalleryImage = (galleryObject) => {
 export const getGalleryById = (id) => {
   return axios.get(`${galleryUrl}${id}/`);
 };
-// export const deleteGalleryById = (id) => {
-//   return axios.delete(`${galleryUrl}${id}/`);
-// };
 export const deleteGalleryById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -70,7 +88,7 @@ export const deleteGalleryById = (id) => {
       if (!accessJWT) {
         return reject("Token not found");
       }
-      const res = await axios.delete(`${galleryUrl}${id}/`, {
+      const res = await axios.delete(`${galleryUrl}/${id}/`, {
         headers: {
           Authorization: "Bearer " + accessJWT,
         },
@@ -82,8 +100,25 @@ export const deleteGalleryById = (id) => {
     }
   });
 };
-export const updateGalleryById = (id, galleryObject) => {
-  return axios.put(`${galleryUrl}${id}/`, galleryObject);
+export const deleteHomeGalleryById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.delete(`${homeGalleryUrl}/${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 // Events
@@ -91,9 +126,6 @@ const eventUrl = address + "/main/api/event/";
 export const getEvents = () => {
   return axios.get(`${eventUrl}`);
 };
-// export const createEvent = (eventObject) => {
-//   return axios.post(eventUrl, eventObject);
-// };
 export const createEvent = (eventObject) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -116,9 +148,6 @@ export const createEvent = (eventObject) => {
 export const getEventById = (id) => {
   return axios.get(`${eventUrl}${id}/`);
 };
-// export const deleteEventById = (id) => {
-//   return axios.delete(`${eventUrl}${id}/`);
-// };
 export const deleteEventById = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -138,9 +167,6 @@ export const deleteEventById = (id) => {
     }
   });
 };
-// export const updateEventById = (id, eventObject)=>{
-//     return axios.put(`${eventUrl}${id}/`,eventObject);
-// }
 export const updateEventById = (id, eventObject) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -163,7 +189,6 @@ export const updateEventById = (id, eventObject) => {
 
 // Profile
 const userProfileUrl = address + "/accounts/profile/user";
-const searchUserByNameUrl = address + "/accounts/profile/user/?search=";
 
 export const getUserProfile = () => {
   return axios.get(`${userProfileUrl}`);
@@ -171,12 +196,9 @@ export const getUserProfile = () => {
 export const createUserProfile = (userProfileObject) => {
   return axios.post(userProfileUrl, userProfileObject);
 };
-
-//This is the url Sital is using in profile
 export const getUserProfileById = (id) => {
   return axios.get(`${userProfileUrl}/${id}/`);
 };
-
 export const deleteUserProfileId = (id) => {
   return axios.delete(`${userProfileUrl}${id}/`);
 };
@@ -188,8 +210,12 @@ export const updateUserProfileById = (userProfile, id) => {
 
 // teams
 const teamUrl = address + "/main/api/Team/";
+const teamByCategoryUrl = address + "/main/api/Team/?search=";
 export const getTeams = () => {
   return axios.get(`${teamUrl}`);
+};
+export const getTeamByCategory = (id) => {
+  return axios.get(`${teamByCategoryUrl}${id}`);
 };
 
 // Relationship
@@ -202,6 +228,44 @@ export const getRelationshipByUserId = (id) => {
   return axios.get(`${RelationshipByUserIdUrl}${id}`);
 };
 
+export const createRelationship = (relationshipObject) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.post(relationshipUrl, relationshipObject, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export const deleteRelationshipById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const accessJWT = sessionStorage.getItem("accessJWT");
+
+      if (!accessJWT) {
+        return reject("Token not found");
+      }
+      const res = await axios.delete(`${relationshipUrl}${id}/`, {
+        headers: {
+          Authorization: "Bearer " + accessJWT,
+        },
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 /**
  * Reset Password Links
  */

@@ -24,7 +24,11 @@ import DashboardHome from "./pages/dashboard/dashboard-home/DashboardHome";
 import Userlist from "./pages/dashboard/user/Userlist";
 import Userprofile from "./pages/dashboard/userProfile/Userprofile";
 
-import ShowTeams from "./pages/teams/ShowTeams";
+import Teams from "./pages/dashboard/teams/Teams";
+
+import Gallery from "./pages/gallery/Gallery";
+import GalleryEdit from "./pages/gallery/GalleryEdit";
+
 import ResetPassword from "./pages/reset-password/ResetPassword";
 import UpdatePassword from "./pages/update-password/UpdatePassword";
 
@@ -46,6 +50,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about/" element={<About />} />
               <Route path="/contact/" element={<Contact />} />
+              <Route path="/gallery" element={<Gallery />} />
+
               <Route
                 path="/signup/"
                 element={<UserSignup actions={actions} />}
@@ -58,12 +64,18 @@ function App() {
               <Route path="/event/:id/" element={<EventDetail />} />
               <Route path="/event/:id/update/" element={<EventUpdate />} />
 
-              <Route exact path="/teams/" element={<ShowTeams />} />
+              <Route path="/teams" element={<Teams />} />
 
               <Route path="/dashboard" exact element={<Dashboard />}>
+                <Route path="galleryEdit" exact element={<GalleryEdit />} />
+                <Route path="teams" exact element={<Teams />} />
                 <Route path="home" exact element={<DashboardHome />} />
                 <Route path="userlist" exact element={<Userlist />} />
-                <Route path="userprofile/:id/" exact element={<Userprofile />} />
+                <Route
+                  path="userprofile/:id/"
+                  exact
+                  element={<Userprofile />}
+                />
                 <Route path="userprofile/" exact element={<Userprofile />} />
                 <Route
                   path="userprofile/:id/"

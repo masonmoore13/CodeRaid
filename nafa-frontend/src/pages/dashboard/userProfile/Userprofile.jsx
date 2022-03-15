@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./userprofile.css";
 import { data, userD } from "../../../dummyUserData";
-import { Button, Form, Card, Modal } from "react-bootstrap";
+import { Button, Form, Card, Modal} from "react-bootstrap";
 import userprofile from "../../../Assets/images/userprofile.png";
 import {
   MdPermIdentity,
@@ -9,8 +9,7 @@ import {
   MdPhoneIphone,
   MdPublish,
 } from "react-icons/md";
-
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from "react-bootstrap/Spinner";
 import { FaAddressCard, FaTrash } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { useSelector } from "react-redux";
@@ -18,11 +17,16 @@ import { IconContext } from "react-icons";
 import {
   updateUserProfileById,
   getUserProfileById,
-  getRelationshipByUserId,
+  createRelationship,
+  deleteRelationshipById,
 } from "../../../api/apiCalls";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+
 
 toast.configure();
 
@@ -30,11 +34,7 @@ const Userprofile = () => {
   let { user, userProfile } = useSelector((state) => state.user.user);
   let navigate = useNavigate();
   const [preview, setPreview] = useState("");
-  const [relationship, setRelationship] = useState([]);
-  const [showSpinner, setShowSpinner] = useState(false)
-
-
-
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const [userProfileData, setUserProfileData] = useState({
     first_name: "",
@@ -56,28 +56,18 @@ const Userprofile = () => {
 
   let { id } = useParams();
 
-  useEffect(() => {
-    if (!id) {
-      id = userProfile.id;
-    }
-
-    if (id) {
-      getUserProfileById(id).then((res) => {
-        setUserProfileData(res.data);
-        setRelationship(res.data.relationships);
-      });
-    }
-  }, [id, userProfile]);
-
-  if (!userProfile) {
-    userProfile = data;
-    user = userD;
-  }
-
   const notify = () => {
     toast.warn("Your profile has been updated!", {
       position: toast.POSITION.TOP_CENTER,
-    });
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });setTimeout(function () {
+      window.location.reload();
+    }, 1300);
   };
 
   const handleOnClick = (e) => {
@@ -154,12 +144,115 @@ const Userprofile = () => {
     // });
   };
 
-  //Relationship fetch
+  if (!userProfile) {
+    userProfile = data;
+    user = userD;
+  }
 
   // Relationship Modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // Relationship fetch
+  const [relationship, setRelationship] = useState([]);
+  const [relationship_type, setRelationshipType] = useState("Friend");
+  const [user2, setUser2] = useState("");
+
+  useEffect(() => {
+    if (!id) {
+      id = userProfile.id;
+    }
+    if (id) {
+      getUserProfileById(id).then((res) => {
+        setUserProfileData(res.data);
+        setRelationship(res.data.relationships);
+      });
+    }
+  }, [id, userProfile]);
+
+  //Create Relationship
+  const createRelationshipInfo = async () => {
+    let formField = new FormData();
+
+    formField.append("user", userProfile.id);
+    formField.append("relationship_type", relationship_type);
+    formField.append("user2", user2);
+    createRelationship(formField).then((response) => {
+      console.log(response.data);
+      navigate.push("/");
+    });
+  };
+
+ //TypeAhead component
+ const CACHE = {};
+ const PER_PAGE = 50;
+ const SEARCH_URI = "http://127.0.0.1:8000/accounts/profile/user/?search=";
+
+ function makeAndHandleRequest(query, page = 1) {
+   return fetch(`${SEARCH_URI}${query}`)
+     .then((resp) => resp.json())
+     .then((user) => {
+       const options = user.map((user) => ({
+         first_name: user.first_name,
+         last_name: user.last_name,
+         id: user.id,
+       }));
+       return { options };
+     });
+ }
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const handleInputChange = (q) => {
+    setQuery(q);
+  };
+
+  const handlePagination = (e, shownResults) => {
+    const cachedQuery = CACHE[query];
+
+    // Don't make another request if:
+    // - the cached results exceed the shown results
+    // - we've already fetched all possible results
+    if (
+      cachedQuery.options.length > shownResults ||
+      cachedQuery.options.length === cachedQuery.total_count
+    ) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    const page = cachedQuery.page + 1;
+
+    makeAndHandleRequest(query, page).then((resp) => {
+      const options = cachedQuery.options.concat(resp.options);
+      CACHE[query] = { ...cachedQuery, options, page };
+
+      setIsLoading(false);
+      setOptions(options);
+    });
+  };
+
+  // `handleInputChange` updates state and triggers a re-render, so
+  // use `useCallback` to prevent the debounced search handler from
+  // being cancelled.
+  const handleSearch = useCallback((q) => {
+    if (CACHE[q]) {
+      setOptions(CACHE[q].options);
+      return;
+    }
+
+    setIsLoading(true);
+    makeAndHandleRequest(q).then((resp) => {
+      CACHE[q] = { ...resp, page: 1 };
+
+      setIsLoading(false);
+      setOptions(resp.options);
+    });
+  }, []);
 
   return (
     <div className={`user ${showSpinner ? "blur" : ""}`}>
@@ -417,10 +510,6 @@ const Userprofile = () => {
                       {relationship.relationship_type + ": "}
                       <button
                         className="btn-sm btn-warning ms-1"
-                        // to={"/dashboard/userprofile/"+ relationship.user2+ "/"}
-                        // style={(isActive) => ({
-                        //   color: isActive ? "blue" : "blue",
-                        // })}
                         onClick={(e) => {
                           e.preventDefault();
                           setShowSpinner(true);
@@ -442,7 +531,7 @@ const Userprofile = () => {
                 </Card.Body>
 
                 <Button
-                  variant="btn btn-warning btn-outline-dark w-25 mx-auto"
+                  variant="btn btn-warning border-0 w-25 mx-auto"
                   onClick={handleShow}
                 >
                   Add/Edit
@@ -465,20 +554,45 @@ const Userprofile = () => {
                       <div class="col ">
                         <h6>Select A Member</h6>
 
-                        <form>
-                          <input
-                            class="form-control mr-sm-2"
-                            type="search"
-                            placeholder="Search"
-                            aria-label="Search"
+                        <div className="row display-6 mx-auto">
+                          <AsyncTypeahead
+                            isLoading={isLoading}
+                            labelKey={(option) =>
+                              `${option.first_name} ${option.last_name}`
+                            }
+                            maxResults={PER_PAGE - 1}
+                            minLength={1}
+                            onInputChange={handleInputChange}
+                            onPaginate={handlePagination}
+                            onSearch={handleSearch}
+                            options={options}
+                            paginate
+                            placeholder="Search for a user..."
+                            renderMenuItemChildren={(option) => (
+                              setUser2(option.id),
+                              (
+                                <div key={option.id}>
+                                  <span>
+                                    {option.first_name} {option.last_name}
+                                  </span>
+                                </div>
+                              )
+                            )}
+                            useCache={false}
                           />
-                        </form>
+                        </div>
                       </div>
                       <div class="col ">
                         <h6 className="">Select Relationship Type</h6>
                         <form>
-                          <select className="form-select">
-                            <option>Friend</option>
+                          <select
+                            className="form-select"
+                            value={relationship_type}
+                            onChange={(e) =>
+                              setRelationshipType(e.target.value)
+                            }
+                          >
+                            <option selected>Friend</option>
                             <option>Spouse</option>
                             <option>Parent</option>
                             <option>Child</option>
@@ -501,8 +615,12 @@ const Userprofile = () => {
                             value={{ color: "red", size: "25px" }}
                           >
                             <Button
-                              className="button bg-white btn-outline-light"
+                              className="button bg-white border-0"
                               type="button"
+                              onClick={() => (
+                                deleteRelationshipById(relationship.id), window.location.reload()
+                              )}
+                             
                             >
                               <FaTrash />
                             </Button>
@@ -517,7 +635,13 @@ const Userprofile = () => {
                       >
                         Close
                       </Button>
-                      <Button variant="btn btn-warning btn-outline-dark">
+                      <Button
+                        variant="btn btn-warning btn-outline-dark"
+                        onClick={() => {
+                         notify();
+                         createRelationshipInfo();
+                        }}
+                      >
                         Add Relationship
                       </Button>
                     </div>
