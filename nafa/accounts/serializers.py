@@ -1,3 +1,5 @@
+import email
+from lib2to3.pgen2 import token
 from rest_framework import serializers
 from .models import User, UserProfile
 from django.core import exceptions
@@ -10,40 +12,51 @@ from django.urls import reverse
 from .utils import *
 from rest_framework.exceptions import AuthenticationFailed
 from main.serializers import RelationshipSerializer
-
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
 # register serializer
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=68, min_length=6, write_only=True)
 
-    class Meta:
-        model = User
-        fields = ["email", "username", "password"]
 
-    def validate(self, attrs):
-        email = attrs.get('email', '')
-        username = attrs.get('username', '')
+# class RegisterSerializer(serializers.ModelSerializer):
+#     password = serializers.CharField(
+#         max_length=68, min_length=6, write_only=True)
 
-        if not username.isalnum():
-            raise serializers.ValidationError("The username should only contain alphanumeric characters.")
+#     class Meta:
+#         model = User
+#         fields = ["email", "username", "password"]
 
-        return attrs
+#     def validate(self, attrs):
+#         email = attrs.get('email', '')
+#         username = attrs.get('username', '')
+
+#         if not username.isalnum():
+#             raise serializers.ValidationError(
+#                 "The username should only contain alphanumeric characters.")
+
+#         return attrs
 
 
 # password reset serializer
 class ResetPasswordEmailRequestSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
+    redirect_url = serializers.CharField(max_length=500, required=False)
+    
     class Meta:
-        fields = ['email']
+        fields = ['email', 'redirect_url']
 
 
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # redirect_url = serializers.CharField(max_length=500, required=False) 
     class Meta:
         model = User
         fields = ['email', 'username', 'password']
-        extra_kwargs = {'password': {'write_only': True,}}
+        extra_kwargs = {'password': {'write_only': True, }}
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -54,35 +67,38 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     def validate(self, data):
-            # here data has all the fields which have validated values
-            # so we can create a User instance out of it
-            user = User(**data)
+        # here data has all the fields which have validated values
+        # so we can create a User instance out of it
+        user = User(**data)
 
-            # get the password from the data
-            password = data.get('password')
+        # get the password from the data
+        password = data.get('password')
 
-            errors = dict() 
-            try:
-                # validate the password and catch the exception
-                validators.validate_password(password=password, user=User)
-                
-            # the exception raised here is different than serializers.ValidationError
-            except exceptions.ValidationError as e:
-                errors['validationErrors'] = list(e.messages)
+        errors = dict()
+        try:
+            # validate the password and catch the exception
+            validators.validate_password(password=password, user=User)
 
-            if errors:
-                raise serializers.ValidationError(errors)
+        # the exception raised here is different than serializers.ValidationError
+        except exceptions.ValidationError as e:
+            errors['validationErrors'] = list(e.messages)
 
-            return super(UserSerializer, self).validate(data)
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return super(UserSerializer, self).validate(data)
 
 # password change serializer
+
+
 class SetNewPasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(min_length=6, max_length=68, write_only=True)
+    password = serializers.CharField(
+        min_length=6, max_length=68, write_only=True)
     token = serializers.CharField(write_only=True)
     uidb64 = serializers.CharField(write_only=True)
 
     class Meta:
-        fields = ['password', 'token', 'uidb64']    
+        fields = ['password', 'token', 'uidb64']
 
     def validate(self, attrs):
         try:
@@ -103,14 +119,16 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise AuthenticationFailed('The reset link is invalid', 401)
         return super().validate(attrs)
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
-    
+
     '''
     Nested serializer
     Searches the ForeignKey according to the related name
     '''
-    relationships = RelationshipSerializer(many=True, read_only=True, source="user1")
-    
+    relationships = RelationshipSerializer(
+        many=True, read_only=True, source="user1")
+
     class Meta:
         model = UserProfile
         fields = ('__all__')

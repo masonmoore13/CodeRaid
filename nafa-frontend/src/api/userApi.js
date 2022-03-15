@@ -1,7 +1,7 @@
 import axios from "axios";
-import address from "../config";
+import {address} from "../config";
 
-const loginUrl = address + "/accounts/api/token/";
+const loginUrl = address + "/accounts/login/";
 const userProfileUrl = address + "/accounts/user/";
 const accessTokenUrl = address + "/accounts/api/token/refresh/";
 const verifyTokenUrl = address + "/accounts/api/token/verify/";
@@ -22,6 +22,7 @@ export const userLogin = (formData) => {
         );
       }
     } catch (error) {
+      console.log(error)
       return reject(error);
     }
   });
