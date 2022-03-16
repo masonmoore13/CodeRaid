@@ -98,7 +98,7 @@ TEMPLATES = [
 ]
 
 
-SITE_ID = 2
+SITE_ID = 1
 # permissions
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
